@@ -122,9 +122,9 @@
       transform: none;
       display: inline-flex;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       gap: 10px;
-      text-align: left;
+      text-align: center;
 
       height: 34px;
       width: var(--rail);
@@ -179,6 +179,13 @@
     body.is-docked .topbar-inner .brand-pill{
       opacity: 1;
       pointer-events: auto;
+      transition: opacity 220ms var(--ease);
+    }
+    body:not(.is-docked) .topbar-inner .pill-dot{
+      opacity: 0;
+    }
+    body.is-docked .topbar-inner .pill-dot{
+      opacity: 1;
       transition: opacity 220ms var(--ease);
     }
 
@@ -552,6 +559,7 @@
       const brandPill = document.getElementById('brandPill');
       const topbarHotzone = document.getElementById('topbarHotzone');
       const topbarInner = document.getElementById('topbarInner');
+      const pillDot = document.querySelector('.topbar-inner .pill-dot');
 
       // Theme: localStorage override; default is system.
       const saved = localStorage.getItem('sb_theme');
@@ -606,22 +614,27 @@
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
 
-        // End placement: center the brandmark onto the visible header brand pill
+        // End placement: align the brandmark so DOT #1 lands exactly on the header pill-dot
         if(brandPill){
           const pillRect = brandPill.getBoundingClientRect();
 
           // Scale brandmark so its outer glass container matches the pill width
           end.s = pillRect.width / bmRect.width;
 
-          // Target the CENTER of the pill
-          const pillCx = pillRect.left + (pillRect.width / 2);
-          const pillCy = pillRect.top  + (pillRect.height / 2);
+          // Prefer aligning to the pill's dot center (prevents the mid-screen green dot)
+          const targetRect = (pillDot || brandPill).getBoundingClientRect();
+          const targetCx = targetRect.left + (targetRect.width / 2);
+          const targetCy = targetRect.top  + (targetRect.height / 2);
 
-          const scaledW = bmRect.width * end.s;
-          const scaledH = bmRect.height * end.s;
+          // Measure dot #1's offset within the brandmark container
+          const dot1 = brandmark.querySelector('.dot');
+          const dotRect = dot1.getBoundingClientRect();
+          const dotOffsetX = dotRect.left - bmRect.left + (dotRect.width / 2);
+          const dotOffsetY = dotRect.top  - bmRect.top  + (dotRect.height / 2);
 
-          end.x = pillCx - (scaledW / 2);
-          end.y = pillCy - (scaledH / 2);
+          // Place the brandmark so the scaled dot center hits the target dot center
+          end.x = targetCx - (dotOffsetX * end.s);
+          end.y = targetCy - (dotOffsetY * end.s);
         } else {
           end.x = start.x;
           end.y = start.y;
@@ -660,9 +673,17 @@
         brandmark.style.setProperty('--ty', `${ty}px`);
         brandmark.style.setProperty('--ts', `${ts}`);
 
+        // Fade the traveling mark down as it approaches the dock (prevents a “double” feel)
+        const fade = 1 - (0.85 * m);
+        brandmark.style.opacity = String(Math.max(0, Math.min(1, fade)));
+
         // Docked at the end
-        if(m > 0.98) document.body.classList.add('is-docked');
-        else document.body.classList.remove('is-docked');
+        if(m > 0.98){
+          document.body.classList.add('is-docked');
+          brandmark.style.opacity = '0';
+        } else {
+          document.body.classList.remove('is-docked');
+        }
       }
 
       function update(){
