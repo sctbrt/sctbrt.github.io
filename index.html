@@ -99,8 +99,9 @@
       transform: translateY(0);
     }
     .topbar-inner{
+      --pill-width: min(var(--max), 100%);
       pointer-events:auto;
-      width: min(var(--max), 100%);
+      width: var(--pill-width);
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -152,7 +153,7 @@
     /* Brandmark (single element that morphs from center → docked in header) */
     .brandmark{
       position: fixed;
-      left: 0;
+      left: 50%;
       top: 0;
       z-index: 60;
       display:flex;
@@ -162,12 +163,21 @@
       transform-origin: 0 0;
       will-change: transform, opacity;
       pointer-events:none;
+      width: var(--pill-width);
+      max-width: var(--max);
+      padding: 18px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--hair);
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      transform: translateX(-50%);
     }
     .brandmark .dots{
       display:flex;
       gap: 12px;
       align-items:center;
       height: 14px;
+      justify-content: center;
     }
     .brandmark .dot{
       width: 10px;
@@ -488,7 +498,7 @@
         const startCenterX = vw * 0.50;
         // Higher than before to avoid crowding the hero copy
         const startCenterY = vh * 0.10;
-        start.x = startCenterX - (bmRect.width / 2);
+        start.x = (window.innerWidth - bmRect.width) / 2;
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
 
