@@ -6,6 +6,7 @@
 <title>SCOTT BERTRAND — Systems</title>
 
 <style>
+html{ scroll-behavior:smooth; }
 :root{
   --bg:#f6f6f4;
   --ink:#0c0f10;
@@ -92,9 +93,15 @@ body.header-on .topbar{opacity:1}
 }
 
 .brand-pill{
+  text-decoration:none;
+  cursor:pointer;
   display:flex;
   align-items:center;
   gap:10px;
+}
+.brand-pill:focus-visible{
+  outline:2px solid var(--green);
+  outline-offset:4px;
 }
 .brand-pill .dot{
   width:10px;height:10px;border-radius:50%;
@@ -276,13 +283,14 @@ section{
 </head>
 
 <body class="boot-1">
+<a id="top"></a>
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="brand-pill">
+    <a href="#top" class="brand-pill" aria-label="Back to top">
       <div class="dot"></div>
       <span>SCOTT BERTRAND</span>
-    </div>
+    </a>
   </div>
 </div>
 
