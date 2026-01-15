@@ -1,781 +1,262 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0B0D0E" media="(prefers-color-scheme: dark)" />
-  <title>SCOTT BERTRAND — Systems</title>
-  <meta name="description" content="SCOTT BERTRAND — operating systems for local service businesses, local retail, and hospitality." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCOTT BERTRAND — Systems</title>
 
-  <style>
-    :root{
-      /* Light-first (Rams/Ive restraint) */
-      --bg: #f6f6f4;
-      --panel: rgba(255,255,255,0.72);
-      --ink: #0c0f10;
-      --muted: rgba(12,15,16,0.60);
-      --hair: rgba(12,15,16,0.12);
+<style>
+:root{
+  --bg:#f6f6f4;
+  --ink:#0c0f10;
+  --muted:rgba(12,15,16,.6);
+  --hair:rgba(12,15,16,.12);
+  --panel:rgba(255,255,255,.72);
 
-      /* Materials */
-      --ceramic: radial-gradient(1200px 800px at 30% 20%, rgba(255,255,255,0.92), rgba(246,246,244,0.82) 55%, rgba(240,240,237,0.92));
-      --grain: radial-gradient(900px 500px at 70% 15%, rgba(0,0,0,0.06), transparent 55%),
-              repeating-linear-gradient(115deg, rgba(0,0,0,0.028) 0 1px, rgba(0,0,0,0) 1px 10px);
+  --red:#ff3b30;
+  --amber:#ffcc00;
+  --green:#34c759;
+  --off:rgba(12,15,16,.22);
 
-      /* Signal system */
-      --red:   #ff3b30;
-      --amber: #ffcc00;
-      --green: #34c759;
-      --off:   rgba(12,15,16,0.22);
+  --max:1120px;
+  --pad:clamp(18px,3vw,40px);
+  --pill-width:min(var(--max),calc(100vw - (2 * var(--pad))));
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
 
-      /* Layout */
-      --max: 1120px;
-      --pill-width: min(var(--max), calc(100vw - (2 * var(--pad))));
-      --pad: clamp(18px, 3.2vw, 40px);
-      --radius: 20px;
-      --gap: clamp(14px, 2.2vw, 22px);
-      --rhythm: clamp(10px, 1.6vw, 16px);
-      --cardPad: clamp(16px, 2.0vw, 22px);
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  font-family:system-ui,-apple-system,Helvetica,Arial;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+}
 
-      /* Motion */
-      --ease: cubic-bezier(.2,.8,.2,1);
-      --dur: 520ms;
-    }
+/* ================= HEADER PILL ================= */
 
-    [data-theme="dark"]{
-      --bg: #0b0d0e;
-      --panel: rgba(14,16,17,0.62);
-      --ink: #f2f3f4;
-      --muted: rgba(242,243,244,0.66);
-      --hair: rgba(242,243,244,0.12);
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  padding:14px var(--pad);
+  display:flex;
+  justify-content:center;
+  z-index:50;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 300ms var(--ease);
+}
+body.header-on .topbar{opacity:1}
 
-      --ceramic: radial-gradient(1200px 800px at 30% 20%, rgba(22,24,25,0.90), rgba(11,13,14,0.86) 55%, rgba(8,10,11,0.92));
-      --grain: radial-gradient(900px 500px at 70% 15%, rgba(255,255,255,0.05), transparent 55%),
-              repeating-linear-gradient(115deg, rgba(255,255,255,0.03) 0 1px, rgba(255,255,255,0) 1px 10px);
+.topbar-inner{
+  width:var(--pill-width);
+  display:grid;
+  grid-template-columns:260px 1fr;
+  align-items:center;
+  padding:12px 18px;
+  border-radius:999px;
+  border:1px solid var(--hair);
+  background:var(--panel);
+  backdrop-filter:blur(14px);
+}
 
-      --off: rgba(242,243,244,0.18);
-    }
+.brand-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.brand-pill .dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--green);
+}
+.brand-pill span{
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      background: var(--ceramic), var(--grain), var(--bg);
-      color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
+/* ================= BRANDMARK (CENTER) ================= */
 
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+.brandmark{
+  position:fixed;
+  top:0;
+  left:0;
+  width:var(--pill-width);
+  padding:18px 22px;
+  border-radius:999px;
+  border:1px solid var(--hair);
+  background:var(--panel);
+  backdrop-filter:blur(14px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+  z-index:60;
+  transform:translate(var(--tx),var(--ty)) scale(var(--ts));
+  transition:opacity 300ms var(--ease);
+}
 
-    /* Top-edge reveal (macOS menubar-like) */
-    .topbar-hotzone{
-      position: fixed;
-      inset: 0 0 auto 0;
-      height: 22px;
-      z-index: 55;
-      pointer-events: auto;
-      background: transparent;
-    }
+.dots{
+  display:flex;
+  gap:14px;
+}
+.dot{
+  width:12px;height:12px;border-radius:50%;
+  background:var(--off);
+  transition:transform 400ms var(--ease),opacity 400ms var(--ease),background 400ms var(--ease);
+}
 
-    /* Glass pill header (fades in during morph; brandmark docks into it) */
-    .topbar{
-      position: fixed;
-      inset: 0 0 auto 0;
-      padding: 14px var(--pad);
-      display:flex;
-      justify-content:center;
-      pointer-events:none;
-      z-index: 50;
-      opacity: 0;
-      transform: translateY(-8px);
-      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
-    }
-    body.header-on .topbar,
-    body.header-peek .topbar{
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .topbar-inner{
-      pointer-events:auto;
-      width: var(--pill-width);
-      display:grid;
-      grid-template-columns: var(--rail) 1fr var(--right-rail);
-      align-items:center;
-      gap: 12px;
-      padding: 12px 16px;
-      border: 1px solid var(--hair);
-      border-radius: 999px;
-      background: var(--panel);
-      backdrop-filter: blur(12px);
-      position: relative;
-      --rail: 272px; /* fixed brand rail */
-      --right-rail: 272px; /* symmetric rail to keep nav truly centered */
-    }
-    /* Visible header brand pill target (final state) */
-    .topbar-inner .brand-pill{
-      grid-column: 1;
-      justify-self: start;
-      position: static;
-      transform: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-align: center;
+.name{
+  font-size:clamp(32px,4vw,46px);
+  letter-spacing:.36em;
+  text-transform:uppercase;
+  color:var(--muted);
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity 500ms var(--ease),transform 500ms var(--ease);
+}
+body.name-on .name{opacity:1;transform:none}
 
-      height: 34px;
-      width: var(--rail);
-      padding: 0 14px;
-      padding-left: 12px;
-      border-radius: 999px;
-      border: 1px solid var(--hair);
-      background: var(--panel);
-      backdrop-filter: blur(12px);
-    }
+/* BOOT SIGNAL */
+body.boot-1 .dot:nth-child(1){background:var(--red)}
+body.boot-2 .dot:nth-child(1){background:var(--red)}
+body.boot-2 .dot:nth-child(2){background:var(--amber)}
+body.boot-3 .dot:nth-child(1){background:var(--red)}
+body.boot-3 .dot:nth-child(2){background:var(--amber)}
+body.boot-3 .dot:nth-child(3){background:var(--green)}
 
-    .topbar-inner .nav{
-      grid-column: 2;
-      justify-self: center;
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      color: var(--muted);
-      font-size: 13px;
-    }
+body.boot-done:not(.collapse) .dot:nth-child(1){background:var(--red)}
+body.boot-done:not(.collapse) .dot:nth-child(2){background:var(--amber)}
+body.boot-done:not(.collapse) .dot:nth-child(3){background:var(--green)}
 
-    .topbar-inner .controls{
-      grid-column: 3;
-      justify-self: end;
-      display:flex;
-      gap: 12px;
-      align-items:center;
-    }
-    .topbar-inner .pill-dot{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--green);
-      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.14);
-      flex: 0 0 auto;
-    }
-    .topbar-inner .pill-name{
-      font-weight: 650;
-      letter-spacing: 0.22em;
-      font-size: 12px;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
+body.collapse .dot:nth-child(2){
+  transform:translateX(-26px);
+  opacity:0;
+}
+body.collapse .dot:nth-child(3){
+  transform:translateX(-52px);
+  opacity:0;
+}
+body.collapse .dot:nth-child(1){
+  background:var(--green);
+}
 
-    /* During travel: keep the brand rail reserved + lightly ghosted, but hide its CONTENT to avoid a doubled logo */
-    body:not(.is-docked) .topbar-inner .brand-pill{
-      opacity: 0.28;
-      pointer-events: none;
-      transition: opacity 260ms var(--ease);
-    }
-    body:not(.is-docked) .topbar-inner .brand-pill .pill-dot,
-    body:not(.is-docked) .topbar-inner .brand-pill .pill-name{
-      opacity: 0;
-    }
+/* ================= HERO ================= */
 
-    body.is-docked .topbar-inner .brand-pill{
-      opacity: 1;
-      pointer-events: auto;
-      transition: opacity 220ms var(--ease);
-    }
-    body.is-docked .topbar-inner .brand-pill .pill-dot,
-    body.is-docked .topbar-inner .brand-pill .pill-name{
-      opacity: 1;
-      transition: opacity 220ms var(--ease);
-    }
+header{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding-top:200px;
+}
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 var(--pad);
+}
+h1{
+  font-size:clamp(40px,5vw,76px);
+  margin:0 0 16px;
+}
+p{
+  max-width:65ch;
+  color:var(--muted);
+  line-height:1.55;
+}
 
-    .nav{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .nav a{
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-    }
-    .nav a:hover{
-      border-color: var(--hair);
-      background: rgba(127,127,127,0.06);
-    }
+/* ================= SECTIONS ================= */
 
-    .controls{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      width: var(--right-rail);
-      min-width: 0;
-      justify-content:flex-end;
-    }
-    .btn{
-      border: 1px solid var(--hair);
-      background: transparent;
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 9px 14px;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor:pointer;
-    }
-    .btn:hover{ background: rgba(127,127,127,0.06); }
+section{
+  min-height:100vh;
+  padding:120px 0;
+  border-top:1px solid var(--hair);
+}
 
-    /* Brandmark (single element that morphs from center → docked in header) */
-    .brandmark{
-      position: fixed;
-      left: 0;
-      top: 0;
-      z-index: 60;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap: 14px;
-      transform-origin: 0 0;
-      will-change: transform, opacity;
-      pointer-events:none;
-      width: var(--pill-width);
-      max-width: var(--max);
-      padding: 18px 22px;
-      border-radius: 999px;
-      border: 1px solid var(--hair);
-      background: var(--panel);
-      backdrop-filter: blur(12px);
-      --c: 0; /* collapse progress 0..1 */
-      --tx: 0px;
-      --ty: 0px;
-      --ts: 1;
-      transform: translate3d(var(--tx), var(--ty), 0) scale(var(--ts));
-    }
-    .brandmark .dots{
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      height: 14px;
-      justify-content: center;
-    }
-    .brandmark .dot{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--off);
-      box-shadow: 0 0 0 1px var(--hair) inset;
-      transition: background 520ms var(--ease), transform 520ms var(--ease), opacity 520ms var(--ease);
-    }
-
-    /* Crisp collapse: scroll drives transform/opacity (no double easing) */
-    body.collapse-on .brandmark .dot{
-      transition: background 520ms var(--ease);
-    }
-    .brandmark .name{
-      font-weight: 650;
-      letter-spacing: 0.36em;
-      text-transform: uppercase;
-      color: var(--muted);
-      /* Initial state should read as a statement */
-      font-size: clamp(28px, 3.4vw, 44px);
-      line-height: 1;
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 520ms var(--ease), transform 520ms var(--ease);
-    }
-
-    body.name-on .brandmark .name{
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Docked style (final state inside header): one green dot + tighter name */
-    body.is-docked .brandmark{
-      flex-direction:row;
-      align-items:center;
-      gap: 12px;
-    }
-    body.is-docked .brandmark .name{
-      letter-spacing: 0.22em;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    /* Dot behavior by state */
-    body.booting .brandmark .dot{ background: var(--off); }
-    body.booting.boot-step-1 .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.booting.boot-step-2 .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.booting.boot-step-2 .brandmark .dot:nth-child(2){ background: var(--amber); }
-    body.booting.boot-step-3 .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.booting.boot-step-3 .brandmark .dot:nth-child(2){ background: var(--amber); }
-    body.booting.boot-step-3 .brandmark .dot:nth-child(3){ background: var(--green); }
-
-    /* After boot, keep tri-signal visible (R/A/G) until scroll begins */
-    body.boot-done:not(.collapse-on) .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.boot-done:not(.collapse-on) .brandmark .dot:nth-child(2){ background: var(--amber); }
-    body.boot-done:not(.collapse-on) .brandmark .dot:nth-child(3){
-      background: var(--green);
-      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.12);
-    }
-
-    /* Dot collapse only: dots 2/3 slide left into dot 1 and fade out */
-    body.collapse-on .brandmark .dot:nth-child(2){
-      transform: translateX(calc(-22px * var(--c)));
-      opacity: calc(1 - var(--c));
-    }
-    body.collapse-on .brandmark .dot:nth-child(3){
-      transform: translateX(calc(-44px * var(--c)));
-      opacity: calc(1 - var(--c));
-    }
-
-    /* When fully collapsed, dot 1 becomes the final green indicator */
-    body.collapse-on .brandmark .dot:nth-child(1){
-      background: var(--green);
-      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.18);
-    }
-
-    /* When docked: only first dot remains and is green */
-    body.is-docked .brandmark .dot:nth-child(1){
-      background: var(--green);
-      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.18);
-    }
-    body.is-docked .brandmark .dot:nth-child(2),
-    body.is-docked .brandmark .dot:nth-child(3){
-      opacity: 0;
-      transform: scale(0.1);
-    }
-
-
-    /* HERO */
-    header.hero{
-      min-height: 100svh;
-      display:flex;
-      align-items:center;
-      /* More breathing room so the centered wordmark never crowds the kicker */
-      padding: 180px 0 84px;
-      position: relative;
-    }
-    body.header-on .brandmark,
-    body.header-peek .brandmark{
-      /* visually align the brandmark container to the pill width */
-      width: var(--pill-width);
-    }
-
-    .hero-grid{
-      display:grid;
-      gap: calc(var(--gap) + 6px);
-      align-items:start;
-      max-width: 980px;
-    }
-
-    .kicker{
-      font-size: 12px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    h1{
-      margin: 0;
-      font-size: clamp(40px, 5.2vw, 76px);
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-    .lede{
-      max-width: 68ch;
-      font-size: clamp(16px, 1.9vw, 20px);
-      line-height: 1.5;
-      color: var(--muted);
-      margin: 0;
-    }
-
-    /* During boot: keep environment visible, only hint the kicker */
-    body.booting header.hero{
-      opacity: 0.08; /* ~8% hint */
-      pointer-events: none;
-    }
-    body.booting main{
-      opacity: 0;
-      pointer-events: none;
-    }
-    body.booting header.hero h1,
-    body.booting header.hero .lede,
-    body.booting header.hero .grid-3{
-      opacity: 0;
-    }
-    body.booting header.hero .kicker{
-      opacity: 1;
-    }
-
-    /* Keep top bar hidden until the scroll-driven morph begins */
-    body.booting .topbar{ opacity: 0 !important; }
-
-    /* Smoother perceived motion: content comes alive only after boot */
-    body.boot-done header.hero,
-    body.boot-done main{
-      opacity: 1;
-      pointer-events: auto;
-      transition: opacity 420ms var(--ease);
-    }
-
-    /* Sections */
-    main section{ padding: clamp(96px, 12vh, 160px) 0; min-height: calc(100svh - 86px); display: grid; align-content: start; }
-    .rule{ border-top: 1px solid var(--hair); }
-
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: var(--gap);
-      margin-top: calc(var(--rhythm) + 10px);
-    }
-    .card{
-      border: 1px solid var(--hair);
-      border-radius: var(--radius);
-      background: var(--panel);
-      backdrop-filter: blur(10px);
-      padding: clamp(14px, 1.8vw, 20px);
-      min-height: 104px;
-    }
-    .card h3{
-      margin: 0 0 8px;
-      font-size: 14px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .card p{ margin:0; color: var(--muted); line-height: 1.5; }
-
-    /* Responsive */
-    @media (max-width: 860px){
-      .topbar-inner{ grid-template-columns: auto 1fr auto; --rail: auto; --right-rail: auto; }
-      .topbar-inner .brand-pill{ width: auto; }
-      .nav{ display:none; }
-      .grid-3{ grid-template-columns: 1fr; }
-    }
-
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      *{ transition:none !important; scroll-behavior:auto !important; }
-    }
-  </style>
+/* ================= SCRIPT ================= */
+</style>
 </head>
 
-<body>
-  <!-- Top-edge hover zone to reveal the pill menu (menubar-style) -->
-  <div class="topbar-hotzone" id="topbarHotzone" aria-hidden="true"></div>
-  <!-- Glass pill header (brand docks into the left area) -->
-  <div class="topbar" aria-hidden="false">
-    <div class="topbar-inner" id="topbarInner">
-      <div class="brand-pill" id="brandPill" aria-label="Scott Bertrand">
-        <span class="pill-dot" aria-hidden="true"></span>
-        <span class="pill-name">SCOTT&nbsp;BERTRAND</span>
-      </div>
+<body class="boot-1">
 
-      <nav class="nav" aria-label="Primary">
-        <a href="#what">What I fix</a>
-        <a href="#approach">My approach</a>
-        <a href="#notes">Field notes</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <div class="controls">
-        <button class="btn" id="themeBtn" type="button" aria-label="Toggle theme">Theme</button>
-      </div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand-pill">
+      <div class="dot"></div>
+      <span>SCOTT BERTRAND</span>
     </div>
   </div>
+</div>
 
-  <!-- Single morphing brandmark (centered at load → docks into header on scroll) -->
-  <div class="brandmark" id="brandmark" aria-label="Scott Bertrand">
-    <div class="dots" aria-hidden="true">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
-    <div class="name">SCOTT&nbsp;BERTRAND</div>
+<div class="brandmark" id="brandmark">
+  <div class="dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
   </div>
+  <div class="name">SCOTT BERTRAND</div>
+</div>
 
-  <header class="hero">
-    <div class="wrap hero-grid">
-      <div class="kicker">Systems for local service businesses · local retail · hospitality</div>
+<header>
+  <div class="wrap">
+    <h1>Systems that make the day run clean.</h1>
+    <p>Fewer mistakes. Faster handoffs. Less cognitive load on busy teams.</p>
+  </div>
+</header>
 
-      <h1>Systems that make the day run clean.</h1>
+<section>
+  <div class="wrap"><h2>What I Fix</h2></div>
+</section>
 
-      <p class="lede">I help small teams reduce busy-day breakdowns: fewer mistakes at the counter, faster handoffs, and fewer “what do we do here?” moments — without adding complexity.</p>
+<section>
+  <div class="wrap"><h2>My Approach</h2></div>
+</section>
 
-      <div class="grid-3">
-        <div class="card">
-          <h3>Shorter lines</h3>
-          <p>Clear defaults for peak hours. Less debate. Less rework.</p>
-        </div>
-        <div class="card">
-          <h3>Fewer voids</h3>
-          <p>Cleaner pricing, offers, and workflows that staff can follow.</p>
-        </div>
-        <div class="card">
-          <h3>More repeatable days</h3>
-          <p>Consistency customers feel — the reason people come back.</p>
-        </div>
-      </div>
-    </div>
-  </header>
+<section>
+  <div class="wrap"><h2>Field Notes</h2></div>
+</section>
 
-  <main>
-    <section id="what" class="rule">
-      <div class="wrap">
-        <div class="kicker">What I fix</div>
-        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">The friction that shows up at the counter.</h2>
-        <p class="lede" style="max-width: 80ch;">When the menu, the rules, and the real day don’t match, the team compensates. I reduce that gap with practical operating decisions you can keep using.</p>
-      </div>
-    </section>
+<script>
+const bm=document.getElementById('brandmark');
+let start={},end={};
 
-    <section id="approach" class="rule">
-      <div class="wrap">
-        <div class="kicker">My approach</div>
-        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">Design the system. Then make it easy to run.</h2>
-        <div class="grid-3">
-          <div class="card"><h3>Observe</h3><p>Find where decisions slow down, errors repeat, or service gets inconsistent.</p></div>
-          <div class="card"><h3>Simplify</h3><p>Clarify defaults and remove contradictions that cause staff to improvise.</p></div>
-          <div class="card"><h3>Lock it in</h3><p>Document the standard in a way people actually use on a busy shift.</p></div>
-        </div>
-      </div>
-    </section>
+function measure(){
+  const r=bm.getBoundingClientRect();
+  start={x:(innerWidth-r.width)/2,y:innerHeight*0.18-r.height/2,s:1};
+  const pill=document.querySelector('.brand-pill .dot').getBoundingClientRect();
+  const d=bm.querySelector('.dot').getBoundingClientRect();
+  const scale=pill.width/d.width;
+  end={
+    x:pill.left-(d.left-r.left)*scale,
+    y:pill.top-(d.top-r.top)*scale,
+    s:scale
+  };
+}
 
-    <section id="notes" class="rule">
-      <div class="wrap">
-        <div class="kicker">Field notes</div>
-        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">A living log: photos, quotes, and short posts.</h2>
-        <p class="lede" style="max-width: 80ch;">This will become your lightweight journal feed. For now, it’s a placeholder section we’ll wire to a simple posting flow next.</p>
-      </div>
-    </section>
+function apply(){
+  const y=scrollY;
+  if(y>10)document.body.classList.add('header-on','collapse');
+  const t=Math.min(y/500,1);
+  bm.style.setProperty('--tx',`${start.x+(end.x-start.x)*t}px`);
+  bm.style.setProperty('--ty',`${start.y+(end.y-start.y)*t}px`);
+  bm.style.setProperty('--ts',start.s+(end.s-start.s)*t);
+  bm.style.opacity=t>0.9?0:1;
+}
 
-    <section id="contact" class="rule" style="padding-bottom: 90px;">
-      <div class="wrap">
-        <div class="kicker">Contact</div>
-        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">Start with a short note.</h2>
-        <p class="lede" style="max-width: 80ch;">Tell me what kind of business you run, what’s breaking under pressure, and what “clean” would feel like. (You’ll add your email here.)</p>
-      </div>
-    </section>
-  </main>
+setTimeout(()=>document.body.classList.replace('boot-1','boot-2'),600);
+setTimeout(()=>document.body.classList.replace('boot-2','boot-3'),1200);
+setTimeout(()=>{
+  document.body.classList.remove('boot-3');
+  document.body.classList.add('boot-done','name-on');
+},2200);
 
-  <script>
-    (function(){
-      const root = document.documentElement;
-      const themeBtn = document.getElementById('themeBtn');
-      const brandmark = document.getElementById('brandmark');
-      const brandPill = document.getElementById('brandPill');
-      const topbarHotzone = document.getElementById('topbarHotzone');
-      const topbarInner = document.getElementById('topbarInner');
-      const pillDot = document.querySelector('.topbar-inner .pill-dot');
+measure();
+apply();
+addEventListener('scroll',apply,{passive:true});
+addEventListener('resize',()=>{measure();apply()});
+</script>
 
-      // Theme: localStorage override; default is system.
-      const saved = localStorage.getItem('sb_theme');
-      if(saved === 'dark') root.setAttribute('data-theme','dark');
-      if(saved === 'light') root.setAttribute('data-theme','light');
-
-      themeBtn.addEventListener('click', () => {
-        const current = root.getAttribute('data-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        localStorage.setItem('sb_theme', next);
-      });
-
-      function runBoot(){
-        // Clean boot: dots fill Red → Amber → Green, then pause, then fade name in.
-        document.body.classList.add('booting');
-        document.body.classList.add('boot-step-1');
-
-        // Slower / more fluid timing
-        setTimeout(() => {
-          document.body.classList.remove('boot-step-1');
-          document.body.classList.add('boot-step-2');
-        }, 650);
-
-        setTimeout(() => {
-          document.body.classList.remove('boot-step-2');
-          document.body.classList.add('boot-step-3');
-        }, 1350);
-
-        // Hold the full tri-signal briefly so the user actually sees it
-        setTimeout(() => {
-          // Keep dots lit via boot-done styles, then fade in name
-          document.body.classList.remove('booting','boot-step-3');
-          document.body.classList.add('boot-done');
-          document.body.classList.add('name-on');
-          update();
-        }, 2550);
-      }
-
-      // Morph math
-      let start = { x: 0, y: 0, s: 1 };
-      let end   = { x: 0, y: 0, s: 1 };
-
-      function measure(){
-        // Measure in a neutral (untransformed) state so our offsets are stable.
-        const prevTx = brandmark.style.getPropertyValue('--tx');
-        const prevTy = brandmark.style.getPropertyValue('--ty');
-        const prevTs = brandmark.style.getPropertyValue('--ts');
-        const prevOp = brandmark.style.opacity;
-
-        brandmark.style.setProperty('--tx', '0px');
-        brandmark.style.setProperty('--ty', '0px');
-        brandmark.style.setProperty('--ts', '1');
-        brandmark.style.opacity = '1';
-
-        const bmRect = brandmark.getBoundingClientRect();
-        const vw = window.innerWidth;
-        const vh = window.innerHeight;
-
-        const startCenterX = vw * 0.50;
-        const startCenterY = vh * 0.18; // slightly above center so it doesn't sit too low
-        start.x = startCenterX - (bmRect.width / 2);
-        start.y = startCenterY - (bmRect.height / 2);
-        start.s = 1;
-
-        // End placement: DOT #1 should land exactly on the header pill-dot center
-        if(brandPill){
-          const pillRect = brandPill.getBoundingClientRect();
-
-          // Scale brandmark so its outer glass container matches the pill width
-          end.s = pillRect.width / bmRect.width;
-
-          // Target the pill-dot center (even if it's visually hidden during travel)
-          const targetEl = pillDot || brandPill;
-          const targetRect = targetEl.getBoundingClientRect();
-          const targetCx = targetRect.left + (targetRect.width / 2);
-          const targetCy = targetRect.top  + (targetRect.height / 2);
-
-          // Compute DOT #1 center offset inside the brandmark in local coordinates
-          const dot1 = brandmark.querySelector('.dot');
-          const dot1Rect = dot1.getBoundingClientRect();
-          const dotOffsetX = (dot1Rect.left - bmRect.left) + (dot1Rect.width / 2);
-          const dotOffsetY = (dot1Rect.top  - bmRect.top)  + (dot1Rect.height / 2);
-
-          // Place the brandmark so the scaled dot center hits the target dot center
-          end.x = targetCx - (dotOffsetX * end.s);
-          end.y = targetCy - (dotOffsetY * end.s);
-        } else {
-          end.x = start.x;
-          end.y = start.y;
-          end.s = 1;
-        }
-
-        // Restore previous transform state
-        if(prevTx) brandmark.style.setProperty('--tx', prevTx); else brandmark.style.removeProperty('--tx');
-        if(prevTy) brandmark.style.setProperty('--ty', prevTy); else brandmark.style.removeProperty('--ty');
-        if(prevTs) brandmark.style.setProperty('--ts', prevTs); else brandmark.style.removeProperty('--ts');
-        if(prevOp) brandmark.style.opacity = prevOp; else brandmark.style.removeProperty('opacity');
-      }
-
-      function clamp01(v){ return Math.max(0, Math.min(1, v)); }
-
-      function applyTransform(){
-        const y = window.scrollY || 0;
-
-        // Header visibility
-        if(y > 22) document.body.classList.add('header-on');
-        else document.body.classList.remove('header-on');
-        if(y > 22) document.body.classList.remove('header-peek');
-
-        // Collapse starts immediately when scroll begins
-        if(y > 0) document.body.classList.add('collapse-on');
-        else document.body.classList.remove('collapse-on');
-
-        // 1) Collapse completes early (crisp stack)
-        const collapseDist = 220;
-        const c = clamp01(y / collapseDist);
-        brandmark.style.setProperty('--c', c.toFixed(4));
-
-        // 2) Travel begins immediately on scroll (overlaps collapse)
-        const travelDist = 520;
-        const m = clamp01(y / travelDist);
-
-        const tx = start.x + (end.x - start.x) * m;
-        const ty = start.y + (end.y - start.y) * m;
-        const ts = start.s + (end.s - start.s) * m;
-
-        brandmark.style.setProperty('--tx', `${tx}px`);
-        brandmark.style.setProperty('--ty', `${ty}px`);
-        brandmark.style.setProperty('--ts', `${ts}`);
-
-        // Fade the traveling mark down as it approaches the header zone (reduces "double" feel)
-        const fadeStart = 0.55;
-        const fadeEnd   = 0.92;
-        const fadeAmt   = 0.55; // down to ~45% opacity
-        const fadeT = clamp01((m - fadeStart) / (fadeEnd - fadeStart));
-        const o = 1 - (fadeT * fadeAmt);
-        brandmark.style.opacity = String(o);
-
-        // Stable docking (hysteresis)
-        const dockOn  = 0.93;
-        const dockOff = 0.88;
-        const isDocked = document.body.classList.contains('is-docked');
-
-        if(!isDocked && m >= dockOn){
-          document.body.classList.add('is-docked');
-        } else if(isDocked && m <= dockOff){
-          document.body.classList.remove('is-docked');
-        }
-
-        // When docked, let the header be primary and remove the traveling layer entirely
-        if(document.body.classList.contains('is-docked')){
-          brandmark.style.opacity = '0';
-        }
-      }
-
-      function update(){
-        applyTransform();
-      }
-
-      // Init
-      document.body.classList.add('booting');
-      runBoot();
-      document.body.classList.remove('header-on');
-      document.body.classList.remove('header-peek');
-      measure();
-      update();
-
-      // Top-edge reveal (hover near top shows the pill even at y=0)
-      let peekOffTimer = null;
-      const setPeek = (on) => {
-        if(peekOffTimer){ clearTimeout(peekOffTimer); peekOffTimer = null; }
-        if(on) document.body.classList.add('header-peek');
-        else document.body.classList.remove('header-peek');
-      };
-
-      if(topbarHotzone && topbarInner){
-        topbarHotzone.addEventListener('mouseenter', () => {
-          // Only peek when the scroll-driven header isn't already on
-          if(!document.body.classList.contains('header-on')) setPeek(true);
-        });
-
-        // Keep visible while hovering the pill
-        topbarInner.addEventListener('mouseenter', () => {
-          if(!document.body.classList.contains('header-on')) setPeek(true);
-        });
-
-        // Gentle hide after leaving
-        topbarInner.addEventListener('mouseleave', () => {
-          if(document.body.classList.contains('header-on')) return;
-          peekOffTimer = setTimeout(() => setPeek(false), 220);
-        });
-
-        topbarHotzone.addEventListener('mouseleave', () => {
-          if(document.body.classList.contains('header-on')) return;
-          peekOffTimer = setTimeout(() => setPeek(false), 220);
-        });
-      }
-
-
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
-
-      // Re-measure once fonts/layout settle
-      window.setTimeout(() => { measure(); update(); }, 650);
-    })();
-  </script>
 </body>
 </html>
