@@ -13,6 +13,10 @@
   --hair:rgba(12,15,16,.12);
   --panel:rgba(255,255,255,.72);
 
+  --panel-strong: rgba(255,255,255,.86);
+  --shadow: 0 10px 30px rgba(12,15,16,.08);
+  --grid: rgba(12,15,16,.06);
+
   --red:#ff3b30;
   --amber:#ffcc00;
   --green:#34c759;
@@ -33,6 +37,31 @@ body{
   overflow-x:hidden;
 }
 
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(1200px 700px at 20% -10%, rgba(52,199,89,.10), transparent 60%),
+    radial-gradient(900px 600px at 80% 0%, rgba(0,0,0,.04), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,0));
+  z-index:0;
+}
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity:.22;
+  mask-image: radial-gradient(900px 600px at 50% 10%, black 40%, transparent 75%);
+  z-index:0;
+}
+
 /* ================= HEADER PILL ================= */
 
 .topbar{
@@ -43,7 +72,7 @@ body{
   padding:14px var(--pad);
   display:flex;
   justify-content:center;
-  z-index:50;
+  z-index:70;
   opacity:0;
   pointer-events:none;
   transition:opacity 300ms var(--ease);
@@ -94,7 +123,7 @@ body.header-on .topbar{opacity:1}
   flex-direction:column;
   align-items:center;
   gap:16px;
-  z-index:60;
+  z-index:80;
   transform:translate(var(--tx),var(--ty)) scale(var(--ts));
   transition:opacity 300ms var(--ease);
 }
@@ -150,7 +179,7 @@ header{
   min-height:100vh;
   display:flex;
   align-items:center;
-  padding-top:200px;
+  padding-top:240px;
 }
 .wrap{
   max-width:var(--max);
@@ -166,13 +195,80 @@ p{
   color:var(--muted);
   line-height:1.55;
 }
+.divider{
+  margin-top:42px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color: rgba(12,15,16,.45);
+}
+.divider:before{
+  content:"";
+  height:1px;
+  background: var(--hair);
+  flex:1;
+}
+.divider span{
+  font-size:12px;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+}
 
 /* ================= SECTIONS ================= */
 
 section{
   min-height:100vh;
-  padding:120px 0;
+  padding:140px 0;
   border-top:1px solid var(--hair);
+  position:relative;
+}
+.section-head{
+  display:grid;
+  gap:12px;
+  max-width: 78ch;
+}
+.kicker{
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.h2{
+  font-size:clamp(28px,3.2vw,44px);
+  margin:0;
+}
+.lede{
+  margin:0;
+  color:var(--muted);
+  line-height:1.55;
+}
+.cards{
+  margin-top:28px;
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:14px;
+}
+.card{
+  grid-column: span 6;
+  background: var(--panel-strong);
+  border:1px solid var(--hair);
+  border-radius:18px;
+  padding:18px 18px;
+  box-shadow: var(--shadow);
+}
+.card small{
+  display:block;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color: rgba(12,15,16,.55);
+  margin-bottom:8px;
+}
+.card p{ margin:0; }
+.card strong{ color: var(--ink); font-weight:600; }
+
+@media (max-width: 820px){
+  .card{ grid-column: span 12; }
 }
 
 /* ================= SCRIPT ================= */
@@ -203,19 +299,101 @@ section{
   <div class="wrap">
     <h1>Systems that make the day run clean.</h1>
     <p>Fewer mistakes. Faster handoffs. Less cognitive load on busy teams.</p>
+    <div class="divider"><span>Scroll</span></div>
   </div>
 </header>
 
 <section>
-  <div class="wrap"><h2>What I Fix</h2></div>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">What I fix</div>
+      <h2 class="h2">Where performance slips in plain sight.</h2>
+      <p class="lede">Most businesses don’t have a “people problem.” They have a system that asks people to remember too much. I remove friction at the counter, in handoffs, and in the daily routines that quietly drive costs.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <small>Front line</small>
+        <p><strong>Shorter lines, fewer voids</strong> — fewer “what do we do here?” moments during peak.</p>
+      </div>
+      <div class="card">
+        <small>Back of house</small>
+        <p><strong>Cleaner handoffs</strong> — predictable prep, labeling, and staging so teams stop improvising.</p>
+      </div>
+      <div class="card">
+        <small>Standards</small>
+        <p><strong>Less comping and redo’s</strong> — reduce errors by reducing decision points.</p>
+      </div>
+      <div class="card">
+        <small>Customer experience</small>
+        <p><strong>Confidence at the counter</strong> — service feels calm, even when it’s busy.</p>
+      </div>
+    </div>
+
+    <div class="divider"><span>Next</span></div>
+  </div>
 </section>
 
 <section>
-  <div class="wrap"><h2>My Approach</h2></div>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">My approach</div>
+      <h2 class="h2">Reduce cognitive load. Increase reliability.</h2>
+      <p class="lede">I use a simple behavioral lens: if a process relies on memory, it will fail under stress. We redesign the environment so the right action is the easiest action — with cues, defaults, and clean rules.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <small>Step 1</small>
+        <p><strong>Observe</strong> the real work: where staff hesitate, ask, or backtrack.</p>
+      </div>
+      <div class="card">
+        <small>Step 2</small>
+        <p><strong>Map</strong> decisions: reduce choices, simplify menus, standardize handoffs.</p>
+      </div>
+      <div class="card">
+        <small>Step 3</small>
+        <p><strong>Design</strong> cues: signage, scripts, layouts, checklists, and “one right way.”</p>
+      </div>
+      <div class="card">
+        <small>Step 4</small>
+        <p><strong>Train + refine</strong> in the field: make the system stick with light iterations.</p>
+      </div>
+    </div>
+
+    <div class="divider"><span>Next</span></div>
+  </div>
 </section>
 
 <section>
-  <div class="wrap"><h2>Field Notes</h2></div>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Field notes</div>
+      <h2 class="h2">Small observations. Real environments.</h2>
+      <p class="lede">A living log — sometimes a photo, sometimes a quote, sometimes a short write-up. It’s how I think, and how clients see the work before we work together.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <small>Note</small>
+        <p>“If the process isn’t obvious at peak, it isn’t a process — it’s a hope.”</p>
+      </div>
+      <div class="card">
+        <small>Photo drop</small>
+        <p><strong>Counter layout audit</strong> — what’s within reach, what’s missing, what causes rework.</p>
+      </div>
+      <div class="card">
+        <small>Micro case</small>
+        <p><strong>Two-word buttons</strong> on POS reduced wrong-category taps by removing ambiguity.</p>
+      </div>
+      <div class="card">
+        <small>Standard</small>
+        <p><strong>One script</strong> for peak handoff: reduces hesitation and improves perceived speed.</p>
+      </div>
+    </div>
+
+    <div class="divider"><span>Contact</span></div>
+  </div>
 </section>
 
 <script>
