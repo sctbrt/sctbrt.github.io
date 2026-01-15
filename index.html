@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#F6F6F4" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0B0D0E" media="(prefers-color-scheme: dark)" />
   <title>SCOTT BERTRAND — Systems</title>
   <meta name="description" content="SCOTT BERTRAND — operating systems for local service businesses, local retail, and hospitality." />
 
@@ -13,11 +15,11 @@
       --bg: #f6f6f4;
       --panel: rgba(255,255,255,0.72);
       --ink: #0c0f10;
-      --muted: rgba(12,15,16,0.58);
+      --muted: rgba(12,15,16,0.60);
       --hair: rgba(12,15,16,0.12);
 
       /* Materials */
-      --ceramic: radial-gradient(1200px 800px at 30% 20%, rgba(255,255,255,0.9), rgba(246,246,244,0.8) 55%, rgba(240,240,237,0.9));
+      --ceramic: radial-gradient(1200px 800px at 30% 20%, rgba(255,255,255,0.92), rgba(246,246,244,0.82) 55%, rgba(240,240,237,0.92));
       --grain: radial-gradient(900px 500px at 70% 15%, rgba(0,0,0,0.06), transparent 55%),
               repeating-linear-gradient(115deg, rgba(0,0,0,0.028) 0 1px, rgba(0,0,0,0) 1px 10px);
 
@@ -41,10 +43,10 @@
       --bg: #0b0d0e;
       --panel: rgba(14,16,17,0.62);
       --ink: #f2f3f4;
-      --muted: rgba(242,243,244,0.62);
+      --muted: rgba(242,243,244,0.66);
       --hair: rgba(242,243,244,0.12);
 
-      --ceramic: radial-gradient(1200px 800px at 30% 20%, rgba(20,22,23,0.9), rgba(11,13,14,0.85) 55%, rgba(8,10,11,0.92));
+      --ceramic: radial-gradient(1200px 800px at 30% 20%, rgba(22,24,25,0.90), rgba(11,13,14,0.86) 55%, rgba(8,10,11,0.92));
       --grain: radial-gradient(900px 500px at 70% 15%, rgba(255,255,255,0.05), transparent 55%),
               repeating-linear-gradient(115deg, rgba(255,255,255,0.03) 0 1px, rgba(255,255,255,0) 1px 10px);
 
@@ -57,7 +59,7 @@
       margin:0;
       background: var(--ceramic), var(--grain), var(--bg);
       color: var(--ink);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
     }
@@ -102,7 +104,7 @@
       min-width: 240px;
     }
     .brand-mini .name{
-      font-weight: 600;
+      font-weight: 650;
       letter-spacing: 0.22em;
       font-size: 12px;
       text-transform: uppercase;
@@ -155,11 +157,7 @@
       padding: 96px 0 48px;
       position: relative;
     }
-    .hero-grid{
-      display:grid;
-      gap: 26px;
-      align-items:start;
-    }
+    .hero-grid{ display:grid; gap: 22px; align-items:start; }
 
     .kicker{
       font-size: 12px;
@@ -167,14 +165,21 @@
       text-transform: uppercase;
       color: var(--muted);
     }
+    .hero-name{
+      font-weight: 650;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: 12px;
+    }
     h1{
       margin: 0;
-      font-size: clamp(44px, 6.2vw, 84px);
+      font-size: clamp(46px, 6.2vw, 84px);
       line-height: 1.02;
       letter-spacing: -0.02em;
     }
     .lede{
-      max-width: 70ch;
+      max-width: 72ch;
       font-size: clamp(16px, 2.0vw, 20px);
       line-height: 1.45;
       color: var(--muted);
@@ -200,4 +205,195 @@
       border-radius: 999px;
       background: var(--off);
       box-shadow: 0 0 0 1px var(--hair) inset;
-      transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease),
+      transition: transform var(--dur) var(--ease), background var(--dur) var(--ease), box-shadow var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+
+    /* Boot state (animated sequence) */
+    .bootmark[data-state="boot"] .dot:nth-child(1){ background: var(--red); }
+    .bootmark[data-state="boot"] .dot:nth-child(2){ background: var(--amber); }
+    .bootmark[data-state="boot"] .dot:nth-child(3){ background: var(--green); }
+
+    /* After scroll: bootmark fades */
+    body.is-scrolled .bootmark{ opacity: 0; transform: translateY(-6px); pointer-events:none; transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+
+    /* Mini indicator in topbar */
+    .led{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: var(--off);
+      box-shadow: 0 0 0 1px var(--hair) inset;
+      position: relative;
+    }
+    body.is-scrolled .led{ background: var(--green); box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.18); }
+
+    /* Sections */
+    section{ padding: 54px 0; }
+    .rule{ border-top: 1px solid var(--hair); }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .card{
+      border: 1px solid var(--hair);
+      border-radius: var(--radius);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      padding: 18px;
+      min-height: 110px;
+    }
+    .card h3{
+      margin: 0 0 6px;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card p{ margin:0; color: var(--muted); line-height: 1.45; }
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .topbar-inner{ gap: 10px; }
+      .brand-mini{ min-width:auto; }
+      .controls{ min-width:auto; }
+      .nav{ display:none; }
+      .grid-3{ grid-template-columns: 1fr; }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; scroll-behavior:auto !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Topbar: appears after scroll; logo collapses to a single green LED + name -->
+  <div class="topbar" aria-hidden="false">
+    <div class="topbar-inner">
+      <div class="brand-mini">
+        <span class="led" aria-hidden="true"></span>
+        <span class="name">SCOTT&nbsp;BERTRAND</span>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#what">What I fix</a>
+        <a href="#approach">My approach</a>
+        <a href="#notes">Field notes</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="controls">
+        <button class="btn" id="themeBtn" type="button" aria-label="Toggle theme">Theme</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-name">SCOTT BERTRAND</div>
+      <div class="kicker">Systems for local service businesses · local retail · hospitality</div>
+
+      <h1>Systems that make the day run clean.</h1>
+
+      <p class="lede">I help small teams reduce busy-day breakdowns: fewer mistakes at the counter, faster handoffs, and fewer “what do we do here?” moments — without adding complexity.</p>
+
+      <!-- Bootmark: centered statement at load; fades after scroll while topbar takes over -->
+      <div class="bootmark" id="bootmark" data-state="boot" aria-label="Status indicator">
+        <div class="dots" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: 10px;">
+        <div class="card">
+          <h3>Shorter lines</h3>
+          <p>Clear defaults for peak hours. Less debate. Less rework.</p>
+        </div>
+        <div class="card">
+          <h3>Fewer voids</h3>
+          <p>Cleaner pricing, offers, and workflows that staff can follow.</p>
+        </div>
+        <div class="card">
+          <h3>More repeatable days</h3>
+          <p>Consistency customers feel — the reason people come back.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="what" class="rule">
+      <div class="wrap">
+        <div class="kicker">What I fix</div>
+        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">The friction that shows up at the counter.</h2>
+        <p class="lede" style="max-width: 80ch;">When the menu, the rules, and the real day don’t match, the team compensates. I reduce that gap with practical operating decisions you can keep using.</p>
+      </div>
+    </section>
+
+    <section id="approach" class="rule">
+      <div class="wrap">
+        <div class="kicker">My approach</div>
+        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">Design the system. Then make it easy to run.</h2>
+        <div class="grid-3">
+          <div class="card"><h3>Observe</h3><p>Find where decisions slow down, errors repeat, or service gets inconsistent.</p></div>
+          <div class="card"><h3>Simplify</h3><p>Clarify defaults and remove contradictions that cause staff to improvise.</p></div>
+          <div class="card"><h3>Lock it in</h3><p>Document the standard in a way people actually use on a busy shift.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="notes" class="rule">
+      <div class="wrap">
+        <div class="kicker">Field notes</div>
+        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">A living log: photos, quotes, and short posts.</h2>
+        <p class="lede" style="max-width: 80ch;">This will become your lightweight journal feed. For now, it’s a placeholder section we’ll wire to a simple posting flow next.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="rule" style="padding-bottom: 90px;">
+      <div class="wrap">
+        <div class="kicker">Contact</div>
+        <h2 style="margin:10px 0 10px; font-size: clamp(24px, 3vw, 34px); letter-spacing:-0.01em;">Start with a short note.</h2>
+        <p class="lede" style="max-width: 80ch;">Tell me what kind of business you run, what’s breaking under pressure, and what “clean” would feel like. (You’ll add your email here.)</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('themeBtn');
+      const bootmark = document.getElementById('bootmark');
+
+      // Theme: localStorage override; default is system.
+      const saved = localStorage.getItem('sb_theme');
+      if(saved === 'dark') root.setAttribute('data-theme','dark');
+      if(saved === 'light') root.setAttribute('data-theme','light');
+
+      function cycleBoot(){
+        // Quick red→amber→green hint (nostalgic “boot”)
+        bootmark.setAttribute('data-state','boot');
+        // Nothing else needed; CSS paints three dots.
+      }
+      cycleBoot();
+
+      function setScrolled(){
+        const y = window.scrollY || 0;
+        document.body.classList.toggle('is-scrolled', y > 18);
+      }
+      setScrolled();
+      window.addEventListener('scroll', setScrolled, {passive:true});
+
+      themeBtn.addEventListener('click', () => {
+        const current = root.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('sb_theme', next);
+      });
+    })();
+  </script>
+</body>
+</html>
