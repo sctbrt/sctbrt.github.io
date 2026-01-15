@@ -171,6 +171,7 @@
       background: var(--panel);
       backdrop-filter: blur(12px);
       transform: translateX(-50%);
+      --c: 0; /* collapse progress 0..1 */
     }
     .brandmark .dots{
       display:flex;
@@ -218,6 +219,30 @@
     body.booting.boot-step-3 .brandmark .dot:nth-child(1){ background: var(--red); }
     body.booting.boot-step-3 .brandmark .dot:nth-child(2){ background: var(--amber); }
     body.booting.boot-step-3 .brandmark .dot:nth-child(3){ background: var(--green); }
+
+    /* After boot, keep tri-signal visible (R/A/G) until scroll begins */
+    body.boot-done:not(.collapse-on) .brandmark .dot:nth-child(1){ background: var(--red); }
+    body.boot-done:not(.collapse-on) .brandmark .dot:nth-child(2){ background: var(--amber); }
+    body.boot-done:not(.collapse-on) .brandmark .dot:nth-child(3){
+      background: var(--green);
+      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.12);
+    }
+
+    /* Dot collapse only: dots 2/3 slide left into dot 1 and fade out */
+    body.collapse-on .brandmark .dot:nth-child(2){
+      transform: translateX(calc(-22px * var(--c))) scale(calc(1 - (0.65 * var(--c))));
+      opacity: calc(1 - var(--c));
+    }
+    body.collapse-on .brandmark .dot:nth-child(3){
+      transform: translateX(calc(-44px * var(--c))) scale(calc(1 - (0.80 * var(--c))));
+      opacity: calc(1 - var(--c));
+    }
+
+    /* When fully collapsed, dot 1 becomes the final green indicator */
+    body.collapse-on .brandmark .dot:nth-child(1){
+      background: var(--green);
+      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.18);
+    }
 
     /* When docked: only first dot remains and is green */
     body.is-docked .brandmark .dot:nth-child(1){
@@ -526,11 +551,23 @@
       function applyTransform(t){
         // Interpolate translate + scale
         const p = t;
+        // Dot collapse only: start collapsing as soon as scroll begins.
+        const y = window.scrollY || 0;
+        if(y > 0){
+          document.body.classList.add('collapse-on');
+        } else {
+          document.body.classList.remove('collapse-on');
+        }
+
+        // Collapse progress: complete by ~180px scroll for a calm, readable motion.
+        const c = clamp01(y / 180);
+        brandmark.style.setProperty('--c', c.toFixed(4));
+
         const x = start.x + (end.x - start.x) * p;
-        const y = start.y + (end.y - start.y) * p;
+        const yPos = start.y + (end.y - start.y) * p;
         const s = start.s + (end.s - start.s) * p;
 
-        brandmark.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${s})`;
+        brandmark.style.transform = `translate3d(${x}px, ${yPos}px, 0) scale(${s})`;
 
         // Header fade in during morph (after slight movement)
         if(p > 0.14) document.body.classList.add('header-on');
@@ -539,9 +576,8 @@
         // If the header is fully on due to scroll, no need to keep peek state.
         if(p > 0.14) document.body.classList.remove('header-peek');
 
-        // Docked state near the end
-        if(p > 0.94) document.body.classList.add('is-docked');
-        else document.body.classList.remove('is-docked');
+        // Docking disabled for dot-collapse-only iteration
+        document.body.classList.remove('is-docked');
       }
 
       function easeInOutCubic(t){
