@@ -171,7 +171,8 @@
       letter-spacing: 0.36em;
       text-transform: uppercase;
       color: var(--muted);
-      font-size: clamp(18px, 2.2vw, 26px);
+      /* Initial state should read as a statement */
+      font-size: clamp(28px, 3.4vw, 44px);
       line-height: 1;
       white-space: nowrap;
     }
@@ -223,7 +224,8 @@
       min-height: 100svh;
       display:flex;
       align-items:center;
-      padding: 132px 0 64px;
+      /* More breathing room so the centered wordmark never crowds the kicker */
+      padding: 210px 0 84px;
       position: relative;
     }
 
@@ -252,6 +254,24 @@
       line-height: 1.5;
       color: var(--muted);
       margin: 0;
+    }
+
+    /* During boot: show only the centered brandmark (clean loading state) */
+    body.booting header.hero,
+    body.booting main{
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Keep top bar hidden until the scroll-driven morph begins */
+    body.booting .topbar{ opacity: 0 !important; }
+
+    /* Smoother perceived motion: content comes alive only after boot */
+    body.boot-done header.hero,
+    body.boot-done main{
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 420ms var(--ease);
     }
 
     /* Sections */
@@ -423,7 +443,8 @@
         }, 520);
         setTimeout(() => {
           document.body.classList.remove('booting','boot-step-3');
-          // header is hidden until the user begins scrolling
+          document.body.classList.add('boot-done');
+          // header stays hidden until the scroll-driven morph begins
           update();
         }, 900);
       }
@@ -446,7 +467,8 @@
 
         // Place start so brandmark center aligns to viewport center-ish (slightly above center)
         const startCenterX = vw * 0.50;
-        const startCenterY = vh * 0.30;
+        // Higher than before to avoid crowding the hero copy
+        const startCenterY = vh * 0.18;
         start.x = startCenterX - (bmRect.width / 2);
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
@@ -482,18 +504,20 @@
         brandmark.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${s})`;
 
         // Header fade in during morph (after slight movement)
-        if(p > 0.06) document.body.classList.add('header-on');
+        if(p > 0.14) document.body.classList.add('header-on');
         else document.body.classList.remove('header-on');
 
         // Docked state near the end
-        if(p > 0.94) document.body.classList.add('is-docked');
+        if(p > 0.90) document.body.classList.add('is-docked');
         else document.body.classList.remove('is-docked');
       }
 
+      function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+
       function progressFromScroll(){
         const y = window.scrollY || 0;
-        // The morph completes within the first ~180px of scroll
-        return clamp01(y / 180);
+        // Give the morph more runway + ease it so it feels fluid, not jumpy.
+        return easeOutCubic(clamp01(y / 280));
       }
 
       function update(){
@@ -501,6 +525,7 @@
       }
 
       // Init
+      document.body.classList.add('booting');
       runBoot();
       measure();
       update();
