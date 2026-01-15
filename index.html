@@ -31,6 +31,7 @@
 
       /* Layout */
       --max: 1120px;
+      --pill-width: min(var(--max), calc(100vw - (2 * var(--pad))));
       --pad: clamp(18px, 3.2vw, 40px);
       --radius: 20px;
       --gap: clamp(14px, 2.2vw, 22px);
@@ -99,18 +100,86 @@
       transform: translateY(0);
     }
     .topbar-inner{
-      --pill-width: min(var(--max), 100%);
       pointer-events:auto;
       width: var(--pill-width);
-      display:flex;
+      display:grid;
+      grid-template-columns: var(--rail) 1fr auto;
       align-items:center;
-      justify-content:space-between;
+      gap: 12px;
       padding: 12px 16px;
       border: 1px solid var(--hair);
       border-radius: 999px;
       background: var(--panel);
       backdrop-filter: blur(12px);
       position: relative;
+      --rail: 272px; /* fixed brand rail */
+    }
+    /* Visible header brand pill target (final state) */
+    .topbar-inner .brand-pill{
+      grid-column: 1;
+      justify-self: start;
+      position: static;
+      transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      text-align: left;
+
+      height: 34px;
+      width: var(--rail);
+      padding: 0 14px;
+      padding-left: 12px;
+      border-radius: 999px;
+      border: 1px solid var(--hair);
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-inner .nav{
+      grid-column: 2;
+      justify-self: center;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .topbar-inner .controls{
+      grid-column: 3;
+      justify-self: end;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+    }
+    .topbar-inner .pill-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.14);
+      flex: 0 0 auto;
+    }
+    .topbar-inner .pill-name{
+      font-weight: 650;
+      letter-spacing: 0.22em;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* During travel: brand pill is visible but ghosted */
+    body:not(.is-docked) .topbar-inner .brand-pill{
+      opacity: 0.28;
+      pointer-events: none;
+      transition: opacity 260ms var(--ease);
+    }
+    body.is-docked .topbar-inner .brand-pill{
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 220ms var(--ease);
     }
 
     .nav{
@@ -153,7 +222,7 @@
     /* Brandmark (single element that morphs from center → docked in header) */
     .brandmark{
       position: fixed;
-      left: 50%;
+      left: 0;
       top: 0;
       z-index: 60;
       display:flex;
@@ -170,8 +239,11 @@
       border: 1px solid var(--hair);
       background: var(--panel);
       backdrop-filter: blur(12px);
-      transform: translateX(-50%);
       --c: 0; /* collapse progress 0..1 */
+      --tx: 0px;
+      --ty: 0px;
+      --ts: 1;
+      transform: translate3d(var(--tx), var(--ty), 0) scale(var(--ts));
     }
     .brandmark .dots{
       display:flex;
@@ -197,6 +269,14 @@
       font-size: clamp(28px, 3.4vw, 44px);
       line-height: 1;
       white-space: nowrap;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 520ms var(--ease), transform 520ms var(--ease);
+    }
+
+    body.name-on .brandmark .name{
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Docked style (final state inside header): one green dot + tighter name */
@@ -230,11 +310,11 @@
 
     /* Dot collapse only: dots 2/3 slide left into dot 1 and fade out */
     body.collapse-on .brandmark .dot:nth-child(2){
-      transform: translateX(calc(-22px * var(--c))) scale(calc(1 - (0.65 * var(--c))));
+      transform: translateX(calc(-22px * var(--c)));
       opacity: calc(1 - var(--c));
     }
     body.collapse-on .brandmark .dot:nth-child(3){
-      transform: translateX(calc(-44px * var(--c))) scale(calc(1 - (0.80 * var(--c))));
+      transform: translateX(calc(-44px * var(--c)));
       opacity: calc(1 - var(--c));
     }
 
@@ -255,16 +335,6 @@
       transform: scale(0.1);
     }
 
-    /* Slot used to compute docking position (invisible) */
-    .brand-slot{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      min-width: 240px;
-      visibility: hidden;
-      pointer-events:none;
-      align-items: center;
-    }
 
     /* HERO */
     header.hero{
@@ -272,8 +342,13 @@
       display:flex;
       align-items:center;
       /* More breathing room so the centered wordmark never crowds the kicker */
-      padding: 210px 0 84px;
+      padding: 180px 0 84px;
       position: relative;
+    }
+    body.header-on .brandmark,
+    body.header-peek .brandmark{
+      /* visually align the brandmark container to the pill width */
+      width: var(--pill-width);
     }
 
     .hero-grid{
@@ -303,11 +378,22 @@
       margin: 0;
     }
 
-    /* During boot: show only the centered brandmark (clean loading state) */
-    body.booting header.hero,
+    /* During boot: keep environment visible, only hint the kicker */
+    body.booting header.hero{
+      opacity: 0.08; /* ~8% hint */
+      pointer-events: none;
+    }
     body.booting main{
       opacity: 0;
       pointer-events: none;
+    }
+    body.booting header.hero h1,
+    body.booting header.hero .lede,
+    body.booting header.hero .grid-3{
+      opacity: 0;
+    }
+    body.booting header.hero .kicker{
+      opacity: 1;
     }
 
     /* Keep top bar hidden until the scroll-driven morph begins */
@@ -350,9 +436,8 @@
 
     /* Responsive */
     @media (max-width: 860px){
-      .topbar-inner{ gap: 12px; }
-      .brand-slot{ min-width:auto; }
-      .controls{ min-width:auto; }
+      .topbar-inner{ grid-template-columns: auto 1fr auto; --rail: auto; }
+      .topbar-inner .brand-pill{ width: auto; }
       .nav{ display:none; }
       .grid-3{ grid-template-columns: 1fr; }
     }
@@ -370,9 +455,9 @@
   <!-- Glass pill header (brand docks into the left area) -->
   <div class="topbar" aria-hidden="false">
     <div class="topbar-inner" id="topbarInner">
-      <div class="brand-slot" id="brandSlot" aria-hidden="true">
-        <span style="width:10px;height:10px;border-radius:999px;background:var(--off);box-shadow:0 0 0 1px var(--hair) inset;"></span>
-        <span style="font-weight:650;letter-spacing:0.22em;font-size:12px;text-transform:uppercase;color:var(--muted);white-space:nowrap;">SCOTT&nbsp;BERTRAND</span>
+      <div class="brand-pill" id="brandPill" aria-label="Scott Bertrand">
+        <span class="pill-dot" aria-hidden="true"></span>
+        <span class="pill-name">SCOTT&nbsp;BERTRAND</span>
       </div>
 
       <nav class="nav" aria-label="Primary">
@@ -464,7 +549,7 @@
       const root = document.documentElement;
       const themeBtn = document.getElementById('themeBtn');
       const brandmark = document.getElementById('brandmark');
-      const brandSlot = document.getElementById('brandSlot');
+      const brandPill = document.getElementById('brandPill');
       const topbarHotzone = document.getElementById('topbarHotzone');
       const topbarInner = document.getElementById('topbarInner');
 
@@ -481,26 +566,29 @@
       });
 
       function runBoot(){
-        // Clean boot: dots fill Red → Amber → Green, slower + smoother.
+        // Clean boot: dots fill Red → Amber → Green, then pause, then fade name in.
         document.body.classList.add('booting');
         document.body.classList.add('boot-step-1');
 
+        // Slower / more fluid timing
         setTimeout(() => {
           document.body.classList.remove('boot-step-1');
           document.body.classList.add('boot-step-2');
-        }, 420);
+        }, 650);
 
         setTimeout(() => {
           document.body.classList.remove('boot-step-2');
           document.body.classList.add('boot-step-3');
-        }, 920);
+        }, 1350);
 
+        // Hold the full tri-signal briefly so the user actually sees it
         setTimeout(() => {
+          // Keep dots lit via boot-done styles, then fade in name
           document.body.classList.remove('booting','boot-step-3');
           document.body.classList.add('boot-done');
-          // header stays hidden until the scroll-driven morph begins
+          document.body.classList.add('name-on');
           update();
-        }, 1600);
+        }, 2550);
       }
 
       // Morph math
@@ -508,95 +596,84 @@
       let end   = { x: 0, y: 0, s: 1 };
 
       function measure(){
-        // Start: centered, large
-        const name = brandmark.querySelector('.name');
-        // Ensure large state for correct measurement
-        document.body.classList.remove('is-docked');
-        name.style.letterSpacing = '';
-        name.style.fontSize = '';
-
         const bmRect = brandmark.getBoundingClientRect();
         const vw = window.innerWidth;
         const vh = window.innerHeight;
 
-        // Place start so brandmark center aligns to viewport center-ish (slightly above center)
         const startCenterX = vw * 0.50;
-        // Higher than before to avoid crowding the hero copy
-        const startCenterY = vh * 0.10;
-        start.x = (window.innerWidth - bmRect.width) / 2;
+        const startCenterY = vh * 0.18; // slightly above center so it doesn't sit too low
+        start.x = startCenterX - (bmRect.width / 2);
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
 
-        // End: position at brandSlot inside the pill header
-        const slotRect = brandSlot.getBoundingClientRect();
+        // End placement: center the brandmark onto the visible header brand pill
+        if(brandPill){
+          const pillRect = brandPill.getBoundingClientRect();
 
-        // Temporarily force dock styles to measure desired final scale
-        document.body.classList.add('is-docked');
-        const bmRectDock = brandmark.getBoundingClientRect();
-        document.body.classList.remove('is-docked');
+          // Scale brandmark so its outer glass container matches the pill width
+          end.s = pillRect.width / bmRect.width;
 
-        // Scale so docked size matches the slot area (height-based)
-        const targetH = slotRect.height;
-        const currentH = bmRectDock.height;
-        end.s = currentH > 0 ? (targetH / currentH) : 1;
+          // Target the CENTER of the pill
+          const pillCx = pillRect.left + (pillRect.width / 2);
+          const pillCy = pillRect.top  + (pillRect.height / 2);
 
-        // Align brandmark to the slot, vertically centered (prevents "too low" pill logo)
-        end.x = slotRect.left;
-        const scaledDockH = bmRectDock.height * end.s;
-        end.y = slotRect.top + (slotRect.height - scaledDockH) / 2;
+          const scaledW = bmRect.width * end.s;
+          const scaledH = bmRect.height * end.s;
+
+          end.x = pillCx - (scaledW / 2);
+          end.y = pillCy - (scaledH / 2);
+        } else {
+          end.x = start.x;
+          end.y = start.y;
+          end.s = 1;
+        }
       }
 
       function clamp01(v){ return Math.max(0, Math.min(1, v)); }
 
-      function applyTransform(t){
-        // Interpolate translate + scale
-        const p = t;
-        // Dot collapse only: start collapsing as soon as scroll begins.
+      function applyTransform(){
         const y = window.scrollY || 0;
-        if(y > 0){
-          document.body.classList.add('collapse-on');
-        } else {
-          document.body.classList.remove('collapse-on');
-        }
 
-        // Collapse progress: complete by ~180px scroll for a calm, readable motion.
-        const c = clamp01(y / 180);
+        // Header visibility
+        if(y > 22) document.body.classList.add('header-on');
+        else document.body.classList.remove('header-on');
+        if(y > 22) document.body.classList.remove('header-peek');
+
+        // Collapse starts immediately when scroll begins
+        if(y > 0) document.body.classList.add('collapse-on');
+        else document.body.classList.remove('collapse-on');
+
+        // 1) Collapse progress: complete by ~220px
+        const collapseDist = 220;
+        const c = clamp01(y / collapseDist);
         brandmark.style.setProperty('--c', c.toFixed(4));
 
-        const x = start.x + (end.x - start.x) * p;
-        const yPos = start.y + (end.y - start.y) * p;
-        const s = start.s + (end.s - start.s) * p;
+        // 2) Travel starts AFTER collapse completes
+        const travelDist = 420;
+        const m = clamp01((y - collapseDist) / travelDist);
 
-        brandmark.style.transform = `translate3d(${x}px, ${yPos}px, 0) scale(${s})`;
+        const tx = start.x + (end.x - start.x) * m;
+        const ty = start.y + (end.y - start.y) * m;
+        const ts = start.s + (end.s - start.s) * m;
 
-        // Header fade in during morph (after slight movement)
-        if(p > 0.14) document.body.classList.add('header-on');
-        else document.body.classList.remove('header-on');
+        brandmark.style.setProperty('--tx', `${tx}px`);
+        brandmark.style.setProperty('--ty', `${ty}px`);
+        brandmark.style.setProperty('--ts', `${ts}`);
 
-        // If the header is fully on due to scroll, no need to keep peek state.
-        if(p > 0.14) document.body.classList.remove('header-peek');
-
-        // Docking disabled for dot-collapse-only iteration
-        document.body.classList.remove('is-docked');
-      }
-
-      function easeInOutCubic(t){
-        return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
-      }
-
-      function progressFromScroll(){
-        const y = window.scrollY || 0;
-        // Longer runway + smoother curve so the morph feels fluid.
-        return easeInOutCubic(clamp01(y / 420));
+        // Docked at the end
+        if(m > 0.98) document.body.classList.add('is-docked');
+        else document.body.classList.remove('is-docked');
       }
 
       function update(){
-        applyTransform(progressFromScroll());
+        applyTransform();
       }
 
       // Init
       document.body.classList.add('booting');
       runBoot();
+      document.body.classList.remove('header-on');
+      document.body.classList.remove('header-peek');
       measure();
       update();
 
@@ -631,11 +708,6 @@
         });
       }
 
-      // Extra safety: if the cursor approaches the very top edge, peek the pill.
-      window.addEventListener('mousemove', (e) => {
-        if(document.body.classList.contains('header-on')) return;
-        if(e.clientY <= 18) setPeek(true);
-      }, { passive: true });
 
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
