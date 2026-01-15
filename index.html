@@ -103,7 +103,7 @@
       pointer-events:auto;
       width: var(--pill-width);
       display:grid;
-      grid-template-columns: var(--rail) 1fr auto;
+      grid-template-columns: var(--rail) 1fr var(--right-rail);
       align-items:center;
       gap: 12px;
       padding: 12px 16px;
@@ -113,6 +113,7 @@
       backdrop-filter: blur(12px);
       position: relative;
       --rail: 272px; /* fixed brand rail */
+      --right-rail: 272px; /* symmetric rail to keep nav truly centered */
     }
     /* Visible header brand pill target (final state) */
     .topbar-inner .brand-pill{
@@ -170,21 +171,24 @@
       white-space: nowrap;
     }
 
-    /* During travel: brand pill is visible but ghosted */
+    /* During travel: keep the brand rail reserved + lightly ghosted, but hide its CONTENT to avoid a doubled logo */
     body:not(.is-docked) .topbar-inner .brand-pill{
       opacity: 0.28;
       pointer-events: none;
       transition: opacity 260ms var(--ease);
     }
+    body:not(.is-docked) .topbar-inner .brand-pill .pill-dot,
+    body:not(.is-docked) .topbar-inner .brand-pill .pill-name{
+      opacity: 0;
+    }
+
     body.is-docked .topbar-inner .brand-pill{
       opacity: 1;
       pointer-events: auto;
       transition: opacity 220ms var(--ease);
     }
-    body:not(.is-docked) .topbar-inner .pill-dot{
-      opacity: 0;
-    }
-    body.is-docked .topbar-inner .pill-dot{
+    body.is-docked .topbar-inner .brand-pill .pill-dot,
+    body.is-docked .topbar-inner .brand-pill .pill-name{
       opacity: 1;
       transition: opacity 220ms var(--ease);
     }
@@ -210,7 +214,8 @@
       display:flex;
       gap: 12px;
       align-items:center;
-      min-width: 240px;
+      width: var(--right-rail);
+      min-width: 0;
       justify-content:flex-end;
     }
     .btn{
@@ -266,6 +271,11 @@
       background: var(--off);
       box-shadow: 0 0 0 1px var(--hair) inset;
       transition: background 520ms var(--ease), transform 520ms var(--ease), opacity 520ms var(--ease);
+    }
+
+    /* Crisp collapse: scroll drives transform/opacity (no double easing) */
+    body.collapse-on .brandmark .dot{
+      transition: background 520ms var(--ease);
     }
     .brandmark .name{
       font-weight: 650;
@@ -443,7 +453,7 @@
 
     /* Responsive */
     @media (max-width: 860px){
-      .topbar-inner{ grid-template-columns: auto 1fr auto; --rail: auto; }
+      .topbar-inner{ grid-template-columns: auto 1fr auto; --rail: auto; --right-rail: auto; }
       .topbar-inner .brand-pill{ width: auto; }
       .nav{ display:none; }
       .grid-3{ grid-template-columns: 1fr; }
@@ -604,6 +614,17 @@
       let end   = { x: 0, y: 0, s: 1 };
 
       function measure(){
+        // Measure in a neutral (untransformed) state so our offsets are stable.
+        const prevTx = brandmark.style.getPropertyValue('--tx');
+        const prevTy = brandmark.style.getPropertyValue('--ty');
+        const prevTs = brandmark.style.getPropertyValue('--ts');
+        const prevOp = brandmark.style.opacity;
+
+        brandmark.style.setProperty('--tx', '0px');
+        brandmark.style.setProperty('--ty', '0px');
+        brandmark.style.setProperty('--ts', '1');
+        brandmark.style.opacity = '1';
+
         const bmRect = brandmark.getBoundingClientRect();
         const vw = window.innerWidth;
         const vh = window.innerHeight;
@@ -614,23 +635,24 @@
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
 
-        // End placement: align the brandmark so DOT #1 lands exactly on the header pill-dot
+        // End placement: DOT #1 should land exactly on the header pill-dot center
         if(brandPill){
           const pillRect = brandPill.getBoundingClientRect();
 
           // Scale brandmark so its outer glass container matches the pill width
           end.s = pillRect.width / bmRect.width;
 
-          // Prefer aligning to the pill's dot center (prevents the mid-screen green dot)
-          const targetRect = (pillDot || brandPill).getBoundingClientRect();
+          // Target the pill-dot center (even if it's visually hidden during travel)
+          const targetEl = pillDot || brandPill;
+          const targetRect = targetEl.getBoundingClientRect();
           const targetCx = targetRect.left + (targetRect.width / 2);
           const targetCy = targetRect.top  + (targetRect.height / 2);
 
-          // Measure dot #1's offset within the brandmark container
+          // Compute DOT #1 center offset inside the brandmark in local coordinates
           const dot1 = brandmark.querySelector('.dot');
-          const dotRect = dot1.getBoundingClientRect();
-          const dotOffsetX = dotRect.left - bmRect.left + (dotRect.width / 2);
-          const dotOffsetY = dotRect.top  - bmRect.top  + (dotRect.height / 2);
+          const dot1Rect = dot1.getBoundingClientRect();
+          const dotOffsetX = (dot1Rect.left - bmRect.left) + (dot1Rect.width / 2);
+          const dotOffsetY = (dot1Rect.top  - bmRect.top)  + (dot1Rect.height / 2);
 
           // Place the brandmark so the scaled dot center hits the target dot center
           end.x = targetCx - (dotOffsetX * end.s);
@@ -640,6 +662,12 @@
           end.y = start.y;
           end.s = 1;
         }
+
+        // Restore previous transform state
+        if(prevTx) brandmark.style.setProperty('--tx', prevTx); else brandmark.style.removeProperty('--tx');
+        if(prevTy) brandmark.style.setProperty('--ty', prevTy); else brandmark.style.removeProperty('--ty');
+        if(prevTs) brandmark.style.setProperty('--ts', prevTs); else brandmark.style.removeProperty('--ts');
+        if(prevOp) brandmark.style.opacity = prevOp; else brandmark.style.removeProperty('opacity');
       }
 
       function clamp01(v){ return Math.max(0, Math.min(1, v)); }
@@ -656,14 +684,14 @@
         if(y > 0) document.body.classList.add('collapse-on');
         else document.body.classList.remove('collapse-on');
 
-        // 1) Collapse progress: complete by ~220px
+        // 1) Collapse completes early (crisp stack)
         const collapseDist = 220;
         const c = clamp01(y / collapseDist);
         brandmark.style.setProperty('--c', c.toFixed(4));
 
-        // 2) Travel starts AFTER collapse completes
-        const travelDist = 420;
-        const m = clamp01((y - collapseDist) / travelDist);
+        // 2) Travel begins immediately on scroll (overlaps collapse)
+        const travelDist = 520;
+        const m = clamp01(y / travelDist);
 
         const tx = start.x + (end.x - start.x) * m;
         const ty = start.y + (end.y - start.y) * m;
@@ -673,16 +701,28 @@
         brandmark.style.setProperty('--ty', `${ty}px`);
         brandmark.style.setProperty('--ts', `${ts}`);
 
-        // Fade the traveling mark down as it approaches the dock (prevents a “double” feel)
-        const fade = 1 - (0.85 * m);
-        brandmark.style.opacity = String(Math.max(0, Math.min(1, fade)));
+        // Fade the traveling mark down as it approaches the header zone (reduces "double" feel)
+        const fadeStart = 0.55;
+        const fadeEnd   = 0.92;
+        const fadeAmt   = 0.55; // down to ~45% opacity
+        const fadeT = clamp01((m - fadeStart) / (fadeEnd - fadeStart));
+        const o = 1 - (fadeT * fadeAmt);
+        brandmark.style.opacity = String(o);
 
-        // Docked at the end
-        if(m > 0.98){
+        // Stable docking (hysteresis)
+        const dockOn  = 0.93;
+        const dockOff = 0.88;
+        const isDocked = document.body.classList.contains('is-docked');
+
+        if(!isDocked && m >= dockOn){
           document.body.classList.add('is-docked');
-          brandmark.style.opacity = '0';
-        } else {
+        } else if(isDocked && m <= dockOff){
           document.body.classList.remove('is-docked');
+        }
+
+        // When docked, let the header be primary and remove the traveling layer entirely
+        if(document.body.classList.contains('is-docked')){
+          brandmark.style.opacity = '0';
         }
       }
 
@@ -734,7 +774,7 @@
       window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
 
       // Re-measure once fonts/layout settle
-      window.setTimeout(() => { measure(); update(); }, 350);
+      window.setTimeout(() => { measure(); update(); }, 650);
     })();
   </script>
 </body>
