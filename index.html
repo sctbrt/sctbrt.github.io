@@ -162,7 +162,7 @@
     }
     .hero-grid{
       display:grid;
-      gap: var(--gap);
+      gap: calc(var(--gap) + 6px);
       align-items:start;
       max-width: 980px;
     }
@@ -182,8 +182,8 @@
     }
     h1{
       margin: 0;
-      font-size: clamp(44px, 6.0vw, 88px);
-      line-height: 1.03;
+      font-size: clamp(40px, 5.2vw, 76px);
+      line-height: 1.05;
       letter-spacing: -0.03em;
     }
     .lede{
@@ -249,8 +249,8 @@
       border-radius: var(--radius);
       background: var(--panel);
       backdrop-filter: blur(10px);
-      padding: var(--cardPad);
-      min-height: 116px;
+      padding: clamp(14px, 1.8vw, 20px);
+      min-height: 104px;
     }
     .card h3{
       margin: 0 0 8px;
@@ -260,6 +260,29 @@
       color: var(--muted);
     }
     .card p{ margin:0; color: var(--muted); line-height: 1.5; }
+
+    /* New hero-brand styles */
+    .hero-brand{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:18px;
+      margin-bottom: 32px;
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .hero-dots{ display:flex; gap:12px; }
+    .hero-title{
+      font-weight:700;
+      letter-spacing:0.28em;
+      text-transform:uppercase;
+      font-size: clamp(18px, 2.2vw, 26px);
+      color: var(--muted);
+    }
+    body.is-scrolled .hero-brand{
+      opacity:0;
+      transform: translateY(-10px);
+      pointer-events:none;
+    }
 
     /* Responsive */
     @media (max-width: 860px){
@@ -300,8 +323,13 @@
   </div>
 
   <header class="hero">
+    <div class="hero-brand" id="heroBrand">
+      <div class="hero-dots" aria-hidden="true">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <div class="hero-title">SCOTT&nbsp;BERTRAND</div>
+    </div>
     <div class="wrap hero-grid">
-      <div class="hero-name">SCOTT BERTRAND</div>
       <div class="kicker">Systems for local service businesses · local retail · hospitality</div>
 
       <h1>Systems that make the day run clean.</h1>
