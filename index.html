@@ -155,14 +155,39 @@
       left: 0;
       top: 0;
       z-index: 60;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap: 14px;
       transform-origin: 0 0;
       will-change: transform, opacity;
       pointer-events:none;
     }
+
+    /* Glass container that morphs into the header pill language */
+    .brand-shell{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: 14px;
+      padding: 22px 26px;
+      border: 1px solid var(--hair);
+      border-radius: 28px;
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      box-shadow:
+        0 18px 60px rgba(0,0,0,0.08),
+        0 1px 0 rgba(255,255,255,0.55) inset;
+    }
+
+    .brand-shell::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: inherit;
+      pointer-events:none;
+    }
+
+    .brand-shell{
+      position: relative;
+    }
+
     .brandmark .dots{
       display:flex;
       gap: 12px;
@@ -175,24 +200,31 @@
       border-radius: 999px;
       background: var(--off);
       box-shadow: 0 0 0 1px var(--hair) inset;
-      transition: background 520ms var(--ease), transform 520ms var(--ease), opacity 520ms var(--ease);
+      transition:
+        background 760ms var(--ease),
+        transform 760ms var(--ease),
+        opacity 760ms var(--ease),
+        filter 760ms var(--ease);
+      will-change: transform, opacity;
     }
     .brandmark .name{
       font-weight: 650;
       letter-spacing: 0.36em;
       text-transform: uppercase;
       color: var(--muted);
-      /* Initial state should read as a statement */
-      font-size: clamp(28px, 3.4vw, 44px);
+      font-size: clamp(26px, 3.2vw, 42px);
       line-height: 1;
       white-space: nowrap;
     }
 
-    /* Docked style (final state inside header): one green dot + tighter name */
-    body.is-docked .brandmark{
+    /* Docked style (final state inside header): horizontal, tighter container */
+    body.is-docked .brand-shell{
       flex-direction:row;
       align-items:center;
       gap: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      box-shadow: none;
     }
     body.is-docked .brandmark .name{
       letter-spacing: 0.22em;
@@ -200,14 +232,17 @@
       color: var(--muted);
     }
 
-    /* Dot behavior by state */
-    body.booting .brandmark .dot{ background: var(--off); }
-    body.booting.boot-step-1 .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.booting.boot-step-2 .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.booting.boot-step-2 .brandmark .dot:nth-child(2){ background: var(--amber); }
-    body.booting.boot-step-3 .brandmark .dot:nth-child(1){ background: var(--red); }
-    body.booting.boot-step-3 .brandmark .dot:nth-child(2){ background: var(--amber); }
-    body.booting.boot-step-3 .brandmark .dot:nth-child(3){ background: var(--green); }
+    /* Pre-dock collapse: dots 2 & 3 slide into dot 1 (looks like they merge) */
+    body.dots-collapse .brandmark .dot:nth-child(2){
+      transform: translateX(-22px) scale(0.55);
+      opacity: 0.28;
+      filter: blur(0.2px);
+    }
+    body.dots-collapse .brandmark .dot:nth-child(3){
+      transform: translateX(-44px) scale(0.35);
+      opacity: 0.00;
+      filter: blur(0.6px);
+    }
 
     /* When docked: only first dot remains and is green */
     body.is-docked .brandmark .dot:nth-child(1){
@@ -236,7 +271,7 @@
       display:flex;
       align-items:center;
       /* More breathing room so the centered wordmark never crowds the kicker */
-      padding: 210px 0 84px;
+      padding: 240px 0 84px;
       position: relative;
     }
 
@@ -354,10 +389,12 @@
 
   <!-- Single morphing brandmark (centered at load → docks into header on scroll) -->
   <div class="brandmark" id="brandmark" aria-label="Scott Bertrand">
-    <div class="dots" aria-hidden="true">
-      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <div class="brand-shell" aria-hidden="false">
+      <div class="dots" aria-hidden="true">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <div class="name">SCOTT&nbsp;BERTRAND</div>
     </div>
-    <div class="name">SCOTT&nbsp;BERTRAND</div>
   </div>
 
   <header class="hero">
@@ -486,7 +523,7 @@
         // Place start so brandmark center aligns to viewport center-ish (slightly above center)
         const startCenterX = vw * 0.50;
         // Higher than before to avoid crowding the hero copy
-        const startCenterY = vh * 0.10;
+        const startCenterY = vh * 0.06;
         start.x = startCenterX - (bmRect.width / 2);
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
@@ -513,23 +550,33 @@
       function clamp01(v){ return Math.max(0, Math.min(1, v)); }
 
       function applyTransform(t){
-        // Interpolate translate + scale
         const p = t;
-        const x = start.x + (end.x - start.x) * p;
-        const y = start.y + (end.y - start.y) * p;
+
+        // Interpolate translate + scale
+        let x = start.x + (end.x - start.x) * p;
+        let y = start.y + (end.y - start.y) * p;
         const s = start.s + (end.s - start.s) * p;
+
+        // Add an upward arc mid-flight so the mark never sweeps across the hero headline.
+        // Peak lift at p=0.5, zero lift at p=0 and p=1.
+        const lift = -120 * Math.sin(Math.PI * p);
+        y += lift;
 
         brandmark.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${s})`;
 
-        // Header fade in during morph (after slight movement)
-        if(p > 0.14) document.body.classList.add('header-on');
+        // Header fade in during morph
+        if(p > 0.18) document.body.classList.add('header-on');
         else document.body.classList.remove('header-on');
 
+        // Pre-dock collapse (merge dots) before final docking
+        if(p > 0.72) document.body.classList.add('dots-collapse');
+        else document.body.classList.remove('dots-collapse');
+
         // If the header is fully on due to scroll, no need to keep peek state.
-        if(p > 0.14) document.body.classList.remove('header-peek');
+        if(p > 0.18) document.body.classList.remove('header-peek');
 
         // Docked state near the end
-        if(p > 0.94) document.body.classList.add('is-docked');
+        if(p > 0.90) document.body.classList.add('is-docked');
         else document.body.classList.remove('is-docked');
       }
 
@@ -540,7 +587,7 @@
       function progressFromScroll(){
         const y = window.scrollY || 0;
         // Longer runway + smoother curve so the morph feels fluid.
-        return easeInOutCubic(clamp01(y / 420));
+        return easeInOutCubic(clamp01(y / 520));
       }
 
       function update(){
