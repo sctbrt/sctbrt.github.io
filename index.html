@@ -30,9 +30,12 @@
       --off:   rgba(12,15,16,0.22);
 
       /* Layout */
-      --max: 1100px;
-      --pad: clamp(18px, 3vw, 36px);
-      --radius: 18px;
+      --max: 1120px;
+      --pad: clamp(18px, 3.2vw, 40px);
+      --radius: 20px;
+      --gap: clamp(14px, 2.2vw, 22px);
+      --rhythm: clamp(10px, 1.6vw, 16px);
+      --cardPad: clamp(16px, 2.0vw, 22px);
 
       /* Motion */
       --ease: cubic-bezier(.2,.8,.2,1);
@@ -71,7 +74,7 @@
     .topbar{
       position: fixed;
       inset: 0 0 auto 0;
-      padding: 12px var(--pad);
+      padding: 14px var(--pad);
       display:flex;
       justify-content:center;
       pointer-events:none;
@@ -90,7 +93,7 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding: 10px 12px;
+      padding: 12px 14px;
       border: 1px solid var(--hair);
       border-radius: 999px;
       background: var(--panel);
@@ -100,7 +103,7 @@
     .brand-mini{
       display:flex;
       align-items:center;
-      gap: 10px;
+      gap: 12px;
       min-width: 240px;
     }
     .brand-mini .name{
@@ -114,7 +117,7 @@
 
     .nav{
       display:flex;
-      gap: 10px;
+      gap: 12px;
       align-items:center;
       color: var(--muted);
       font-size: 13px;
@@ -131,7 +134,7 @@
 
     .controls{
       display:flex;
-      gap: 10px;
+      gap: 12px;
       align-items:center;
       min-width: 240px;
       justify-content:flex-end;
@@ -141,7 +144,7 @@
       background: transparent;
       color: var(--muted);
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 9px 14px;
       font-size: 12px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -151,37 +154,42 @@
 
     /* HERO */
     header.hero{
-      min-height: 100vh;
+      min-height: 100svh;
       display:flex;
       align-items:center;
-      padding: 96px 0 48px;
+      padding: 104px 0 56px;
       position: relative;
     }
-    .hero-grid{ display:grid; gap: 22px; align-items:start; }
+    .hero-grid{
+      display:grid;
+      gap: var(--gap);
+      align-items:start;
+      max-width: 980px;
+    }
 
     .kicker{
       font-size: 12px;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--muted);
     }
     .hero-name{
       font-weight: 650;
-      letter-spacing: 0.26em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--muted);
       font-size: 12px;
     }
     h1{
       margin: 0;
-      font-size: clamp(46px, 6.2vw, 84px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
+      font-size: clamp(44px, 6.0vw, 88px);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
     }
     .lede{
-      max-width: 72ch;
-      font-size: clamp(16px, 2.0vw, 20px);
-      line-height: 1.45;
+      max-width: 68ch;
+      font-size: clamp(16px, 1.9vw, 20px);
+      line-height: 1.5;
       color: var(--muted);
       margin: 0;
     }
@@ -227,35 +235,35 @@
     body.is-scrolled .led{ background: var(--green); box-shadow: 0 0 0 1px rgba(52,199,89,0.35) inset, 0 0 18px rgba(52,199,89,0.18); }
 
     /* Sections */
-    section{ padding: 54px 0; }
+    section{ padding: 64px 0; }
     .rule{ border-top: 1px solid var(--hair); }
 
     .grid-3{
       display:grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 14px;
-      margin-top: 22px;
+      gap: var(--gap);
+      margin-top: calc(var(--rhythm) + 10px);
     }
     .card{
       border: 1px solid var(--hair);
       border-radius: var(--radius);
       background: var(--panel);
       backdrop-filter: blur(10px);
-      padding: 18px;
-      min-height: 110px;
+      padding: var(--cardPad);
+      min-height: 116px;
     }
     .card h3{
-      margin: 0 0 6px;
+      margin: 0 0 8px;
       font-size: 14px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .card p{ margin:0; color: var(--muted); line-height: 1.45; }
+    .card p{ margin:0; color: var(--muted); line-height: 1.5; }
 
     /* Responsive */
     @media (max-width: 860px){
-      .topbar-inner{ gap: 10px; }
+      .topbar-inner{ gap: 12px; }
       .brand-mini{ min-width:auto; }
       .controls{ min-width:auto; }
       .nav{ display:none; }
@@ -307,7 +315,7 @@
         </div>
       </div>
 
-      <div class="grid-3" style="margin-top: 10px;">
+      <div class="grid-3">
         <div class="card">
           <h3>Shorter lines</h3>
           <p>Clear defaults for peak hours. Less debate. Less rework.</p>
