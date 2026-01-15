@@ -70,6 +70,16 @@
     a{ color:inherit; text-decoration:none; }
     .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
 
+    /* Top-edge reveal (macOS menubar-like) */
+    .topbar-hotzone{
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 22px;
+      z-index: 55;
+      pointer-events: auto;
+      background: transparent;
+    }
+
     /* Glass pill header (fades in during morph; brandmark docks into it) */
     .topbar{
       position: fixed;
@@ -83,7 +93,8 @@
       transform: translateY(-8px);
       transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
     }
-    body.header-on .topbar{
+    body.header-on .topbar,
+    body.header-peek .topbar{
       opacity: 1;
       transform: translateY(0);
     }
@@ -164,7 +175,7 @@
       border-radius: 999px;
       background: var(--off);
       box-shadow: 0 0 0 1px var(--hair) inset;
-      transition: background 260ms var(--ease), transform 260ms var(--ease), opacity 260ms var(--ease);
+      transition: background 520ms var(--ease), transform 520ms var(--ease), opacity 520ms var(--ease);
     }
     .brandmark .name{
       font-weight: 650;
@@ -318,6 +329,8 @@
 </head>
 
 <body>
+  <!-- Top-edge hover zone to reveal the pill menu (menubar-style) -->
+  <div class="topbar-hotzone" id="topbarHotzone" aria-hidden="true"></div>
   <!-- Glass pill header (brand docks into the left area) -->
   <div class="topbar" aria-hidden="false">
     <div class="topbar-inner" id="topbarInner">
@@ -416,6 +429,8 @@
       const themeBtn = document.getElementById('themeBtn');
       const brandmark = document.getElementById('brandmark');
       const brandSlot = document.getElementById('brandSlot');
+      const topbarHotzone = document.getElementById('topbarHotzone');
+      const topbarInner = document.getElementById('topbarInner');
 
       // Theme: localStorage override; default is system.
       const saved = localStorage.getItem('sb_theme');
@@ -429,24 +444,27 @@
         localStorage.setItem('sb_theme', next);
       });
 
-      // Boot sequence: dots fill red → amber → green, then enable scroll-driven morph.
       function runBoot(){
+        // Clean boot: dots fill Red → Amber → Green, slower + smoother.
         document.body.classList.add('booting');
         document.body.classList.add('boot-step-1');
+
         setTimeout(() => {
           document.body.classList.remove('boot-step-1');
           document.body.classList.add('boot-step-2');
-        }, 240);
+        }, 420);
+
         setTimeout(() => {
           document.body.classList.remove('boot-step-2');
           document.body.classList.add('boot-step-3');
-        }, 520);
+        }, 920);
+
         setTimeout(() => {
           document.body.classList.remove('booting','boot-step-3');
           document.body.classList.add('boot-done');
           // header stays hidden until the scroll-driven morph begins
           update();
-        }, 900);
+        }, 1600);
       }
 
       // Morph math
@@ -468,7 +486,7 @@
         // Place start so brandmark center aligns to viewport center-ish (slightly above center)
         const startCenterX = vw * 0.50;
         // Higher than before to avoid crowding the hero copy
-        const startCenterY = vh * 0.18;
+        const startCenterY = vh * 0.10;
         start.x = startCenterX - (bmRect.width / 2);
         start.y = startCenterY - (bmRect.height / 2);
         start.s = 1;
@@ -507,17 +525,22 @@
         if(p > 0.14) document.body.classList.add('header-on');
         else document.body.classList.remove('header-on');
 
+        // If the header is fully on due to scroll, no need to keep peek state.
+        if(p > 0.14) document.body.classList.remove('header-peek');
+
         // Docked state near the end
-        if(p > 0.90) document.body.classList.add('is-docked');
+        if(p > 0.94) document.body.classList.add('is-docked');
         else document.body.classList.remove('is-docked');
       }
 
-      function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+      function easeInOutCubic(t){
+        return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+      }
 
       function progressFromScroll(){
         const y = window.scrollY || 0;
-        // Give the morph more runway + ease it so it feels fluid, not jumpy.
-        return easeOutCubic(clamp01(y / 280));
+        // Longer runway + smoother curve so the morph feels fluid.
+        return easeInOutCubic(clamp01(y / 420));
       }
 
       function update(){
@@ -529,6 +552,43 @@
       runBoot();
       measure();
       update();
+
+      // Top-edge reveal (hover near top shows the pill even at y=0)
+      let peekOffTimer = null;
+      const setPeek = (on) => {
+        if(peekOffTimer){ clearTimeout(peekOffTimer); peekOffTimer = null; }
+        if(on) document.body.classList.add('header-peek');
+        else document.body.classList.remove('header-peek');
+      };
+
+      if(topbarHotzone && topbarInner){
+        topbarHotzone.addEventListener('mouseenter', () => {
+          // Only peek when the scroll-driven header isn't already on
+          if(!document.body.classList.contains('header-on')) setPeek(true);
+        });
+
+        // Keep visible while hovering the pill
+        topbarInner.addEventListener('mouseenter', () => {
+          if(!document.body.classList.contains('header-on')) setPeek(true);
+        });
+
+        // Gentle hide after leaving
+        topbarInner.addEventListener('mouseleave', () => {
+          if(document.body.classList.contains('header-on')) return;
+          peekOffTimer = setTimeout(() => setPeek(false), 220);
+        });
+
+        topbarHotzone.addEventListener('mouseleave', () => {
+          if(document.body.classList.contains('header-on')) return;
+          peekOffTimer = setTimeout(() => setPeek(false), 220);
+        });
+      }
+
+      // Extra safety: if the cursor approaches the very top edge, peek the pill.
+      window.addEventListener('mousemove', (e) => {
+        if(document.body.classList.contains('header-on')) return;
+        if(e.clientY <= 18) setPeek(true);
+      }, { passive: true });
 
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
