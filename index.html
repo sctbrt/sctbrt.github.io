@@ -25,6 +25,61 @@
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
 
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://sctbrt.github.io/#scott",
+      "name": "Scott Bertrand",
+      "jobTitle": "Founder, Operator & Systems Developer",
+      "description": "Systems developer focused on operational clarity, brand frameworks, and decision tools for teams under constraint.",
+      "url": "https://sctbrt.github.io/",
+      "sameAs": [],
+      "worksFor": {
+        "@id": "https://sctbrt.github.io/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://sctbrt.github.io/#organization",
+      "name": "Bertrand Brands",
+      "url": "https://sctbrt.github.io/",
+      "logo": "https://sctbrt.github.io/assets/images/sb-monogram-dark.png",
+      "founder": {
+        "@id": "https://sctbrt.github.io/#scott"
+      },
+      "description": "Systems that make things feel lighter. Operational clarity, brand frameworks, and decision tools for teams under constraint."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sctbrt.github.io/#website",
+      "url": "https://sctbrt.github.io/",
+      "name": "Scott Bertrand — Systems that make things feel lighter",
+      "description": "Operational systems, brand frameworks, and practical tools for teams under constraint.",
+      "publisher": {
+        "@id": "https://sctbrt.github.io/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://sctbrt.github.io/#webpage",
+      "url": "https://sctbrt.github.io/",
+      "name": "Scott Bertrand — Systems that make things feel lighter",
+      "isPartOf": {
+        "@id": "https://sctbrt.github.io/#website"
+      },
+      "about": {
+        "@id": "https://sctbrt.github.io/#organization"
+      },
+      "description": "Operational systems, brand frameworks, and practical tools for teams under constraint."
+    }
+  ]
+}
+</script>
+
 <style>
 html{
   scroll-behavior:smooth;
@@ -131,9 +186,6 @@ body.header-on .topbar{
   animation:logoAppear 800ms var(--ease) 400ms forwards;
   transition:transform 600ms var(--ease);
 }
-body.header-on .logo-pill{
-  transform:translateX(0);
-}
 
 @keyframes logoAppear{
   0%{
@@ -186,7 +238,7 @@ body.dark-mode .logo-pill:not(:hover){
   pointer-events:none;
   position:absolute;
   left:0;
-  transform:translateX(-18px) scale(0.88);
+  transform:translateX(-6px) scale(0.92);
   transition:opacity 400ms var(--ease), transform 500ms var(--ease);
 }
 
@@ -328,7 +380,7 @@ body.mobile-menu-open .hamburger span:nth-child(3){
   .menu-pill{
     position:relative;
     opacity:0;
-    transform:translateX(-18px) scale(0.88);
+    transform:translateX(-6px) scale(0.92);
     pointer-events:none;
     transition:opacity 500ms var(--ease), transform 500ms var(--ease);
   }
@@ -512,11 +564,17 @@ section{
   gap:12px;
   max-width: 78ch;
 }
+.section-head-spaced{
+  margin-top:80px;
+}
 .kicker{
   font-size:12px;
   letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--muted);
+}
+.kicker-spaced{
+  margin-top:20px;
 }
 .h2{
   font-size:clamp(28px,3.2vw,44px);
@@ -526,6 +584,14 @@ section{
   margin:0;
   color:var(--muted);
   line-height:1.55;
+}
+.lede-spaced{
+  margin-top:8px;
+}
+.tagline{
+  font-size:13px;
+  opacity:.6;
+  margin-top:32px;
 }
 .cards{
   margin-top:28px;
@@ -566,6 +632,9 @@ section{
   border-radius:18px;
   padding:32px;
   box-shadow:var(--shadow);
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .form-group{
@@ -681,6 +750,11 @@ section{
   object-fit:cover;
 }
 
+.loading-card{
+  grid-column: span 12;
+  text-align: center;
+}
+
 /* ================= FOOTER ================= */
 
 footer{
@@ -751,6 +825,25 @@ footer{
 
 /* ================= ACCESSIBILITY ================= */
 
+.skip-to-content{
+  position:absolute;
+  top:-100px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--ink);
+  color:var(--bg);
+  padding:12px 24px;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  z-index:100;
+  transition:top 200ms var(--ease);
+}
+.skip-to-content:focus{
+  top:16px;
+}
+
 @media (prefers-reduced-motion: reduce){
   *,*:before,*:after{
     animation-duration:0.01ms !important;
@@ -774,6 +867,7 @@ footer{
   }
 })();
 </script>
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
 <a id="top"></a>
 
 <div class="topbar">
@@ -809,12 +903,12 @@ footer{
   </div>
 </div>
 
-<header>
+<header id="main-content">
   <div class="wrap">
     <div class="hero-content">
       <h1>Systems that make things feel lighter.</h1>
       <p class="positioning">Reducing friction in how teams plan, decide, and hand off — especially when things are busy, imperfect, or changing. The goal isn't perfection. It's clearer decisions, fewer unforced errors, and more room to focus on what actually matters.</p>
-      <p style="font-size:13px;opacity:.6;margin-top:32px;">Most days feel heavier than they need to be. This is an attempt to change that.</p>
+      <p class="tagline">Most days feel heavier than they need to be. This is an attempt to change that.</p>
     </div>
     <div class="divider"><span>—</span></div>
   </div>
@@ -824,12 +918,12 @@ footer{
   <div class="wrap">
     <div class="section-head">
       <div class="kicker">Focus</div>
-      <p class="lede" style="margin-top:8px;">Operational systems<br>Brand and decision frameworks<br>Practical tools for teams under constraint</p>
+      <p class="lede lede-spaced">Operational systems<br>Brand and decision frameworks<br>Practical tools for teams under constraint</p>
     </div>
 
     <div class="divider"><span>—</span></div>
 
-    <div class="section-head" style="margin-top:80px;">
+    <div class="section-head" class="section-head-spaced">
       <h2 class="h2">Most things don't fail because people aren't trying hard enough.</h2>
       <p class="lede">They fail quietly — through unclear ownership, fragile handoffs, and decisions that never quite settle. Over time, that friction adds weight to the day.</p>
       <p class="lede">This practice exists to remove some of that weight.</p>
@@ -862,9 +956,9 @@ footer{
 
     <div class="divider"><span>—</span></div>
 
-    <div class="section-head" style="margin-top:80px;">
+    <div class="section-head" class="section-head-spaced">
       <div class="kicker">What this often involves</div>
-      <p class="lede" style="margin-top:20px;">Mapping how things actually move — not how they're described.</p>
+      <p class="lede kicker-spaced">Mapping how things actually move — not how they're described.</p>
       <p class="lede">Clarifying where decisions stall or repeat.</p>
       <p class="lede">Making responsibilities explicit when they've become assumed.</p>
       <p class="lede">Creating simple references teams can rely on without constant explanation.</p>
@@ -884,8 +978,8 @@ footer{
 
     <div class="cards" id="field-notes-cards">
       <!-- Field notes loaded dynamically from Notion -->
-      <div class="card" style="grid-column: span 12; text-align: center;">
-        <p style="color: var(--muted);">Loading field notes...</p>
+      <div class="card loading-card">
+        <p>Loading field notes...</p>
       </div>
     </div>
 
@@ -911,7 +1005,7 @@ footer{
       <div class="kicker">Get in touch</div>
     </div>
 
-    <form class="contact-form" id="contact-form" action="https://formspree.io/f/meeeazrq" method="POST" style="max-width:600px;margin:0 auto;">
+    <form class="contact-form" id="contact-form" action="https://formspree.io/f/meeeazrq" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
@@ -1071,6 +1165,13 @@ document.addEventListener('click', (e) => {
 // Close menu when resizing to desktop
 window.addEventListener('resize', () => {
   if (window.innerWidth > 768) {
+    document.body.classList.remove('mobile-menu-open');
+  }
+});
+
+// Close mobile menu with ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.body.classList.contains('mobile-menu-open')) {
     document.body.classList.remove('mobile-menu-open');
   }
 });
