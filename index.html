@@ -4,6 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SCOTT BERTRAND — Systems</title>
+<meta name="description" content="Systems that make the day run clean. Reducing cognitive load and friction in operations for faster handoffs, fewer mistakes, and calmer teams.">
+<meta name="author" content="Scott Bertrand">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sctbrt.github.io/">
+<meta property="og:title" content="SCOTT BERTRAND — Systems">
+<meta property="og:description" content="Systems that make the day run clean. Reducing cognitive load and friction in operations for faster handoffs, fewer mistakes, and calmer teams.">
+<meta property="og:image" content="https://sctbrt.github.io/assets/images/og-image.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://sctbrt.github.io/">
+<meta property="twitter:title" content="SCOTT BERTRAND — Systems">
+<meta property="twitter:description" content="Systems that make the day run clean. Reducing cognitive load and friction in operations for faster handoffs, fewer mistakes, and calmer teams.">
+<meta property="twitter:image" content="https://sctbrt.github.io/assets/images/og-image.png">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
 
 <style>
 html{ scroll-behavior:smooth; }
@@ -133,6 +153,7 @@ body.header-on .topbar{opacity:1}
   z-index:80;
   transform:translate(var(--tx),var(--ty)) scale(var(--ts));
   transition:opacity 300ms var(--ease);
+  pointer-events:none;
 }
 
 .dots{
@@ -186,29 +207,74 @@ header{
   min-height:100vh;
   display:flex;
   align-items:center;
-  padding-top:240px;
+  justify-content:center;
+  padding-top:140px;
+  position:relative;
 }
 .wrap{
   max-width:var(--max);
   margin:0 auto;
   padding:0 var(--pad);
 }
-h1{
-  font-size:clamp(40px,5vw,76px);
-  margin:0 0 16px;
+
+.hero-content{
+  opacity:0;
+  transform:translateY(12px);
+  animation:fadeInUp 800ms var(--ease) 2400ms forwards;
 }
+
+@keyframes fadeInUp{
+  to{opacity:1;transform:none}
+}
+
+.office-name{
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:500;
+  margin:0 0 32px;
+  opacity:.75;
+}
+
+h1{
+  font-size:clamp(36px,4.5vw,64px);
+  margin:0 0 24px;
+  line-height:1.1;
+  font-weight:500;
+  letter-spacing:-.02em;
+}
+
+.positioning{
+  font-size:clamp(16px,1.8vw,22px);
+  max-width:62ch;
+  color:var(--ink);
+  line-height:1.5;
+  margin:0 0 16px;
+  font-weight:400;
+}
+
 p{
   max-width:65ch;
   color:var(--muted);
-  line-height:1.55;
+  line-height:1.6;
+  font-size:15px;
 }
+
 .divider{
-  margin-top:42px;
+  margin-top:64px;
   display:flex;
   align-items:center;
   gap:12px;
-  color: rgba(12,15,16,.45);
+  color: rgba(12,15,16,.35);
+  opacity:0;
+  animation:fadeIn 600ms var(--ease) 3200ms forwards;
 }
+
+@keyframes fadeIn{
+  to{opacity:1}
+}
+
 .divider:before{
   content:"";
   height:1px;
@@ -216,8 +282,8 @@ p{
   flex:1;
 }
 .divider span{
-  font-size:12px;
-  letter-spacing:.20em;
+  font-size:11px;
+  letter-spacing:.22em;
   text-transform:uppercase;
 }
 
@@ -276,6 +342,151 @@ section{
 
 @media (max-width: 820px){
   .card{ grid-column: span 12; }
+}
+
+/* ================= CONTACT ================= */
+
+.contact-grid{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:40px;
+  align-items:start;
+}
+
+.contact-info h3{
+  font-size:18px;
+  margin:0 0 16px;
+  font-weight:600;
+}
+
+.contact-info p{
+  margin:0;
+}
+
+.email-link{
+  color:var(--ink);
+  text-decoration:none;
+  font-size:18px;
+  font-weight:500;
+  border-bottom:2px solid var(--green);
+  transition:border-color 200ms var(--ease);
+}
+
+.email-link:hover{
+  border-color:var(--ink);
+}
+
+.email-link:focus-visible{
+  outline:2px solid var(--green);
+  outline-offset:4px;
+  border-radius:2px;
+}
+
+.contact-form{
+  background:var(--panel-strong);
+  border:1px solid var(--hair);
+  border-radius:18px;
+  padding:32px;
+  box-shadow:var(--shadow);
+}
+
+.form-group{
+  margin-bottom:20px;
+}
+
+.form-group label{
+  display:block;
+  font-size:12px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+  font-weight:500;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:12px 16px;
+  border:1px solid var(--hair);
+  border-radius:8px;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:inherit;
+  font-size:15px;
+  transition:border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(52,199,89,.1);
+}
+
+.form-group textarea{
+  resize:vertical;
+  min-height:120px;
+}
+
+.submit-btn{
+  width:100%;
+  padding:14px 28px;
+  background:var(--ink);
+  color:var(--bg);
+  border:none;
+  border-radius:8px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:transform 150ms var(--ease), box-shadow 150ms var(--ease);
+}
+
+.submit-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 12px rgba(12,15,16,.2);
+}
+
+.submit-btn:active{
+  transform:translateY(0);
+}
+
+.submit-btn:focus-visible{
+  outline:2px solid var(--green);
+  outline-offset:4px;
+}
+
+@media (max-width: 820px){
+  .contact-grid{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+}
+
+/* ================= FIELD NOTES ================= */
+
+.field-note-card{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.field-note-image{
+  width:100%;
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--bg);
+  margin-top:8px;
+}
+
+.field-note-image img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
 }
 
 /* ================= SCRIPT ================= */
@@ -381,28 +592,54 @@ section{
       <p class="lede">A living log — sometimes a photo, sometimes a quote, sometimes a short write-up. It’s how I think, and how clients see the work before we work together.</p>
     </div>
 
-    <div class="cards">
-      <div class="card">
-        <small>Note</small>
-        <p>“If the process isn’t obvious at peak, it isn’t a process — it’s a hope.”</p>
-      </div>
-      <div class="card">
-        <small>Photo drop</small>
-        <p><strong>Counter layout audit</strong> — what’s within reach, what’s missing, what causes rework.</p>
-      </div>
-      <div class="card">
-        <small>Micro case</small>
-        <p><strong>Two-word buttons</strong> on POS reduced wrong-category taps by removing ambiguity.</p>
-      </div>
-      <div class="card">
-        <small>Standard</small>
-        <p><strong>One script</strong> for peak handoff: reduces hesitation and improves perceived speed.</p>
+    <div class="cards" id="field-notes-cards">
+      <!-- Field notes loaded dynamically from Notion -->
+      <div class="card" style="grid-column: span 12; text-align: center;">
+        <p style="color: var(--muted);">Loading field notes...</p>
       </div>
     </div>
 
     <div class="divider"><span>Contact</span></div>
   </div>
 </section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">Get in touch</div>
+      <h2 class="h2">Let's talk systems.</h2>
+      <p class="lede">Whether you're dealing with bottlenecks at the counter or handoffs in the back, I can help you design a system that sticks.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Direct contact</h3>
+        <p><a href="mailto:bertrandbrands@outlook.com" class="email-link">bertrandbrands@outlook.com</a></p>
+      </div>
+
+      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="assets/js/field-notes.js"></script>
 
 <script>
 const bm=document.getElementById('brandmark');
