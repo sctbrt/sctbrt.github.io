@@ -179,7 +179,7 @@
       width:120px;
       height:120px;
       opacity:0;
-      animation:expandAndPulse 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation:expandAndPulse 5.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     @keyframes expandAndPulse{
@@ -187,26 +187,26 @@
         opacity:0;
         transform:scale(0.1);
       }
-      5%{
+      3%{
         opacity:1;
       }
-      40%{
-        opacity:1;
-        transform:scale(1);
-      }
-      50%{
-        opacity:.6;
-        transform:scale(.96);
-      }
-      60%{
+      27%{
         opacity:1;
         transform:scale(1);
       }
-      70%{
+      36%{
         opacity:.6;
         transform:scale(.96);
       }
-      80%, 100%{
+      45%{
+        opacity:1;
+        transform:scale(1);
+      }
+      54%{
+        opacity:.6;
+        transform:scale(.96);
+      }
+      63%, 100%{
         opacity:1;
         transform:scale(1);
       }
@@ -217,13 +217,13 @@
       align-items:center;
       gap:16px;
       opacity:0;
-      animation:brandReveal 1.2s var(--ease) 1.8s forwards;
+      animation:brandReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) 3.5s forwards;
     }
 
     @keyframes brandReveal{
       0%{
         opacity:0;
-        transform:translateY(12px);
+        transform:translateY(16px);
       }
       100%{
         opacity:1;
@@ -302,14 +302,14 @@
 
     .brand-pill{
       opacity:0;
-      transform:translateY(20px) scale(1.4);
-      animation:brandPillAppear 1000ms cubic-bezier(0.16, 1, 0.3, 1) 3600ms forwards;
+      transform:translateY(20px) scale(1.3);
+      animation:brandPillAppear 1200ms cubic-bezier(0.16, 1, 0.3, 1) 6000ms forwards;
     }
 
     @keyframes brandPillAppear{
       0%{
         opacity:0;
-        transform:translateY(20px) scale(1.4);
+        transform:translateY(20px) scale(1.3);
       }
       100%{
         opacity:1;
@@ -356,7 +356,7 @@
       padding:10px 14px;
       gap:0;
       opacity:0;
-      animation:navPillAppear 600ms var(--ease) 1000ms forwards;
+      animation:navPillAppear 800ms var(--ease) 6400ms forwards;
     }
 
     @keyframes navPillAppear{
@@ -942,14 +942,14 @@
     window.addEventListener('load', () => {
       const loadingScreen = document.getElementById('loading-screen');
       if (loadingScreen){
-        // Wait for brand reveal to complete, then fade out
+        // Wait for brand lockup to settle, then fade out
         setTimeout(() => {
           loadingScreen.classList.add('loaded');
           // Remove from DOM after fade completes
           setTimeout(() => {
             loadingScreen.remove();
           }, 800);
-        }, 3200);
+        }, 5500);
       }
     });
 
