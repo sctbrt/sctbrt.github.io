@@ -39,6 +39,7 @@ html{
 
   --panel-strong: rgba(255,255,255,.86);
   --shadow: 0 10px 30px rgba(12,15,16,.08);
+  --focus-shadow: 0 0 0 3px rgba(12,15,16,.08);
   --grid: rgba(12,15,16,.06);
   --accent:var(--ink);
 
@@ -57,6 +58,7 @@ html{
     --panel:rgba(18,22,24,.72);
     --panel-strong: rgba(18,22,24,.86);
     --shadow: 0 10px 30px rgba(0,0,0,.3);
+    --focus-shadow: 0 0 0 3px rgba(246,246,244,.12);
     --grid: rgba(246,246,244,.06);
   }
 }
@@ -76,9 +78,17 @@ body:before{
   inset:0;
   pointer-events:none;
   background:
-    radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.06), transparent 65%),
-    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
+    radial-gradient(1200px 800px at 30% -5%, var(--grid), transparent 65%),
+    linear-gradient(180deg, var(--panel), transparent);
   z-index:0;
+}
+
+@media (prefers-color-scheme: dark){
+  body:before{
+    background:
+      radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.04), transparent 65%),
+      linear-gradient(180deg, rgba(18,22,24,.35), transparent);
+  }
 }
 body:after{
   content:"";
@@ -152,7 +162,7 @@ body.header-on .topbar{
   width:1px;
   height:20px;
   background:var(--hair);
-  opacity:.6;
+  opacity:.8;
   transition:height 300ms var(--ease);
 }
 .nav-brand .wordmark{
@@ -187,7 +197,7 @@ body.collapse .nav-brand .wordmark{
   font-size:14px;
   font-weight:500;
   letter-spacing:.02em;
-  opacity:.7;
+  opacity:.85;
   transition:opacity 200ms var(--ease);
 }
 .nav-menu a:hover{
@@ -201,70 +211,21 @@ body.collapse .nav-brand .wordmark{
 
 @media (max-width: 768px){
   .topbar-inner{
-    gap:24px;
+    gap:16px;
+    padding:10px 20px;
   }
   .nav-menu{
-    gap:20px;
+    display:none;
   }
-  .nav-menu a{
-    font-size:13px;
+  .nav-brand .wordmark{
+    height:12px;
   }
-}
-
-/* ================= BRANDMARK (CENTER) ================= */
-
-.brandmark{
-  position:fixed;
-  top:0;
-  left:0;
-  width:var(--pill-width);
-  padding:18px 22px;
-  border-radius:999px;
-  border:1px solid var(--hair);
-  background:var(--panel);
-  backdrop-filter:blur(14px);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:16px;
-  z-index:80;
-  transform:translate(var(--tx),var(--ty));
-  transition:opacity 400ms var(--ease), transform 400ms var(--ease);
-  pointer-events:none;
-}
-
-.dots{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.dots img{
-  height:clamp(80px,8vw,120px);
-  width:auto;
-  display:block;
-  opacity:0;
-  transition:opacity 500ms var(--ease);
-}
-body.boot-done .dots img{
-  opacity:1;
-}
-
-.name{
-  opacity:0;
-  transform:translateY(6px);
-  transition:opacity 500ms var(--ease),transform 500ms var(--ease);
-}
-.name img{
-  height:clamp(28px,3.5vw,40px);
-  width:auto;
-  display:block;
-}
-body.name-on .name{opacity:1;transform:none}
-
-/* DOT GRID FADE */
-body.collapse .dots img{
-  opacity:0;
-  transition:opacity 300ms var(--ease);
+  .nav-brand .monogram{
+    height:18px;
+  }
+  .nav-brand .separator{
+    height:18px;
+  }
 }
 
 /* ================= HERO ================= */
@@ -294,20 +255,10 @@ header{
   to{opacity:1;transform:none}
 }
 
-.office-name{
-  font-size:11px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:var(--muted);
-  font-weight:500;
-  margin:0 0 32px;
-  opacity:.75;
-}
-
 h1{
   font-size:clamp(28px,4.5vw,64px);
   margin:0 0 24px;
-  line-height:1.1;
+  line-height:1.15;
   font-weight:500;
   letter-spacing:-.02em;
 }
@@ -315,7 +266,7 @@ h1{
 .positioning{
   font-size:clamp(16px,1.8vw,22px);
   max-width:62ch;
-  color:var(--ink);
+  color:var(--muted);
   line-height:1.5;
   margin:0 0 16px;
   font-weight:400;
@@ -333,13 +284,13 @@ p{
   display:flex;
   align-items:center;
   gap:12px;
-  color: rgba(12,15,16,.35);
-  opacity:0;
+  color:var(--muted);
+  opacity:.35;
   animation:fadeIn 600ms var(--ease) 2600ms forwards;
 }
 
 @keyframes fadeIn{
-  to{opacity:1}
+  to{opacity:.6}
 }
 
 .divider:before{
@@ -357,7 +308,7 @@ p{
 /* ================= SECTIONS ================= */
 
 section{
-  padding:clamp(80px,12vh,160px) 0;
+  padding:clamp(80px,10vh,120px) 0;
   border-top:1px solid var(--hair);
   position:relative;
   scroll-snap-align:start;
@@ -369,7 +320,7 @@ section{
 }
 .kicker{
   font-size:12px;
-  letter-spacing:.22em;
+  letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--muted);
 }
@@ -386,7 +337,7 @@ section{
   margin-top:28px;
   display:grid;
   grid-template-columns: repeat(12, 1fr);
-  gap:14px;
+  gap:20px;
 }
 .card{
   grid-column: span 6;
@@ -401,7 +352,8 @@ section{
   font-size:12px;
   letter-spacing:.18em;
   text-transform:uppercase;
-  color: rgba(12,15,16,.55);
+  color:var(--muted);
+  opacity:.85;
   margin-bottom:8px;
 }
 .card p{ margin:0; }
@@ -490,7 +442,7 @@ section{
 .form-group textarea:focus{
   outline:none;
   border-color:var(--ink);
-  box-shadow:0 0 0 3px rgba(12,15,16,.08);
+  box-shadow:var(--focus-shadow);
 }
 
 .form-group textarea{
@@ -515,7 +467,7 @@ section{
 
 .submit-btn:hover{
   transform:translateY(-1px);
-  box-shadow:0 4px 12px rgba(12,15,16,.2);
+  box-shadow:var(--shadow);
 }
 
 .submit-btn:active{
@@ -565,7 +517,7 @@ footer{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:40px;
+  gap:24px;
 }
 
 .footer-mark{
@@ -577,7 +529,7 @@ footer{
 .footer-mark img.monogram{
   height:24px;
   width:auto;
-  opacity:.4;
+  opacity:.6;
 }
 
 .footer-meta{
@@ -610,15 +562,6 @@ footer{
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
-  </div>
-</div>
-
-<div class="brandmark" id="brandmark">
-  <div class="dots">
-    <img src="assets/images/tree-ring-logo.png" alt="" />
-  </div>
-  <div class="name">
-    <img src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
   </div>
 </div>
 
@@ -760,37 +703,10 @@ footer{
 <script src="assets/js/field-notes.js"></script>
 
 <script>
-const bm=document.getElementById('brandmark');
-let start={},end={};
-
-function measure(){
-  if(!bm) return;
-  const r=bm.getBoundingClientRect();
-  start={x:(innerWidth-r.width)/2,y:innerHeight*0.18-r.height/2};
-  const topbar=document.querySelector('.topbar-inner');
-  if(!topbar) return;
-  const topbarRect=topbar.getBoundingClientRect();
-  end={
-    x:topbarRect.left,
-    y:topbarRect.top
-  };
-}
-
-function apply(){
+function applyScroll(){
   const y=scrollY;
   if(y>10)document.body.classList.add('header-on','collapse');
-  const t=Math.min(y/400,1);
-  bm.style.setProperty('--tx',`${start.x+(end.x-start.x)*t}px`);
-  bm.style.setProperty('--ty',`${start.y+(end.y-start.y)*t}px`);
-  bm.style.opacity=t>0.8?0:1;
 }
-
-setTimeout(()=>document.body.classList.replace('boot-1','boot-2'),500);
-setTimeout(()=>document.body.classList.replace('boot-2','boot-3'),1000);
-setTimeout(()=>{
-  document.body.classList.remove('boot-3');
-  document.body.classList.add('boot-done','name-on');
-},1800);
 
 document.getElementById('footer-year').textContent=new Date().getFullYear();
 
@@ -804,10 +720,8 @@ function updateAssets(){
 updateAssets();
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',updateAssets);
 
-measure();
-apply();
-addEventListener('scroll',apply,{passive:true});
-addEventListener('resize',()=>{measure();apply()});
+applyScroll();
+addEventListener('scroll',applyScroll,{passive:true});
 </script>
 
 </body>
