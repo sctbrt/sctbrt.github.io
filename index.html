@@ -114,6 +114,10 @@ body:after{
   align-items:center;
   gap:12px;
   z-index:70;
+  transition:gap 600ms var(--ease);
+}
+body.header-on .topbar{
+  gap:12px;
 }
 
 .logo-pill{
@@ -125,6 +129,10 @@ body:after{
   opacity:0;
   transform:translateY(-8px);
   animation:logoAppear 600ms var(--ease) 800ms forwards;
+  transition:transform 600ms var(--ease);
+}
+body.header-on .logo-pill{
+  transform:translateX(0);
 }
 
 @keyframes logoAppear{
@@ -142,12 +150,16 @@ body:after{
   backdrop-filter:blur(14px);
   opacity:0;
   pointer-events:none;
-  transform:translateX(-100px) scale(0.95);
-  transition:opacity 400ms var(--ease), transform 500ms var(--ease);
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%) scale(0.85);
+  transition:opacity 500ms var(--ease) 100ms, transform 600ms var(--ease) 100ms, left 600ms var(--ease) 100ms;
 }
 body.header-on .menu-pill{
   opacity:1;
   pointer-events:auto;
+  position:relative;
+  left:auto;
   transform:translateX(0) scale(1);
 }
 
@@ -221,6 +233,45 @@ body.collapse .nav-brand .wordmark{
   border-radius:2px;
 }
 
+.pill-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+}
+
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:4px;
+  transition:opacity 200ms var(--ease);
+}
+.hamburger span{
+  display:block;
+  width:18px;
+  height:2px;
+  background:var(--ink);
+  border-radius:2px;
+  opacity:.7;
+  transition:all 300ms var(--ease);
+}
+.hamburger:hover span{
+  opacity:1;
+}
+body.mobile-menu-open .hamburger span:nth-child(1){
+  transform:translateY(6px) rotate(45deg);
+}
+body.mobile-menu-open .hamburger span:nth-child(2){
+  opacity:0;
+}
+body.mobile-menu-open .hamburger span:nth-child(3){
+  transform:translateY(-6px) rotate(-45deg);
+}
+
 @media (min-width: 769px){
   .nav-brand{
     pointer-events:auto;
@@ -230,17 +281,28 @@ body.collapse .nav-brand .wordmark{
 @media (max-width: 768px){
   .topbar{
     flex-direction:column;
-    gap:8px;
+    gap:0;
   }
   .logo-pill{
     padding:10px 20px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    transition:gap 300ms var(--ease), padding 300ms var(--ease);
+  }
+  body.mobile-menu-open .logo-pill{
+    gap:16px;
+    padding-bottom:16px;
   }
   .menu-pill{
-    padding:10px 20px;
-    width:100%;
+    display:none;
+  }
+  .hamburger{
+    display:flex;
   }
   .nav-brand{
-    cursor:pointer;
     pointer-events:auto;
   }
   .nav-menu{
@@ -248,12 +310,16 @@ body.collapse .nav-brand .wordmark{
     width:100%;
     flex-direction:column;
     gap:12px;
+    padding-top:12px;
+    border-top:1px solid var(--hair);
+    opacity:0;
+    transform:translateY(-8px);
+    transition:opacity 300ms var(--ease), transform 300ms var(--ease);
   }
   body.mobile-menu-open .nav-menu{
     display:flex;
-  }
-  body.mobile-menu-open .menu-pill{
-    padding-bottom:16px;
+    opacity:1;
+    transform:translateY(0);
   }
   .nav-brand .wordmark{
     height:12px;
@@ -579,11 +645,25 @@ footer{
 
 <div class="topbar">
   <div class="logo-pill">
-    <a href="#top" class="nav-brand" aria-label="Scott Bertrand">
-      <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
-      <span class="separator"></span>
-      <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
-    </a>
+    <div class="pill-header">
+      <a href="#top" class="nav-brand" aria-label="Scott Bertrand">
+        <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
+        <span class="separator"></span>
+        <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
+      </a>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#field-notes">Field Notes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </div>
   <div class="menu-pill">
     <nav>
@@ -799,36 +879,25 @@ if (themeToggle) {
 applyScroll();
 window.addEventListener('scroll', applyScroll, { passive: true });
 
-// Mobile menu toggle (mobile only)
-function initMobileMenu() {
-  if (window.innerWidth <= 768) {
-    const navBrand = document.querySelector('.nav-brand');
-
-    navBrand.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.body.classList.toggle('mobile-menu-open');
-    });
-
-    // Close menu when clicking a nav link
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        document.body.classList.remove('mobile-menu-open');
-      });
-    });
-  }
+// Mobile menu toggle with hamburger button
+const hamburger = document.querySelector('.hamburger');
+if (hamburger) {
+  hamburger.addEventListener('click', () => {
+    document.body.classList.toggle('mobile-menu-open');
+  });
 }
 
-initMobileMenu();
+// Close menu when clicking a nav link
+document.querySelectorAll('.nav-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.body.classList.remove('mobile-menu-open');
+  });
+});
 
-// Re-initialize on resize if crossing breakpoint
-let wasMobile = window.innerWidth <= 768;
+// Close menu when resizing to desktop
 window.addEventListener('resize', () => {
-  const isMobile = window.innerWidth <= 768;
-  if (isMobile !== wasMobile) {
-    wasMobile = isMobile;
-    if (!isMobile) {
-      document.body.classList.remove('mobile-menu-open');
-    }
+  if (window.innerWidth > 768) {
+    document.body.classList.remove('mobile-menu-open');
   }
 });
 </script>
