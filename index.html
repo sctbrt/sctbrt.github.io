@@ -111,29 +111,44 @@ body:after{
   padding:16px var(--pad);
   display:flex;
   justify-content:center;
+  align-items:center;
+  gap:12px;
   z-index:70;
   opacity:0;
   pointer-events:none;
-  transition:opacity 400ms var(--ease), transform 400ms var(--ease);
-  transform:translateY(-8px);
+  transition:opacity 400ms var(--ease);
 }
 body.header-on .topbar{
   opacity:1;
   pointer-events:auto;
-  transform:translateY(0);
 }
 
-.topbar-inner{
-  width:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+.logo-pill{
   padding:12px 24px;
   border-radius:999px;
   border:1px solid var(--hair);
   background:var(--panel);
   backdrop-filter:blur(14px);
-  gap:32px;
+  transform:translateY(-8px);
+  transition:transform 400ms var(--ease);
+}
+body.header-on .logo-pill{
+  transform:translateY(0);
+}
+
+.menu-pill{
+  padding:12px 24px;
+  border-radius:999px;
+  border:1px solid var(--hair);
+  background:var(--panel);
+  backdrop-filter:blur(14px);
+  opacity:0;
+  transform:translateX(-100px) scale(0.95);
+  transition:opacity 400ms var(--ease) 200ms, transform 500ms var(--ease) 200ms;
+}
+body.header-on .menu-pill{
+  opacity:1;
+  transform:translateX(0) scale(1);
 }
 
 .nav-brand{
@@ -213,10 +228,16 @@ body.collapse .nav-brand .wordmark{
 }
 
 @media (max-width: 768px){
-  .topbar-inner{
-    gap:16px;
+  .topbar{
+    flex-direction:column;
+    gap:8px;
+  }
+  .logo-pill{
     padding:10px 20px;
-    flex-wrap:wrap;
+  }
+  .menu-pill{
+    padding:10px 20px;
+    width:100%;
   }
   .nav-brand{
     cursor:pointer;
@@ -226,12 +247,13 @@ body.collapse .nav-brand .wordmark{
     display:none;
     width:100%;
     flex-direction:column;
-    gap:16px;
-    padding-top:12px;
-    border-top:1px solid var(--hair);
+    gap:12px;
   }
   body.mobile-menu-open .nav-menu{
     display:flex;
+  }
+  body.mobile-menu-open .menu-pill{
+    padding-bottom:16px;
   }
   .nav-brand .wordmark{
     height:12px;
@@ -556,12 +578,14 @@ footer{
 <a id="top"></a>
 
 <div class="topbar">
-  <div class="topbar-inner">
+  <div class="logo-pill">
     <a href="#top" class="nav-brand" aria-label="Scott Bertrand">
       <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
       <span class="separator"></span>
       <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
     </a>
+  </div>
+  <div class="menu-pill">
     <nav>
       <ul class="nav-menu">
         <li><a href="#services">Services</a></li>
