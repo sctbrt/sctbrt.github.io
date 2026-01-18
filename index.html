@@ -28,6 +28,7 @@
 <style>
 html{
   scroll-behavior:smooth;
+  scroll-padding-top:80px;
   /* Scroll snap can feel jumpy/empty during fine scrolling; keep it off for now. */
   scroll-snap-type: none;
 }
@@ -50,18 +51,16 @@ html{
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#0c0f10;
-    --ink:#f6f6f4;
-    --muted:rgba(246,246,244,.6);
-    --hair:rgba(246,246,244,.12);
-    --panel:rgba(18,22,24,.72);
-    --panel-strong: rgba(18,22,24,.86);
-    --shadow: 0 10px 30px rgba(0,0,0,.3);
-    --focus-shadow: 0 0 0 3px rgba(246,246,244,.12);
-    --grid: rgba(246,246,244,.06);
-  }
+body.dark-mode{
+  --bg:#0c0f10;
+  --ink:#f6f6f4;
+  --muted:rgba(246,246,244,.6);
+  --hair:rgba(246,246,244,.12);
+  --panel:rgba(18,22,24,.72);
+  --panel-strong: rgba(18,22,24,.86);
+  --shadow: 0 10px 30px rgba(0,0,0,.3);
+  --focus-shadow: 0 0 0 3px rgba(246,246,244,.12);
+  --grid: rgba(246,246,244,.06);
 }
 
 *{box-sizing:border-box}
@@ -84,12 +83,10 @@ body:before{
   z-index:0;
 }
 
-@media (prefers-color-scheme: dark){
-  body:before{
-    background:
-      radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.04), transparent 65%),
-      linear-gradient(180deg, rgba(18,22,24,.35), transparent);
-  }
+body.dark-mode:before{
+  background:
+    radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.04), transparent 65%),
+    linear-gradient(180deg, rgba(18,22,24,.35), transparent);
 }
 body:after{
   content:"";
@@ -210,13 +207,32 @@ body.collapse .nav-brand .wordmark{
   border-radius:2px;
 }
 
+@media (min-width: 769px){
+  .nav-brand{
+    pointer-events:auto;
+  }
+}
+
 @media (max-width: 768px){
   .topbar-inner{
     gap:16px;
     padding:10px 20px;
+    flex-wrap:wrap;
+  }
+  .nav-brand{
+    cursor:pointer;
+    pointer-events:auto;
   }
   .nav-menu{
     display:none;
+    width:100%;
+    flex-direction:column;
+    gap:16px;
+    padding-top:12px;
+    border-top:1px solid var(--hair);
+  }
+  body.mobile-menu-open .nav-menu{
+    display:flex;
   }
   .nav-brand .wordmark{
     height:12px;
@@ -248,7 +264,7 @@ header{
 .hero-content{
   opacity:0;
   transform:translateY(12px);
-  animation:fadeInUp 800ms var(--ease) 1800ms forwards;
+  animation:fadeInUp 800ms var(--ease) 1000ms forwards;
 }
 
 @keyframes fadeInUp{
@@ -286,7 +302,7 @@ p{
   gap:12px;
   color:var(--muted);
   opacity:.35;
-  animation:fadeIn 600ms var(--ease) 2600ms forwards;
+  animation:fadeIn 600ms var(--ease) 1800ms forwards;
 }
 
 @keyframes fadeIn{
@@ -517,6 +533,7 @@ footer{
   flex-direction:column;
   align-items:center;
   gap:24px;
+  position:relative;
 }
 
 .footer-mark{
@@ -538,6 +555,41 @@ footer{
   color:var(--muted);
   opacity:.6;
   text-align:center;
+}
+
+.theme-toggle{
+  position:absolute;
+  bottom:80px;
+  right:var(--pad);
+  background:var(--panel);
+  border:1px solid var(--hair);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  cursor:pointer;
+  transition:all 200ms var(--ease);
+  backdrop-filter:blur(14px);
+}
+
+.theme-toggle:hover{
+  opacity:1;
+  color:var(--ink);
+  border-color:var(--ink);
+}
+
+.theme-toggle:focus-visible{
+  outline:2px solid var(--ink);
+  outline-offset:4px;
+}
+
+@media (max-width: 768px){
+  .theme-toggle{
+    position:static;
+    margin-top:16px;
+  }
 }
 
 /* ================= SCRIPT ================= */
@@ -670,7 +722,7 @@ footer{
         <p><a href="mailto:bertrandbrands@outlook.com" class="email-link">bertrandbrands@outlook.com</a></p>
       </div>
 
-      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form class="contact-form" action="https://formspree.io/f/meeeazrq" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
@@ -694,9 +746,12 @@ footer{
 
 <footer>
   <div class="footer-mark">
-    <img class="monogram" src="assets/images/sb-monogram-light.png" alt="SB" data-light-src="assets/images/sb-monogram-light.png" data-dark-src="assets/images/sb-monogram-dark.png" />
+    <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
   </div>
   <div class="footer-meta">© <span id="footer-year"></span> Scott Bertrand</div>
+  <button class="theme-toggle" aria-label="Toggle theme">
+    <span class="theme-label">Dark mode</span>
+  </button>
 </footer>
 
 <script src="assets/js/field-notes.js"></script>
@@ -724,19 +779,85 @@ function applyScroll(){
 
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-// Dark mode asset switching
+// Theme management: manual toggle with localStorage persistence
+function getTheme() {
+  const saved = localStorage.getItem('theme');
+  return saved || 'light'; // Default to light mode
+}
+
+function setTheme(theme) {
+  localStorage.setItem('theme', theme);
+  if (theme === 'dark') {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.remove('dark-mode');
+  }
+  updateAssets();
+  updateThemeLabel();
+}
+
 function updateAssets(){
-  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = document.body.classList.contains('dark-mode');
   document.querySelectorAll('img[data-light-src][data-dark-src]').forEach(img => {
     img.src = isDark ? img.dataset.darkSrc : img.dataset.lightSrc;
   });
 }
 
-updateAssets();
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateAssets);
+function updateThemeLabel() {
+  const isDark = document.body.classList.contains('dark-mode');
+  const label = document.querySelector('.theme-label');
+  if (label) {
+    label.textContent = isDark ? 'Light mode' : 'Dark mode';
+  }
+}
+
+// Initialize theme on page load
+setTheme(getTheme());
+
+// Theme toggle button
+const themeToggle = document.querySelector('.theme-toggle');
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = getTheme();
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+  });
+}
 
 applyScroll();
 window.addEventListener('scroll', applyScroll, { passive: true });
+
+// Mobile menu toggle (mobile only)
+function initMobileMenu() {
+  if (window.innerWidth <= 768) {
+    const navBrand = document.querySelector('.nav-brand');
+
+    navBrand.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.classList.toggle('mobile-menu-open');
+    });
+
+    // Close menu when clicking a nav link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('mobile-menu-open');
+      });
+    });
+  }
+}
+
+initMobileMenu();
+
+// Re-initialize on resize if crossing breakpoint
+let wasMobile = window.innerWidth <= 768;
+window.addEventListener('resize', () => {
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile !== wasMobile) {
+    wasMobile = isMobile;
+    if (!isMobile) {
+      document.body.classList.remove('mobile-menu-open');
+    }
+  }
+});
 </script>
 
 </body>
