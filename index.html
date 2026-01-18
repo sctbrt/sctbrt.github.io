@@ -162,17 +162,15 @@ body.header-on .logo-pill{
   opacity:0;
   pointer-events:none;
   position:absolute;
-  left:50%;
-  transform:translateX(-50%) scale(0.85);
-  transition:opacity 400ms var(--ease), transform 500ms var(--ease), left 500ms var(--ease), position 0s 500ms;
+  left:0;
+  transform:translateX(0) scale(0.85);
+  transition:opacity 400ms var(--ease), transform 500ms var(--ease);
 }
 body.header-on .menu-pill{
   opacity:1;
   pointer-events:auto;
-  position:relative;
-  left:auto;
   transform:translateX(0) scale(1);
-  transition:opacity 400ms var(--ease) 100ms, transform 500ms var(--ease) 100ms, left 500ms var(--ease) 100ms, position 0s;
+  transition:opacity 400ms var(--ease) 100ms, transform 500ms var(--ease) 100ms;
 }
 
 .nav-brand{
@@ -304,12 +302,16 @@ body.mobile-menu-open .hamburger span:nth-child(3){
   .logo-pill:not(:hover){
     animation:subtlePulse 4s ease-in-out 2s infinite;
   }
+  .menu-pill{
+    position:relative;
+    opacity:0;
+    transform:translateX(-12px) scale(0.92);
+    pointer-events:none;
+  }
   .logo-pill:hover ~ .menu-pill,
   .menu-pill:hover{
     opacity:1;
     pointer-events:auto;
-    position:relative;
-    left:auto;
     transform:translateX(0) scale(1);
   }
 }
