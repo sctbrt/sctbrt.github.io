@@ -22,11 +22,14 @@
 <meta property="twitter:image" content="https://sctbrt.github.io/assets/images/og-image.png">
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
+<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
 
 <style>
-html{ scroll-behavior:smooth; }
+html{
+  scroll-behavior:smooth;
+  scroll-snap-type:y proximity;
+}
 :root{
   --bg:#f6f6f4;
   --ink:#0c0f10;
@@ -104,7 +107,7 @@ body.header-on .topbar{
   width:auto;
   display:flex;
   align-items:center;
-  padding:10px 20px;
+  padding:12px 24px;
   border-radius:999px;
   border:1px solid var(--hair);
   background:var(--panel);
@@ -130,10 +133,10 @@ body.header-on .topbar{
   opacity:.85;
 }
 .brand-pill .wordmark{
-  height:13px;
+  height:14px;
   width:auto;
   display:block;
-  opacity:.7;
+  opacity:.85;
 }
 
 /* ================= BRANDMARK (CENTER) ================= */
@@ -153,8 +156,8 @@ body.header-on .topbar{
   align-items:center;
   gap:16px;
   z-index:80;
-  transform:translate(var(--tx),var(--ty)) scale(var(--ts));
-  transition:opacity 300ms var(--ease);
+  transform:translate(var(--tx),var(--ty));
+  transition:opacity 400ms var(--ease), transform 400ms var(--ease);
   pointer-events:none;
 }
 
@@ -201,6 +204,7 @@ header{
   justify-content:center;
   padding-top:140px;
   position:relative;
+  scroll-snap-align:start;
 }
 .wrap{
   max-width:var(--max);
@@ -211,7 +215,7 @@ header{
 .hero-content{
   opacity:0;
   transform:translateY(12px);
-  animation:fadeInUp 800ms var(--ease) 2400ms forwards;
+  animation:fadeInUp 800ms var(--ease) 1800ms forwards;
 }
 
 @keyframes fadeInUp{
@@ -229,7 +233,7 @@ header{
 }
 
 h1{
-  font-size:clamp(36px,4.5vw,64px);
+  font-size:clamp(28px,4.5vw,64px);
   margin:0 0 24px;
   line-height:1.1;
   font-weight:500;
@@ -259,7 +263,7 @@ p{
   gap:12px;
   color: rgba(12,15,16,.35);
   opacity:0;
-  animation:fadeIn 600ms var(--ease) 3200ms forwards;
+  animation:fadeIn 600ms var(--ease) 2600ms forwards;
 }
 
 @keyframes fadeIn{
@@ -281,10 +285,10 @@ p{
 /* ================= SECTIONS ================= */
 
 section{
-  min-height:100vh;
-  padding:140px 0;
+  padding:clamp(80px,12vh,160px) 0;
   border-top:1px solid var(--hair);
   position:relative;
+  scroll-snap-align:start;
 }
 .section-head{
   display:grid;
@@ -317,7 +321,7 @@ section{
   background: var(--panel-strong);
   border:1px solid var(--hair);
   border-radius:18px;
-  padding:18px 18px;
+  padding:24px;
   box-shadow: var(--shadow);
 }
 .card small{
@@ -496,13 +500,6 @@ footer{
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:20px;
-}
-
-.footer-mark img.dot-grid{
-  height:60px;
-  width:auto;
-  opacity:.25;
 }
 
 .footer-mark img.monogram{
@@ -541,14 +538,13 @@ footer{
     <img src="assets/images/tree-ring-logo.png" alt="" />
   </div>
   <div class="name">
-    <img src="assets/images/scott-bertrand-wordmark-light.png" alt="Scott Bertrand" />
+    <img src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" />
   </div>
 </div>
 
 <header>
   <div class="wrap">
     <div class="hero-content">
-      <div class="office-name">Scott Bertrand</div>
       <h1>Systems that make the day run clean.</h1>
       <p class="positioning">Operational clarity for teams under pressure.</p>
       <p>Reducing friction in handoffs, decision points, and daily routines that quietly drive costs.</p>
@@ -576,7 +572,7 @@ footer{
       </div>
       <div class="card">
         <small>Standards</small>
-        <p><strong>Less comping and redo’s</strong> — reduce errors by reducing decision points.</p>
+        <p><strong>Less comping and redos</strong> — reduce errors by reducing decision points.</p>
       </div>
       <div class="card">
         <small>Customer experience</small>
@@ -676,10 +672,9 @@ footer{
 
 <footer>
   <div class="footer-mark">
-    <img class="dot-grid" src="assets/images/dot-grid-light.png" alt="" />
     <img class="monogram" src="assets/images/sb-monogram-light.png" alt="SB" />
   </div>
-  <div class="footer-meta">© 2026 Scott Bertrand</div>
+  <div class="footer-meta">© <span id="footer-year"></span> Scott Bertrand</div>
 </footer>
 
 <script src="assets/js/field-notes.js"></script>
@@ -691,36 +686,33 @@ let start={},end={};
 function measure(){
   if(!bm) return;
   const r=bm.getBoundingClientRect();
-  start={x:(innerWidth-r.width)/2,y:innerHeight*0.18-r.height/2,s:1};
-  const pill=document.querySelector('.brand-pill .monogram');
-  const d=bm.querySelector('.dots img');
-  if(!pill || !d) return;
-  const pillRect=pill.getBoundingClientRect();
-  const dRect=d.getBoundingClientRect();
-  const scale=pillRect.width/dRect.width;
+  start={x:(innerWidth-r.width)/2,y:innerHeight*0.18-r.height/2};
+  const topbar=document.querySelector('.topbar-inner');
+  if(!topbar) return;
+  const topbarRect=topbar.getBoundingClientRect();
   end={
-    x:pillRect.left-(dRect.left-r.left)*scale,
-    y:pillRect.top-(dRect.top-r.top)*scale,
-    s:scale
+    x:topbarRect.left,
+    y:topbarRect.top
   };
 }
 
 function apply(){
   const y=scrollY;
   if(y>10)document.body.classList.add('header-on','collapse');
-  const t=Math.min(y/500,1);
+  const t=Math.min(y/400,1);
   bm.style.setProperty('--tx',`${start.x+(end.x-start.x)*t}px`);
   bm.style.setProperty('--ty',`${start.y+(end.y-start.y)*t}px`);
-  bm.style.setProperty('--ts',start.s+(end.s-start.s)*t);
-  bm.style.opacity=t>0.9?0:1;
+  bm.style.opacity=t>0.8?0:1;
 }
 
-setTimeout(()=>document.body.classList.replace('boot-1','boot-2'),700);
-setTimeout(()=>document.body.classList.replace('boot-2','boot-3'),1400);
+setTimeout(()=>document.body.classList.replace('boot-1','boot-2'),500);
+setTimeout(()=>document.body.classList.replace('boot-2','boot-3'),1000);
 setTimeout(()=>{
   document.body.classList.remove('boot-3');
   document.body.classList.add('boot-done','name-on');
-},2400);
+},1800);
+
+document.getElementById('footer-year').textContent=new Date().getFullYear();
 
 measure();
 apply();
