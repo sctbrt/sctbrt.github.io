@@ -47,7 +47,6 @@ html{
 
   --max:1120px;
   --pad:clamp(18px,3vw,40px);
-  --pill-width:min(var(--max),calc(100vw - (2 * var(--pad))));
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 
@@ -621,7 +620,7 @@ footer{
     <div class="hero-content">
       <h1>Systems that make work feel lighter.</h1>
       <p class="positioning">The work focuses on reducing friction in how teams plan, decide, and hand work off — especially when things are busy, imperfect, or changing. The goal isn't perfection. It's clearer decisions, fewer unforced errors, and more room to focus on what actually matters.</p>
-      <p style="font-size:13px;opacity:.5;margin-top:32px;">Work often feels heavier than it needs to be. This is an attempt to change that.</p>
+      <p style="font-size:13px;opacity:.6;margin-top:32px;">Work often feels heavier than it needs to be. This is an attempt to change that.</p>
     </div>
     <div class="divider"><span>—</span></div>
   </div>
@@ -778,8 +777,6 @@ function applyScroll(){
     document.body.classList.remove('collapse');
   }
 }
-
-document.getElementById('footer-year').textContent = new Date().getFullYear();
 
 // Theme management: manual toggle with localStorage persistence
 function getTheme() {
