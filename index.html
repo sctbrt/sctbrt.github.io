@@ -127,8 +127,8 @@ body.header-on .topbar{
   background:var(--panel);
   backdrop-filter:blur(14px);
   opacity:0;
-  transform:translateY(-8px);
-  animation:logoAppear 600ms var(--ease) 800ms forwards;
+  transform:translateY(20px);
+  animation:logoAppear 800ms var(--ease) 400ms forwards;
   transition:transform 600ms var(--ease);
 }
 body.header-on .logo-pill{
@@ -136,7 +136,11 @@ body.header-on .logo-pill{
 }
 
 @keyframes logoAppear{
-  to{
+  0%{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  100%{
     opacity:1;
     transform:translateY(0);
   }
@@ -312,6 +316,9 @@ body.mobile-menu-open .hamburger span:nth-child(3){
   .hamburger{
     display:none;
   }
+  .logo-pill{
+    transition:transform 600ms var(--ease), opacity 400ms var(--ease);
+  }
   .logo-pill:not(:hover):not(.menu-revealed){
     animation:subtlePulse 4s ease-in-out 2s infinite;
   }
@@ -323,6 +330,7 @@ body.mobile-menu-open .hamburger span:nth-child(3){
     opacity:0;
     transform:translateX(-18px) scale(0.88);
     pointer-events:none;
+    transition:opacity 500ms var(--ease), transform 500ms var(--ease);
   }
   .logo-pill:hover ~ .menu-pill,
   .menu-pill:hover,
@@ -331,7 +339,8 @@ body.mobile-menu-open .hamburger span:nth-child(3){
     pointer-events:auto;
     transform:translateX(0) scale(1);
   }
-  body.menu-revealed .logo-pill{
+  body.menu-revealed .logo-pill,
+  .logo-pill:hover{
     animation:none;
   }
 }
