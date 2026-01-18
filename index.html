@@ -37,11 +37,7 @@ html{ scroll-behavior:smooth; }
   --panel-strong: rgba(255,255,255,.86);
   --shadow: 0 10px 30px rgba(12,15,16,.08);
   --grid: rgba(12,15,16,.06);
-
-  --red:#ff3b30;
-  --amber:#ffcc00;
-  --green:#34c759;
-  --off:rgba(12,15,16,.22);
+  --accent:var(--ink);
 
   --max:1120px;
   --pad:clamp(18px,3vw,40px);
@@ -105,11 +101,10 @@ body.header-on .topbar{
 }
 
 .topbar-inner{
-  width:var(--pill-width);
-  display:grid;
-  grid-template-columns:260px 1fr;
+  width:auto;
+  display:flex;
   align-items:center;
-  padding:12px 18px;
+  padding:10px 20px;
   border-radius:999px;
   border:1px solid var(--hair);
   background:var(--panel);
@@ -121,26 +116,24 @@ body.header-on .topbar{
   cursor:pointer;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
 }
 .brand-pill:focus-visible{
-  outline:2px solid var(--green);
+  outline:2px solid var(--ink);
   outline-offset:4px;
+  border-radius:4px;
 }
-.brand-pill .dot{
-  width:10px;height:10px;border-radius:50%;
-  background:var(--green);
-}
-.brand-pill span{
-  font-size:12px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-.brand-pill img{
-  height:12px;
+.brand-pill .monogram{
+  height:18px;
   width:auto;
-  opacity:.75;
+  display:block;
+  opacity:.85;
+}
+.brand-pill .wordmark{
+  height:13px;
+  width:auto;
+  display:block;
+  opacity:.7;
 }
 
 /* ================= BRANDMARK (CENTER) ================= */
@@ -167,12 +160,18 @@ body.header-on .topbar{
 
 .dots{
   display:flex;
-  gap:14px;
+  align-items:center;
+  justify-content:center;
 }
-.dot{
-  width:12px;height:12px;border-radius:50%;
-  background:var(--off);
-  transition:transform 400ms var(--ease),opacity 400ms var(--ease),background 400ms var(--ease);
+.dots img{
+  height:clamp(80px,8vw,120px);
+  width:auto;
+  display:block;
+  opacity:0;
+  transition:opacity 500ms var(--ease);
+}
+body.boot-done .dots img{
+  opacity:1;
 }
 
 .name{
@@ -187,28 +186,10 @@ body.header-on .topbar{
 }
 body.name-on .name{opacity:1;transform:none}
 
-/* BOOT SIGNAL */
-body.boot-1 .dot:nth-child(1){background:var(--red)}
-body.boot-2 .dot:nth-child(1){background:var(--red)}
-body.boot-2 .dot:nth-child(2){background:var(--amber)}
-body.boot-3 .dot:nth-child(1){background:var(--red)}
-body.boot-3 .dot:nth-child(2){background:var(--amber)}
-body.boot-3 .dot:nth-child(3){background:var(--green)}
-
-body.boot-done:not(.collapse) .dot:nth-child(1){background:var(--red)}
-body.boot-done:not(.collapse) .dot:nth-child(2){background:var(--amber)}
-body.boot-done:not(.collapse) .dot:nth-child(3){background:var(--green)}
-
-body.collapse .dot:nth-child(2){
-  transform:translateX(-26px);
+/* DOT GRID FADE */
+body.collapse .dots img{
   opacity:0;
-}
-body.collapse .dot:nth-child(3){
-  transform:translateX(-52px);
-  opacity:0;
-}
-body.collapse .dot:nth-child(1){
-  background:var(--green);
+  transition:opacity 300ms var(--ease);
 }
 
 /* ================= HERO ================= */
@@ -379,16 +360,17 @@ section{
   text-decoration:none;
   font-size:18px;
   font-weight:500;
-  border-bottom:2px solid var(--green);
-  transition:border-color 200ms var(--ease);
+  border-bottom:1px solid var(--hair);
+  transition:border-color 200ms var(--ease), opacity 200ms var(--ease);
 }
 
 .email-link:hover{
   border-color:var(--ink);
+  opacity:.75;
 }
 
 .email-link:focus-visible{
-  outline:2px solid var(--green);
+  outline:2px solid var(--ink);
   outline-offset:4px;
   border-radius:2px;
 }
@@ -431,8 +413,8 @@ section{
 .form-group input:focus,
 .form-group textarea:focus{
   outline:none;
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(52,199,89,.1);
+  border-color:var(--ink);
+  box-shadow:0 0 0 3px rgba(12,15,16,.08);
 }
 
 .form-group textarea{
@@ -465,7 +447,7 @@ section{
 }
 
 .submit-btn:focus-visible{
-  outline:2px solid var(--green);
+  outline:2px solid var(--ink);
   outline-offset:4px;
 }
 
@@ -499,6 +481,45 @@ section{
   object-fit:cover;
 }
 
+/* ================= FOOTER ================= */
+
+footer{
+  border-top:1px solid var(--hair);
+  padding:80px 0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:40px;
+}
+
+.footer-mark{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+}
+
+.footer-mark img.dot-grid{
+  height:60px;
+  width:auto;
+  opacity:.25;
+}
+
+.footer-mark img.monogram{
+  height:24px;
+  width:auto;
+  opacity:.4;
+}
+
+.footer-meta{
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+  opacity:.6;
+  text-align:center;
+}
+
 /* ================= SCRIPT ================= */
 </style>
 </head>
@@ -509,17 +530,15 @@ section{
 <div class="topbar">
   <div class="topbar-inner">
     <a href="#top" class="brand-pill" aria-label="Back to top">
-      <div class="dot"></div>
-      <img src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" />
+      <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" />
+      <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" />
     </a>
   </div>
 </div>
 
 <div class="brandmark" id="brandmark">
   <div class="dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+    <img src="assets/images/tree-ring-logo.png" alt="" />
   </div>
   <div class="name">
     <img src="assets/images/scott-bertrand-wordmark-light.png" alt="Scott Bertrand" />
@@ -655,6 +674,14 @@ section{
   </div>
 </section>
 
+<footer>
+  <div class="footer-mark">
+    <img class="dot-grid" src="assets/images/dot-grid-light.png" alt="" />
+    <img class="monogram" src="assets/images/sb-monogram-light.png" alt="SB" />
+  </div>
+  <div class="footer-meta">© 2026 Scott Bertrand</div>
+</footer>
+
 <script src="assets/js/field-notes.js"></script>
 
 <script>
@@ -662,14 +689,18 @@ const bm=document.getElementById('brandmark');
 let start={},end={};
 
 function measure(){
+  if(!bm) return;
   const r=bm.getBoundingClientRect();
   start={x:(innerWidth-r.width)/2,y:innerHeight*0.18-r.height/2,s:1};
-  const pill=document.querySelector('.brand-pill .dot').getBoundingClientRect();
-  const d=bm.querySelector('.dot').getBoundingClientRect();
-  const scale=pill.width/d.width;
+  const pill=document.querySelector('.brand-pill .monogram');
+  const d=bm.querySelector('.dots img');
+  if(!pill || !d) return;
+  const pillRect=pill.getBoundingClientRect();
+  const dRect=d.getBoundingClientRect();
+  const scale=pillRect.width/dRect.width;
   end={
-    x:pill.left-(d.left-r.left)*scale,
-    y:pill.top-(d.top-r.top)*scale,
+    x:pillRect.left-(dRect.left-r.left)*scale,
+    y:pillRect.top-(dRect.top-r.top)*scale,
     s:scale
   };
 }
