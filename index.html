@@ -155,6 +155,99 @@
       z-index:0;
     }
 
+    /* ================= LOADING SCREEN ================= */
+    .loading-screen{
+      position:fixed;
+      inset:0;
+      background:var(--bg);
+      z-index:9999;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:24px;
+      opacity:1;
+      transition:opacity 800ms var(--ease);
+    }
+
+    .loading-screen.loaded{
+      opacity:0;
+      pointer-events:none;
+    }
+
+    .loading-ring{
+      width:120px;
+      height:120px;
+      opacity:0;
+      animation:expandAndPulse 3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes expandAndPulse{
+      0%{
+        opacity:0;
+        transform:scale(0.1);
+      }
+      5%{
+        opacity:1;
+      }
+      40%{
+        opacity:1;
+        transform:scale(1);
+      }
+      50%{
+        opacity:.6;
+        transform:scale(.96);
+      }
+      60%{
+        opacity:1;
+        transform:scale(1);
+      }
+      70%{
+        opacity:.6;
+        transform:scale(.96);
+      }
+      80%, 100%{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
+    .loading-brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      opacity:0;
+      animation:brandReveal 1.2s var(--ease) 1.8s forwards;
+    }
+
+    @keyframes brandReveal{
+      0%{
+        opacity:0;
+        transform:translateY(12px);
+      }
+      100%{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .loading-brand .monogram{
+      height:32px;
+      width:auto;
+    }
+
+    .loading-brand .separator{
+      width:1px;
+      height:32px;
+      background:var(--hair);
+      opacity:.8;
+    }
+
+    .loading-brand .wordmark{
+      height:22px;
+      width:auto;
+    }
+
     /* ================= ACCESSIBILITY ================= */
     .skip-to-content{
       position:absolute;
@@ -207,6 +300,23 @@
       min-height:44px;
     }
 
+    .brand-pill{
+      opacity:0;
+      transform:translateY(20px) scale(1.4);
+      animation:brandPillAppear 1000ms cubic-bezier(0.16, 1, 0.3, 1) 3600ms forwards;
+    }
+
+    @keyframes brandPillAppear{
+      0%{
+        opacity:0;
+        transform:translateY(20px) scale(1.4);
+      }
+      100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
     .brand-pill a{
       text-decoration:none;
       display:flex;
@@ -222,7 +332,7 @@
     }
 
     .brand-pill .monogram{
-      height:18px;
+      height:20px;
       width:auto;
       display:block;
       opacity:.9;
@@ -230,13 +340,13 @@
 
     .brand-pill .separator{
       width:1px;
-      height:18px;
+      height:20px;
       background:var(--hair);
       opacity:.9;
     }
 
     .brand-pill .wordmark{
-      height:13px;
+      height:14px;
       width:auto;
       display:block;
       opacity:.9;
@@ -245,6 +355,13 @@
     .nav-pill{
       padding:10px 14px;
       gap:0;
+      opacity:0;
+      animation:navPillAppear 600ms var(--ease) 1000ms forwards;
+    }
+
+    @keyframes navPillAppear{
+      0%{ opacity:0; }
+      100%{ opacity:1; }
     }
 
     .nav-pill ul{
@@ -649,6 +766,16 @@
     })();
   </script>
 
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loading-screen">
+    <img class="loading-ring" src="assets/images/tree-ring-logo.png" alt="" />
+    <div class="loading-brand">
+      <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
+      <span class="separator" aria-hidden="true"></span>
+      <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
+    </div>
+  </div>
+
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
   <a id="top"></a>
 
@@ -810,6 +937,21 @@
   <script src="assets/js/field-notes.js"></script>
 
   <script>
+
+    // Loading screen management
+    window.addEventListener('load', () => {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen){
+        // Wait for brand reveal to complete, then fade out
+        setTimeout(() => {
+          loadingScreen.classList.add('loaded');
+          // Remove from DOM after fade completes
+          setTimeout(() => {
+            loadingScreen.remove();
+          }, 800);
+        }, 3200);
+      }
+    });
 
     // Theme management: manual toggle with localStorage persistence
     function getTheme(){
