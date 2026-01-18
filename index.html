@@ -28,7 +28,8 @@
 <style>
 html{
   scroll-behavior:smooth;
-  scroll-snap-type:y proximity;
+  /* Scroll snap can feel jumpy/empty during fine scrolling; keep it off for now. */
+  scroll-snap-type: none;
 }
 :root{
   --bg:#f6f6f4;
@@ -237,7 +238,6 @@ header{
   justify-content:center;
   padding-top:140px;
   position:relative;
-  scroll-snap-align:start;
 }
 .wrap{
   max-width:var(--max);
@@ -311,7 +311,6 @@ section{
   padding:clamp(80px,10vh,120px) 0;
   border-top:1px solid var(--hair);
   position:relative;
-  scroll-snap-align:start;
 }
 .section-head{
   display:grid;
@@ -703,25 +702,41 @@ footer{
 <script src="assets/js/field-notes.js"></script>
 
 <script>
+// Header pill behavior: show only after the user scrolls, and restore when back at top.
+// Also separate "header-on" (visible) from "collapse" (slightly smaller) for better feel.
 function applyScroll(){
-  const y=scrollY;
-  if(y>10)document.body.classList.add('header-on','collapse');
+  const y = window.scrollY || 0;
+
+  // Show header pill once the user has meaningfully moved.
+  if (y > 10) {
+    document.body.classList.add('header-on');
+  } else {
+    document.body.classList.remove('header-on');
+  }
+
+  // Collapse sizing only after a bit more scroll.
+  if (y > 140) {
+    document.body.classList.add('collapse');
+  } else {
+    document.body.classList.remove('collapse');
+  }
 }
 
-document.getElementById('footer-year').textContent=new Date().getFullYear();
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 
 // Dark mode asset switching
 function updateAssets(){
-  const isDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
-  document.querySelectorAll('img[data-light-src][data-dark-src]').forEach(img=>{
-    img.src=isDark?img.dataset.darkSrc:img.dataset.lightSrc;
+  const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.querySelectorAll('img[data-light-src][data-dark-src]').forEach(img => {
+    img.src = isDark ? img.dataset.darkSrc : img.dataset.lightSrc;
   });
 }
+
 updateAssets();
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',updateAssets);
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateAssets);
 
 applyScroll();
-addEventListener('scroll',applyScroll,{passive:true});
+window.addEventListener('scroll', applyScroll, { passive: true });
 </script>
 
 </body>
