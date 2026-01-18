@@ -146,10 +146,29 @@ body.header-on .logo-pill{
   0%, 100%{
     opacity:1;
     transform:scale(1);
+    box-shadow:0 0 0 0 rgba(0,0,0,0.05);
   }
   50%{
-    opacity:.92;
-    transform:scale(.995);
+    opacity:.88;
+    transform:scale(.992);
+    box-shadow:0 0 0 3px rgba(0,0,0,0.04);
+  }
+}
+
+body.dark-mode .logo-pill:not(:hover){
+  animation:subtlePulseDark 4s ease-in-out 2s infinite;
+}
+
+@keyframes subtlePulseDark{
+  0%, 100%{
+    opacity:1;
+    transform:scale(1);
+    box-shadow:0 0 0 0 rgba(255,255,255,0.08);
+  }
+  50%{
+    opacity:.88;
+    transform:scale(.992);
+    box-shadow:0 0 0 3px rgba(255,255,255,0.06);
   }
 }
 
@@ -163,7 +182,7 @@ body.header-on .logo-pill{
   pointer-events:none;
   position:absolute;
   left:0;
-  transform:translateX(0) scale(0.85);
+  transform:translateX(-18px) scale(0.88);
   transition:opacity 400ms var(--ease), transform 500ms var(--ease);
 }
 
@@ -293,20 +312,27 @@ body.mobile-menu-open .hamburger span:nth-child(3){
   .hamburger{
     display:none;
   }
-  .logo-pill:not(:hover){
+  .logo-pill:not(:hover):not(.menu-revealed){
     animation:subtlePulse 4s ease-in-out 2s infinite;
+  }
+  body.dark-mode .logo-pill:not(:hover):not(.menu-revealed){
+    animation:subtlePulseDark 4s ease-in-out 2s infinite;
   }
   .menu-pill{
     position:relative;
     opacity:0;
-    transform:translateX(-12px) scale(0.92);
+    transform:translateX(-18px) scale(0.88);
     pointer-events:none;
   }
   .logo-pill:hover ~ .menu-pill,
-  .menu-pill:hover{
+  .menu-pill:hover,
+  body.menu-revealed .menu-pill{
     opacity:1;
     pointer-events:auto;
     transform:translateX(0) scale(1);
+  }
+  body.menu-revealed .logo-pill{
+    animation:none;
   }
 }
 
@@ -342,7 +368,7 @@ body.mobile-menu-open .hamburger span:nth-child(3){
     display:none;
     width:100%;
     flex-direction:column;
-    gap:4px;
+    gap:8px;
     padding-top:16px;
     border-top:1px solid var(--hair);
     opacity:0;
@@ -356,10 +382,26 @@ body.mobile-menu-open .hamburger span:nth-child(3){
   }
   .nav-menu li{
     text-align:center;
+    opacity:0;
+    transform:translateY(-4px);
+    transition:opacity 300ms var(--ease), transform 300ms var(--ease);
+  }
+  body.mobile-menu-open .nav-menu li{
+    opacity:1;
+    transform:translateY(0);
+  }
+  body.mobile-menu-open .nav-menu li:nth-child(1){
+    transition-delay:50ms;
+  }
+  body.mobile-menu-open .nav-menu li:nth-child(2){
+    transition-delay:100ms;
+  }
+  body.mobile-menu-open .nav-menu li:nth-child(3){
+    transition-delay:150ms;
   }
   .nav-menu a{
     display:block;
-    padding:10px 16px;
+    padding:12px 16px;
     font-size:15px;
   }
   .nav-brand .wordmark{
@@ -897,14 +939,27 @@ footer{
 <script>
 // Header pill behavior: show only after the user scrolls, and restore when back at top.
 // Also separate "header-on" (visible) from "collapse" (slightly smaller) for better feel.
+let menuRevealTimeout = null;
 function applyScroll(){
   const y = window.scrollY || 0;
 
   // Show header pill once the user has meaningfully moved.
   if (y > 10) {
     document.body.classList.add('header-on');
+
+    // On desktop, if user scrolls without hovering menu, reveal it after 3 seconds
+    if (window.innerWidth > 768 && !document.body.classList.contains('menu-revealed')) {
+      if (menuRevealTimeout) clearTimeout(menuRevealTimeout);
+      menuRevealTimeout = setTimeout(() => {
+        document.body.classList.add('menu-revealed');
+        document.querySelector('.logo-pill')?.classList.add('menu-revealed');
+      }, 3000);
+    }
   } else {
     document.body.classList.remove('header-on');
+    document.body.classList.remove('menu-revealed');
+    document.querySelector('.logo-pill')?.classList.remove('menu-revealed');
+    if (menuRevealTimeout) clearTimeout(menuRevealTimeout);
   }
 
   // Collapse sizing only after a bit more scroll.
@@ -961,6 +1016,22 @@ if (themeToggle) {
 
 applyScroll();
 window.addEventListener('scroll', applyScroll, { passive: true });
+
+// Cancel auto-reveal if user manually hovers (desktop only)
+const logoPill = document.querySelector('.logo-pill');
+const menuPill = document.querySelector('.menu-pill');
+
+if (logoPill && menuPill) {
+  const cancelAutoReveal = () => {
+    if (menuRevealTimeout) {
+      clearTimeout(menuRevealTimeout);
+      menuRevealTimeout = null;
+    }
+  };
+
+  logoPill.addEventListener('mouseenter', cancelAutoReveal);
+  menuPill.addEventListener('mouseenter', cancelAutoReveal);
+}
 
 // Mobile menu toggle with hamburger button
 const hamburger = document.querySelector('.hamburger');
