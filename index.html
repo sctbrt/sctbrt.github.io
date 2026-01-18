@@ -64,9 +64,8 @@ body:before{
   inset:0;
   pointer-events:none;
   background:
-    radial-gradient(1200px 700px at 20% -10%, rgba(52,199,89,.10), transparent 60%),
-    radial-gradient(900px 600px at 80% 0%, rgba(0,0,0,.04), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,0));
+    radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.06), transparent 65%),
+    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0));
   z-index:0;
 }
 body:after{
@@ -77,9 +76,9 @@ body:after{
   background:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity:.22;
-  mask-image: radial-gradient(900px 600px at 50% 10%, black 40%, transparent 75%);
+  background-size: 32px 32px;
+  opacity:.14;
+  mask-image: radial-gradient(1000px 700px at 50% 15%, black 35%, transparent 70%);
   z-index:0;
 }
 
@@ -90,15 +89,20 @@ body:after{
   top:0;
   left:0;
   right:0;
-  padding:14px var(--pad);
+  padding:16px var(--pad);
   display:flex;
   justify-content:center;
   z-index:70;
   opacity:0;
   pointer-events:none;
-  transition:opacity 300ms var(--ease);
+  transition:opacity 400ms var(--ease), transform 400ms var(--ease);
+  transform:translateY(-8px);
 }
-body.header-on .topbar{opacity:1}
+body.header-on .topbar{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
 
 .topbar-inner{
   width:var(--pill-width);
@@ -132,6 +136,11 @@ body.header-on .topbar{opacity:1}
   letter-spacing:.22em;
   text-transform:uppercase;
   color:var(--muted);
+}
+.brand-pill img{
+  height:12px;
+  width:auto;
+  opacity:.75;
 }
 
 /* ================= BRANDMARK (CENTER) ================= */
@@ -167,13 +176,14 @@ body.header-on .topbar{opacity:1}
 }
 
 .name{
-  font-size:clamp(32px,4vw,46px);
-  letter-spacing:.36em;
-  text-transform:uppercase;
-  color:var(--muted);
   opacity:0;
   transform:translateY(6px);
   transition:opacity 500ms var(--ease),transform 500ms var(--ease);
+}
+.name img{
+  height:clamp(28px,3.5vw,40px);
+  width:auto;
+  display:block;
 }
 body.name-on .name{opacity:1;transform:none}
 
@@ -500,7 +510,7 @@ section{
   <div class="topbar-inner">
     <a href="#top" class="brand-pill" aria-label="Back to top">
       <div class="dot"></div>
-      <span>SCOTT BERTRAND</span>
+      <img src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" />
     </a>
   </div>
 </div>
@@ -511,14 +521,20 @@ section{
     <div class="dot"></div>
     <div class="dot"></div>
   </div>
-  <div class="name">SCOTT BERTRAND</div>
+  <div class="name">
+    <img src="assets/images/scott-bertrand-wordmark-light.png" alt="Scott Bertrand" />
+  </div>
 </div>
 
 <header>
   <div class="wrap">
-    <h1>Systems that make the day run clean.</h1>
-    <p>Fewer mistakes. Faster handoffs. Less cognitive load on busy teams.</p>
-    <div class="divider"><span>Scroll</span></div>
+    <div class="hero-content">
+      <div class="office-name">Scott Bertrand</div>
+      <h1>Systems that make the day run clean.</h1>
+      <p class="positioning">Operational clarity for teams under pressure.</p>
+      <p>Reducing friction in handoffs, decision points, and daily routines that quietly drive costs.</p>
+    </div>
+    <div class="divider"><span>—</span></div>
   </div>
 </header>
 
@@ -549,7 +565,7 @@ section{
       </div>
     </div>
 
-    <div class="divider"><span>Next</span></div>
+    <div class="divider"><span>—</span></div>
   </div>
 </section>
 
@@ -580,7 +596,7 @@ section{
       </div>
     </div>
 
-    <div class="divider"><span>Next</span></div>
+    <div class="divider"><span>—</span></div>
   </div>
 </section>
 
@@ -599,7 +615,7 @@ section{
       </div>
     </div>
 
-    <div class="divider"><span>Contact</span></div>
+    <div class="divider"><span>—</span></div>
   </div>
 </section>
 
@@ -668,12 +684,12 @@ function apply(){
   bm.style.opacity=t>0.9?0:1;
 }
 
-setTimeout(()=>document.body.classList.replace('boot-1','boot-2'),600);
-setTimeout(()=>document.body.classList.replace('boot-2','boot-3'),1200);
+setTimeout(()=>document.body.classList.replace('boot-1','boot-2'),700);
+setTimeout(()=>document.body.classList.replace('boot-2','boot-3'),1400);
 setTimeout(()=>{
   document.body.classList.remove('boot-3');
   document.body.classList.add('boot-done','name-on');
-},2200);
+},2400);
 
 measure();
 apply();
