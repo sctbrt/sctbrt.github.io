@@ -48,6 +48,19 @@ html{
   --ease:cubic-bezier(.2,.8,.2,1);
 }
 
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0c0f10;
+    --ink:#f6f6f4;
+    --muted:rgba(246,246,244,.6);
+    --hair:rgba(246,246,244,.12);
+    --panel:rgba(18,22,24,.72);
+    --panel-strong: rgba(18,22,24,.86);
+    --shadow: 0 10px 30px rgba(0,0,0,.3);
+    --grid: rgba(246,246,244,.06);
+  }
+}
+
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{
@@ -107,36 +120,95 @@ body.header-on .topbar{
   width:auto;
   display:flex;
   align-items:center;
+  justify-content:space-between;
   padding:12px 24px;
   border-radius:999px;
   border:1px solid var(--hair);
   background:var(--panel);
   backdrop-filter:blur(14px);
+  gap:32px;
 }
 
-.brand-pill{
+.nav-brand{
   text-decoration:none;
-  cursor:pointer;
   display:flex;
   align-items:center;
   gap:12px;
+  transition:transform 300ms var(--ease);
 }
-.brand-pill:focus-visible{
+.nav-brand:focus-visible{
   outline:2px solid var(--ink);
   outline-offset:4px;
   border-radius:4px;
 }
-.brand-pill .monogram{
-  height:18px;
+.nav-brand .monogram{
+  height:20px;
   width:auto;
   display:block;
   opacity:.85;
+  transition:height 300ms var(--ease);
 }
-.brand-pill .wordmark{
+.nav-brand .separator{
+  width:1px;
+  height:20px;
+  background:var(--hair);
+  opacity:.6;
+  transition:height 300ms var(--ease);
+}
+.nav-brand .wordmark{
   height:14px;
   width:auto;
   display:block;
   opacity:.85;
+  transition:height 300ms var(--ease);
+}
+
+body.collapse .nav-brand .monogram{
+  height:18px;
+}
+body.collapse .nav-brand .separator{
+  height:18px;
+}
+body.collapse .nav-brand .wordmark{
+  height:12px;
+}
+
+.nav-menu{
+  display:flex;
+  align-items:center;
+  gap:32px;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.nav-menu a{
+  text-decoration:none;
+  color:var(--ink);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:.02em;
+  opacity:.7;
+  transition:opacity 200ms var(--ease);
+}
+.nav-menu a:hover{
+  opacity:1;
+}
+.nav-menu a:focus-visible{
+  outline:2px solid var(--ink);
+  outline-offset:4px;
+  border-radius:2px;
+}
+
+@media (max-width: 768px){
+  .topbar-inner{
+    gap:24px;
+  }
+  .nav-menu{
+    gap:20px;
+  }
+  .nav-menu a{
+    font-size:13px;
+  }
 }
 
 /* ================= BRANDMARK (CENTER) ================= */
@@ -526,10 +598,18 @@ footer{
 
 <div class="topbar">
   <div class="topbar-inner">
-    <a href="#top" class="brand-pill" aria-label="Back to top">
-      <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" />
-      <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" />
+    <a href="#top" class="nav-brand" aria-label="Scott Bertrand">
+      <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
+      <span class="separator"></span>
+      <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
     </a>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#field-notes">Field Notes</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </div>
 </div>
 
@@ -538,7 +618,7 @@ footer{
     <img src="assets/images/tree-ring-logo.png" alt="" />
   </div>
   <div class="name">
-    <img src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" />
+    <img src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
   </div>
 </div>
 
@@ -553,7 +633,7 @@ footer{
   </div>
 </header>
 
-<section>
+<section id="services">
   <div class="wrap">
     <div class="section-head">
       <div class="kicker">What I fix</div>
@@ -615,7 +695,7 @@ footer{
   </div>
 </section>
 
-<section>
+<section id="field-notes">
   <div class="wrap">
     <div class="section-head">
       <div class="kicker">Field notes</div>
@@ -634,7 +714,7 @@ footer{
   </div>
 </section>
 
-<section>
+<section id="contact">
   <div class="wrap">
     <div class="section-head">
       <div class="kicker">Get in touch</div>
@@ -672,7 +752,7 @@ footer{
 
 <footer>
   <div class="footer-mark">
-    <img class="monogram" src="assets/images/sb-monogram-light.png" alt="SB" />
+    <img class="monogram" src="assets/images/sb-monogram-light.png" alt="SB" data-light-src="assets/images/sb-monogram-light.png" data-dark-src="assets/images/sb-monogram-dark.png" />
   </div>
   <div class="footer-meta">© <span id="footer-year"></span> Scott Bertrand</div>
 </footer>
@@ -713,6 +793,16 @@ setTimeout(()=>{
 },1800);
 
 document.getElementById('footer-year').textContent=new Date().getFullYear();
+
+// Dark mode asset switching
+function updateAssets(){
+  const isDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.querySelectorAll('img[data-light-src][data-dark-src]').forEach(img=>{
+    img.src=isDark?img.dataset.darkSrc:img.dataset.lightSrc;
+  });
+}
+updateAssets();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',updateAssets);
 
 measure();
 apply();
