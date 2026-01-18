@@ -142,6 +142,17 @@ body.header-on .logo-pill{
   }
 }
 
+@keyframes subtlePulse{
+  0%, 100%{
+    opacity:1;
+    transform:scale(1);
+  }
+  50%{
+    opacity:.92;
+    transform:scale(.995);
+  }
+}
+
 .menu-pill{
   padding:12px 24px;
   border-radius:999px;
@@ -283,6 +294,9 @@ body.mobile-menu-open .hamburger span:nth-child(3){
   }
   .logo-pill > nav{
     display:none;
+  }
+  .logo-pill:not(:hover){
+    animation:subtlePulse 4s ease-in-out 2s infinite;
   }
   .logo-pill:hover ~ .menu-pill,
   .menu-pill:hover{
