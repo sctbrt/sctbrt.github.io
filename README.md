@@ -1,26 +1,41 @@
-# sctbrt.github.io
-scottbertrand site
 # Scott Bertrand
 
-Personal website for Scott Bertrand.
+ScottBertrand.com is the working site of an independent design and systems office.
 
-This site focuses on systems design for local service businesses, retail, and hospitality — with an emphasis on operational clarity, consistency, and real-world execution.
+The work focuses on reducing friction in how teams plan, decide, and operate — especially when things are busy, imperfect, or changing. The aim is not polish for its own sake, but clarity that holds up under real conditions.
 
-Built as a lightweight, typography-first site using plain HTML/CSS and hosted via GitHub Pages.
-# Scott Bertrand
+This site is not a portfolio.  
+It is a foundation.
 
-This repository contains the source for **ScottBertrand.com** — an independent design office focused on systems that make work feel lighter.
+## What the work focuses on
 
-The work centers on operational clarity: how work moves, where decisions stall, and why simple things become harder to maintain as complexity grows. The focus is on practical systems, brand and decision frameworks, and tools that teams can rely on under real-world constraints.
+- Operational systems and workflows  
+- Brand and decision frameworks  
+- Practical tools and documentation for teams under constraint  
 
-This is not a portfolio site. It is a working foundation for an office in formation.
+The common thread is weight: identifying where work becomes heavier than it needs to be, and removing that friction with simple, durable structures.
 
-## Structure
-- Plain HTML and CSS
-- Typography-first, minimal interface
-- No build step; deployed directly via GitHub Pages
+## Why this exists
 
-## Notes
-The site is intentionally restrained. Content is added only when it adds weight or clarity.
+Most work does not fail loudly.
+
+It slows down through unclear ownership, fragile handoffs, and decisions that never quite settle. Over time, those small points of friction compound and make even good work harder to sustain.
+
+This practice exists to reduce that weight.
+
+## Field Notes
+
+Field Notes is a working record of observations, partial thoughts, and ideas in progress.
+
+It is not a blog and not a publication.  
+It exists to think clearly, not to perform.
+
+## Responsibility
+
+Scott Bertrand is the principal of Bertrand Brands.
+
+The office operates independently and works with a small number of teams at a time.
+
+---
 
 © Bertrand Brands

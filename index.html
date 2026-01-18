@@ -1,1222 +1,1007 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Scott Bertrand — Systems that make things feel lighter</title>
-<meta name="description" content="Systems that make things feel lighter. Operational clarity, brand frameworks, and decision tools for teams under constraint. Founded by Scott Bertrand.">
-<meta name="author" content="Scott Bertrand">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scott Bertrand — Systems that make things feel lighter</title>
+  <meta name="description" content="Systems that make things feel lighter. Operational clarity, brand frameworks, and decision tools for teams under constraint. Founded by Scott Bertrand.">
+  <meta name="author" content="Scott Bertrand">
+  <link rel="canonical" href="https://sctbrt.github.io/">
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://sctbrt.github.io/">
-<meta property="og:title" content="Scott Bertrand — Systems that make things feel lighter">
-<meta property="og:description" content="Operational systems, brand frameworks, and practical tools for teams under constraint.">
-<meta property="og:image" content="https://sctbrt.github.io/assets/images/og-image.png">
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sctbrt.github.io/">
+  <meta property="og:title" content="Scott Bertrand — Systems that make things feel lighter">
+  <meta property="og:description" content="Operational systems, brand frameworks, and practical tools for teams under constraint.">
+  <meta property="og:image" content="https://sctbrt.github.io/assets/images/og-image.png">
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://sctbrt.github.io/">
-<meta property="twitter:title" content="Scott Bertrand — Systems that make things feel lighter">
-<meta property="twitter:description" content="Operational systems, brand frameworks, and practical tools for teams under constraint.">
-<meta property="twitter:image" content="https://sctbrt.github.io/assets/images/og-image.png">
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://sctbrt.github.io/">
+  <meta property="twitter:title" content="Scott Bertrand — Systems that make things feel lighter">
+  <meta property="twitter:description" content="Operational systems, brand frameworks, and practical tools for teams under constraint.">
+  <meta property="twitter:image" content="https://sctbrt.github.io/assets/images/og-image.png">
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="assets/images/favicon.png">
-<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
 
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://sctbrt.github.io/#scott",
-      "name": "Scott Bertrand",
-      "jobTitle": "Founder, Operator & Systems Developer",
-      "description": "Systems developer focused on operational clarity, brand frameworks, and decision tools for teams under constraint.",
-      "url": "https://sctbrt.github.io/",
-      "sameAs": [],
-      "worksFor": {
-        "@id": "https://sctbrt.github.io/#organization"
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://sctbrt.github.io/#scott",
+        "name": "Scott Bertrand",
+        "jobTitle": "Founder, Operator & Systems Developer",
+        "description": "Systems developer focused on operational clarity, brand frameworks, and decision tools for teams under constraint.",
+        "url": "https://sctbrt.github.io/",
+        "sameAs": [],
+        "worksFor": {
+          "@id": "https://sctbrt.github.io/#organization"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://sctbrt.github.io/#organization",
+        "name": "Bertrand Brands",
+        "url": "https://sctbrt.github.io/",
+        "logo": "https://sctbrt.github.io/assets/images/sb-monogram-dark.png",
+        "founder": {
+          "@id": "https://sctbrt.github.io/#scott"
+        },
+        "description": "Systems that make things feel lighter. Operational clarity, brand frameworks, and decision tools for teams under constraint."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://sctbrt.github.io/#website",
+        "url": "https://sctbrt.github.io/",
+        "name": "Scott Bertrand — Systems that make things feel lighter",
+        "description": "Operational systems, brand frameworks, and practical tools for teams under constraint.",
+        "publisher": {
+          "@id": "https://sctbrt.github.io/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://sctbrt.github.io/#webpage",
+        "url": "https://sctbrt.github.io/",
+        "name": "Scott Bertrand — Systems that make things feel lighter",
+        "isPartOf": {
+          "@id": "https://sctbrt.github.io/#website"
+        },
+        "about": {
+          "@id": "https://sctbrt.github.io/#organization"
+        },
+        "description": "Operational systems, brand frameworks, and practical tools for teams under constraint."
       }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://sctbrt.github.io/#organization",
-      "name": "Bertrand Brands",
-      "url": "https://sctbrt.github.io/",
-      "logo": "https://sctbrt.github.io/assets/images/sb-monogram-dark.png",
-      "founder": {
-        "@id": "https://sctbrt.github.io/#scott"
-      },
-      "description": "Systems that make things feel lighter. Operational clarity, brand frameworks, and decision tools for teams under constraint."
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://sctbrt.github.io/#website",
-      "url": "https://sctbrt.github.io/",
-      "name": "Scott Bertrand — Systems that make things feel lighter",
-      "description": "Operational systems, brand frameworks, and practical tools for teams under constraint.",
-      "publisher": {
-        "@id": "https://sctbrt.github.io/#organization"
-      }
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://sctbrt.github.io/#webpage",
-      "url": "https://sctbrt.github.io/",
-      "name": "Scott Bertrand — Systems that make things feel lighter",
-      "isPartOf": {
-        "@id": "https://sctbrt.github.io/#website"
-      },
-      "about": {
-        "@id": "https://sctbrt.github.io/#organization"
-      },
-      "description": "Operational systems, brand frameworks, and practical tools for teams under constraint."
+    ]
+  }
+  </script>
+
+  <style>
+    html{
+      scroll-behavior:smooth;
+      scroll-padding-top:96px;
+      scroll-snap-type:none;
     }
-  ]
-}
-</script>
-
-<style>
-html{
-  scroll-behavior:smooth;
-  scroll-padding-top:80px;
-  /* Scroll snap can feel jumpy/empty during fine scrolling; keep it off for now. */
-  scroll-snap-type: none;
-}
-:root{
-  --bg:#f6f6f4;
-  --ink:#0c0f10;
-  --muted:rgba(12,15,16,.6);
-  --hair:rgba(12,15,16,.12);
-  --panel:rgba(255,255,255,.72);
-
-  --panel-strong: rgba(255,255,255,.86);
-  --shadow: 0 10px 30px rgba(12,15,16,.08);
-  --focus-shadow: 0 0 0 3px rgba(12,15,16,.08);
-  --grid: rgba(12,15,16,.06);
-  --accent:var(--ink);
-
-  --max:1120px;
-  --pad:clamp(18px,3vw,40px);
-  --ease:cubic-bezier(.2,.8,.2,1);
-}
-
-body.dark-mode{
-  --bg:#0c0f10;
-  --ink:#f6f6f4;
-  --muted:rgba(246,246,244,.6);
-  --hair:rgba(246,246,244,.12);
-  --panel:rgba(18,22,24,.72);
-  --panel-strong: rgba(18,22,24,.86);
-  --shadow: 0 10px 30px rgba(0,0,0,.3);
-  --focus-shadow: 0 0 0 3px rgba(246,246,244,.12);
-  --grid: rgba(246,246,244,.06);
-}
-
-*{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{
-  font-family:system-ui,-apple-system,Helvetica,Arial;
-  background:var(--bg);
-  color:var(--ink);
-  overflow-x:hidden;
-}
-
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(1200px 800px at 30% -5%, var(--grid), transparent 65%),
-    linear-gradient(180deg, var(--panel), transparent);
-  z-index:0;
-}
-
-body.dark-mode:before{
-  background:
-    radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.04), transparent 65%),
-    linear-gradient(180deg, rgba(18,22,24,.35), transparent);
-}
-body:after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-  opacity:.14;
-  mask-image: radial-gradient(1000px 700px at 50% 15%, black 35%, transparent 70%);
-  z-index:0;
-}
-
-/* ================= HEADER PILL ================= */
-
-.topbar{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  padding:16px var(--pad);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:12px;
-  z-index:70;
-  transition:gap 600ms var(--ease);
-}
-body.header-on .topbar{
-  gap:12px;
-}
-
-.logo-pill{
-  padding:12px 24px;
-  border-radius:999px;
-  border:1px solid var(--hair);
-  background:var(--panel);
-  backdrop-filter:blur(14px);
-  opacity:0;
-  transform:translateY(20px);
-  animation:logoAppear 800ms var(--ease) 400ms forwards;
-  transition:transform 600ms var(--ease);
-}
-
-@keyframes logoAppear{
-  0%{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  100%{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-@keyframes subtlePulse{
-  0%, 100%{
-    opacity:1;
-    transform:scale(1);
-    box-shadow:0 0 0 0 rgba(0,0,0,0.05);
-  }
-  50%{
-    opacity:.82;
-    transform:scale(.988);
-    box-shadow:0 0 0 4px rgba(0,0,0,0.08);
-  }
-}
-
-body.dark-mode .logo-pill:not(:hover){
-  animation:subtlePulseDark 4s ease-in-out 2s infinite;
-}
-
-@keyframes subtlePulseDark{
-  0%, 100%{
-    opacity:1;
-    transform:scale(1);
-    box-shadow:0 0 0 0 rgba(255,255,255,0.08);
-  }
-  50%{
-    opacity:.82;
-    transform:scale(.988);
-    box-shadow:0 0 0 4px rgba(255,255,255,0.12);
-  }
-}
-
-.menu-pill{
-  padding:12px 24px;
-  border-radius:999px;
-  border:1px solid var(--hair);
-  background:var(--panel);
-  backdrop-filter:blur(14px);
-  opacity:0;
-  pointer-events:none;
-  position:absolute;
-  left:0;
-  transform:translateX(-12px) scale(0.92);
-  transition:opacity 500ms var(--ease), transform 500ms var(--ease);
-}
-
-.nav-brand{
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  transition:transform 300ms var(--ease);
-}
-.nav-brand:focus-visible{
-  outline:2px solid var(--ink);
-  outline-offset:4px;
-  border-radius:4px;
-}
-.nav-brand .monogram{
-  height:20px;
-  width:auto;
-  display:block;
-  opacity:.85;
-  transition:height 300ms var(--ease);
-}
-.nav-brand .separator{
-  width:1px;
-  height:20px;
-  background:var(--hair);
-  opacity:.8;
-  transition:height 300ms var(--ease);
-}
-.nav-brand .wordmark{
-  height:14px;
-  width:auto;
-  display:block;
-  opacity:.85;
-  transition:height 300ms var(--ease);
-}
-
-body.collapse .nav-brand .monogram{
-  height:18px;
-}
-body.collapse .nav-brand .separator{
-  height:18px;
-}
-body.collapse .nav-brand .wordmark{
-  height:12px;
-}
-
-.nav-menu{
-  display:flex;
-  align-items:center;
-  gap:32px;
-  list-style:none;
-  margin:0;
-  padding:0;
-}
-.nav-menu a{
-  text-decoration:none;
-  color:var(--ink);
-  font-size:14px;
-  font-weight:400;
-  letter-spacing:.02em;
-  opacity:.7;
-  transition:opacity 200ms var(--ease);
-}
-.nav-menu a:hover{
-  opacity:1;
-}
-.nav-menu a:focus-visible{
-  outline:2px solid var(--ink);
-  outline-offset:4px;
-  border-radius:2px;
-}
-
-.pill-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  width:100%;
-}
-
-.hamburger{
-  display:none;
-  flex-direction:column;
-  gap:5px;
-  background:transparent;
-  border:none;
-  cursor:pointer;
-  padding:6px;
-  transition:opacity 200ms var(--ease);
-}
-.hamburger span{
-  display:block;
-  width:20px;
-  height:2px;
-  background:var(--ink);
-  border-radius:2px;
-  opacity:.7;
-  transition:all 300ms var(--ease);
-}
-.hamburger:hover span{
-  opacity:1;
-}
-body.mobile-menu-open .hamburger span{
-  opacity:1;
-}
-body.mobile-menu-open .hamburger span:nth-child(1){
-  transform:translateY(7px) rotate(45deg);
-}
-body.mobile-menu-open .hamburger span:nth-child(2){
-  opacity:0;
-  transform:translateX(-10px);
-}
-body.mobile-menu-open .hamburger span:nth-child(3){
-  transform:translateY(-7px) rotate(-45deg);
-}
-
-@media (min-width: 769px){
-  .nav-brand{
-    pointer-events:auto;
-  }
-  .pill-header{
-    width:auto;
-  }
-  .logo-pill > nav{
-    display:none;
-  }
-  .hamburger{
-    display:none;
-  }
-  .logo-pill{
-    transition:transform 600ms var(--ease), opacity 400ms var(--ease);
-  }
-  .logo-pill:not(:hover):not(.menu-revealed){
-    animation:subtlePulse 4s ease-in-out 2s infinite;
-  }
-  body.dark-mode .logo-pill:not(:hover):not(.menu-revealed){
-    animation:subtlePulseDark 4s ease-in-out 2s infinite;
-  }
-  .menu-pill{
-    position:relative;
-    opacity:0;
-    transform:translateX(-12px) scale(0.92);
-    pointer-events:none;
-    transition:opacity 500ms var(--ease), transform 500ms var(--ease);
-  }
-  .logo-pill:hover ~ .menu-pill,
-  .menu-pill:hover,
-  body.menu-revealed .menu-pill{
-    opacity:1;
-    pointer-events:auto;
-    transform:translateX(0) scale(1);
-  }
-  body.menu-revealed .logo-pill,
-  .logo-pill:hover{
-    animation:none;
-  }
-}
-
-@media (max-width: 768px){
-  .topbar{
-    flex-direction:column;
-    gap:0;
-  }
-  .logo-pill{
-    padding:10px 20px;
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:stretch;
-    gap:0;
-    transition:gap 300ms var(--ease), padding 300ms var(--ease), border-radius 300ms var(--ease);
-  }
-  body.mobile-menu-open .logo-pill{
-    gap:16px;
-    padding-bottom:16px;
-    border-radius:18px;
-  }
-  .menu-pill{
-    display:none;
-  }
-  .hamburger{
-    display:flex;
-  }
-  .nav-brand{
-    pointer-events:auto;
-  }
-  .nav-menu{
-    display:none;
-    width:100%;
-    flex-direction:column;
-    gap:8px;
-    padding-top:16px;
-    border-top:1px solid var(--hair);
-    opacity:0;
-    transform:translateY(-8px);
-    transition:opacity 300ms var(--ease), transform 300ms var(--ease);
-  }
-  body.mobile-menu-open .nav-menu{
-    display:flex;
-    opacity:1;
-    transform:translateY(0);
-  }
-  .nav-menu li{
-    text-align:center;
-    opacity:0;
-    transform:translateY(-4px);
-    transition:opacity 300ms var(--ease), transform 300ms var(--ease);
-  }
-  body.mobile-menu-open .nav-menu li{
-    opacity:1;
-    transform:translateY(0);
-  }
-  body.mobile-menu-open .nav-menu li:nth-child(1){
-    transition-delay:50ms;
-  }
-  body.mobile-menu-open .nav-menu li:nth-child(2){
-    transition-delay:100ms;
-  }
-  body.mobile-menu-open .nav-menu li:nth-child(3){
-    transition-delay:150ms;
-  }
-  .nav-menu a{
-    display:block;
-    padding:12px 16px;
-    font-size:15px;
-  }
-  .nav-brand .wordmark{
-    height:12px;
-  }
-  .nav-brand .monogram{
-    height:18px;
-  }
-  .nav-brand .separator{
-    height:18px;
-  }
-}
-
-/* ================= HERO ================= */
-
-header{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding-top:140px;
-  position:relative;
-}
-.wrap{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:0 var(--pad);
-}
-
-.hero-content{
-  opacity:0;
-  transform:translateY(12px);
-  animation:fadeInUp 800ms var(--ease) 1000ms forwards;
-}
-
-@keyframes fadeInUp{
-  to{opacity:1;transform:none}
-}
-
-h1{
-  font-size:clamp(28px,4.5vw,64px);
-  margin:0 0 24px;
-  line-height:1.15;
-  font-weight:500;
-  letter-spacing:-.02em;
-}
-
-.positioning{
-  font-size:clamp(16px,1.8vw,22px);
-  max-width:62ch;
-  color:var(--muted);
-  line-height:1.5;
-  margin:0 0 16px;
-  font-weight:400;
-}
-
-p{
-  max-width:65ch;
-  color:var(--muted);
-  line-height:1.6;
-  font-size:15px;
-}
-
-.divider{
-  margin-top:64px;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:var(--muted);
-  opacity:.35;
-  animation:fadeIn 600ms var(--ease) 1800ms forwards;
-}
-
-@keyframes fadeIn{
-  to{opacity:.6}
-}
-
-.divider:before{
-  content:"";
-  height:1px;
-  background: var(--hair);
-  flex:1;
-}
-.divider span{
-  font-size:11px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-}
-
-/* ================= SECTIONS ================= */
-
-section{
-  padding:clamp(80px,10vh,120px) 0;
-  border-top:1px solid var(--hair);
-  position:relative;
-}
-.section-head{
-  display:grid;
-  gap:12px;
-  max-width: 78ch;
-}
-.section-head-spaced{
-  margin-top:80px;
-}
-.kicker{
-  font-size:12px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-.kicker-spaced{
-  margin-top:20px;
-}
-.h2{
-  font-size:clamp(28px,3.2vw,44px);
-  margin:0;
-}
-.lede{
-  margin:0;
-  color:var(--muted);
-  line-height:1.55;
-}
-.lede-spaced{
-  margin-top:8px;
-}
-.tagline{
-  font-size:13px;
-  opacity:.6;
-  margin-top:32px;
-}
-.cards{
-  margin-top:28px;
-  display:grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap:20px;
-}
-.card{
-  grid-column: span 6;
-  background: var(--panel-strong);
-  border:1px solid var(--hair);
-  border-radius:18px;
-  padding:24px;
-  box-shadow: var(--shadow);
-}
-.card small{
-  display:block;
-  font-size:12px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-  opacity:.85;
-  margin-bottom:8px;
-}
-.card p{ margin:0; }
-.card strong{ color: var(--ink); font-weight:600; }
-
-@media (max-width: 820px){
-  .card{ grid-column: span 12; }
-}
-
-/* ================= CONTACT ================= */
-
-.contact-form{
-  margin-top:40px;
-  background:var(--panel-strong);
-  border:1px solid var(--hair);
-  border-radius:18px;
-  padding:32px;
-  box-shadow:var(--shadow);
-  max-width:600px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-.form-group{
-  margin-bottom:20px;
-}
-
-.form-group label{
-  display:block;
-  font-size:12px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:8px;
-  font-weight:500;
-}
-
-.form-group input,
-.form-group textarea{
-  width:100%;
-  padding:12px 16px;
-  border:1px solid var(--hair);
-  border-radius:8px;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:inherit;
-  font-size:15px;
-  transition:border-color 200ms var(--ease), box-shadow 200ms var(--ease);
-}
-
-.form-group input:focus,
-.form-group textarea:focus{
-  outline:none;
-  border-color:var(--ink);
-  box-shadow:var(--focus-shadow);
-}
-
-.form-group textarea{
-  resize:vertical;
-  min-height:120px;
-}
-
-.submit-btn{
-  width:100%;
-  padding:14px 28px;
-  background:var(--ink);
-  color:var(--bg);
-  border:none;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:transform 150ms var(--ease), box-shadow 150ms var(--ease);
-}
-
-.submit-btn:hover{
-  transform:translateY(-1px);
-  box-shadow:var(--shadow);
-}
-
-.submit-btn:active{
-  transform:translateY(0);
-}
-
-.submit-btn:focus-visible{
-  outline:2px solid var(--ink);
-  outline-offset:4px;
-}
-
-.form-status{
-  margin-top:16px;
-  padding:12px 16px;
-  border-radius:8px;
-  font-size:14px;
-  text-align:center;
-  display:none;
-}
-.form-status.success{
-  display:block;
-  background:rgba(52,199,89,.1);
-  color:#34c759;
-  border:1px solid rgba(52,199,89,.2);
-}
-.form-status.error{
-  display:block;
-  background:rgba(255,59,48,.1);
-  color:#ff3b30;
-  border:1px solid rgba(255,59,48,.2);
-}
-
-
-/* ================= FIELD NOTES ================= */
-
-.field-note-card{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.field-note-image{
-  width:100%;
-  border-radius:10px;
-  overflow:hidden;
-  background:var(--bg);
-  margin-top:8px;
-}
-
-.field-note-image img{
-  width:100%;
-  height:auto;
-  display:block;
-  object-fit:cover;
-}
-
-.loading-card{
-  grid-column: span 12;
-  text-align: center;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  border-top:1px solid var(--hair);
-  padding:80px 0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:24px;
-  position:relative;
-}
-
-.footer-mark{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-}
-
-.footer-mark img.monogram{
-  height:24px;
-  width:auto;
-  opacity:.6;
-}
-
-.footer-meta{
-  font-size:12px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--muted);
-  opacity:.6;
-  text-align:center;
-}
-
-.theme-toggle{
-  position:absolute;
-  bottom:80px;
-  right:var(--pad);
-  background:var(--panel);
-  border:1px solid var(--hair);
-  border-radius:999px;
-  padding:8px 16px;
-  font-size:11px;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--muted);
-  cursor:pointer;
-  transition:all 200ms var(--ease);
-  backdrop-filter:blur(14px);
-}
-
-.theme-toggle:hover{
-  opacity:1;
-  color:var(--ink);
-  border-color:var(--ink);
-}
-
-.theme-toggle:focus-visible{
-  outline:2px solid var(--ink);
-  outline-offset:4px;
-}
-
-@media (max-width: 768px){
-  .theme-toggle{
-    position:static;
-    margin-top:16px;
-  }
-}
-
-/* ================= ACCESSIBILITY ================= */
-
-.skip-to-content{
-  position:absolute;
-  top:-100px;
-  left:50%;
-  transform:translateX(-50%);
-  background:var(--ink);
-  color:var(--bg);
-  padding:12px 24px;
-  border-radius:8px;
-  font-size:14px;
-  font-weight:600;
-  text-decoration:none;
-  z-index:100;
-  transition:top 200ms var(--ease);
-}
-.skip-to-content:focus{
-  top:16px;
-}
-
-@media (prefers-reduced-motion: reduce){
-  *,*:before,*:after{
-    animation-duration:0.01ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:0.01ms !important;
-  }
-}
-
-/* ================= SCRIPT ================= */
-</style>
+    :root{
+      --bg:#f6f6f4;
+      --ink:#0c0f10;
+      --muted:rgba(12,15,16,.6);
+      --hair:rgba(12,15,16,.12);
+      --panel:rgba(255,255,255,.72);
+      --panel-strong: rgba(255,255,255,.86);
+      --shadow: 0 10px 30px rgba(12,15,16,.08);
+      --focus-shadow: 0 0 0 3px rgba(12,15,16,.08);
+      --grid: rgba(12,15,16,.06);
+      --accent:var(--ink);
+      --max:1120px;
+      --pad:clamp(18px,3vw,40px);
+      --ease:cubic-bezier(.2,.8,.2,1);
+    }
+
+    body.dark-mode{
+      --bg:#0c0f10;
+      --ink:#f6f6f4;
+      --muted:rgba(246,246,244,.6);
+      --hair:rgba(246,246,244,.12);
+      --panel:rgba(18,22,24,.72);
+      --panel-strong: rgba(18,22,24,.86);
+      --shadow: 0 10px 30px rgba(0,0,0,.3);
+      --focus-shadow: 0 0 0 3px rgba(246,246,244,.12);
+      --grid: rgba(246,246,244,.06);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%}
+    body{
+      font-family:system-ui,-apple-system,Helvetica,Arial;
+      background:var(--bg);
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 800px at 30% -5%, var(--grid), transparent 65%),
+        linear-gradient(180deg, var(--panel), transparent);
+      z-index:0;
+    }
+
+    body.dark-mode:before{
+      background:
+        radial-gradient(1200px 800px at 30% -5%, rgba(52,199,89,.04), transparent 65%),
+        linear-gradient(180deg, rgba(18,22,24,.35), transparent);
+    }
+
+    body:after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size:32px 32px;
+      opacity:.14;
+      mask-image: radial-gradient(1000px 700px at 50% 15%, black 35%, transparent 70%);
+      z-index:0;
+    }
+
+    /* ================= ACCESSIBILITY ================= */
+    .skip-to-content{
+      position:absolute;
+      top:-100px;
+      left:50%;
+      transform:translateX(-50%);
+      background:var(--ink);
+      color:var(--bg);
+      padding:12px 24px;
+      border-radius:8px;
+      font-size:14px;
+      font-weight:600;
+      text-decoration:none;
+      z-index:100;
+      transition:top 200ms var(--ease);
+    }
+    .skip-to-content:focus{ top:16px; }
+
+    /* ================= HEADER ================= */
+    .topbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      padding:16px var(--pad);
+      display:flex;
+      justify-content:center;
+      z-index:70;
+      pointer-events:none;
+    }
+
+    .header-pill{
+      pointer-events:auto;
+      width:min(var(--max), calc(100% - (var(--pad) * 0)));
+      border:1px solid var(--hair);
+      background:var(--panel);
+      backdrop-filter:blur(14px);
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      padding:12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      opacity:0;
+      transform:translateY(-8px);
+      transition:opacity 500ms var(--ease), transform 500ms var(--ease), border-radius 300ms var(--ease);
+    }
+
+    body.header-on .header-pill{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .nav-brand{
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .nav-brand:focus-visible{
+      outline:2px solid var(--ink);
+      outline-offset:4px;
+      border-radius:6px;
+    }
+
+    .nav-brand .monogram{
+      height:20px;
+      width:auto;
+      display:block;
+      opacity:.9;
+    }
+    .nav-brand .separator{
+      width:1px;
+      height:18px;
+      background:var(--hair);
+      opacity:.9;
+    }
+    .nav-brand .wordmark{
+      height:14px;
+      width:auto;
+      display:block;
+      opacity:.9;
+    }
+
+    body.collapse .nav-brand .monogram{ height:18px; }
+    body.collapse .nav-brand .wordmark{ height:12px; }
+
+    .nav-menu{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      list-style:none;
+      margin:0;
+      padding:0;
+    }
+
+    .nav-menu a{
+      text-decoration:none;
+      color:var(--ink);
+      font-size:14px;
+      font-weight:400;
+      letter-spacing:.02em;
+      opacity:.72;
+      transition:opacity 200ms var(--ease);
+    }
+    .nav-menu a:hover{ opacity:1; }
+    .nav-menu a:focus-visible{
+      outline:2px solid var(--ink);
+      outline-offset:4px;
+      border-radius:4px;
+    }
+
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:5px;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      padding:8px;
+      border-radius:10px;
+      transition:background 200ms var(--ease);
+    }
+    .hamburger:hover{ background:rgba(0,0,0,.04); }
+    body.dark-mode .hamburger:hover{ background:rgba(255,255,255,.06); }
+
+    .hamburger span{
+      display:block;
+      width:20px;
+      height:2px;
+      background:var(--ink);
+      border-radius:2px;
+      opacity:.8;
+      transition:transform 250ms var(--ease), opacity 250ms var(--ease);
+    }
+
+    .mobile-nav{
+      display:none;
+      width:100%;
+      margin-top:10px;
+      border-top:1px solid var(--hair);
+      padding-top:10px;
+    }
+
+    .mobile-nav ul{
+      list-style:none;
+      margin:0;
+      padding:6px 0 0;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .mobile-nav a{
+      display:block;
+      padding:12px 14px;
+      border-radius:12px;
+      text-align:center;
+      opacity:.9;
+      background:transparent;
+    }
+
+    body.mobile-menu-open .hamburger span:nth-child(1){ transform:translateY(7px) rotate(45deg); opacity:1; }
+    body.mobile-menu-open .hamburger span:nth-child(2){ opacity:0; transform:translateX(-10px); }
+    body.mobile-menu-open .hamburger span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); opacity:1; }
+
+    @media (max-width: 768px){
+      .header-pill{
+        width:100%;
+        border-radius:18px;
+        align-items:stretch;
+        flex-direction:column;
+      }
+      .header-row{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+      }
+      .nav-menu{ display:none; }
+      .hamburger{ display:flex; }
+      .mobile-nav{ display:block; }
+      .mobile-nav[hidden]{ display:none; }
+    }
+
+    /* ================= HERO ================= */
+    header{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding-top:140px;
+      position:relative;
+      z-index:1;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 var(--pad);
+    }
+
+    .hero-content{
+      opacity:0;
+      transform:translateY(12px);
+      animation:fadeInUp 800ms var(--ease) 500ms forwards;
+    }
+
+    @keyframes fadeInUp{ to{opacity:1;transform:none} }
+
+    h1{
+      font-size:clamp(28px,4.5vw,64px);
+      margin:0 0 24px;
+      line-height:1.15;
+      font-weight:500;
+      letter-spacing:-.02em;
+    }
+
+    .positioning{
+      font-size:clamp(16px,1.8vw,22px);
+      max-width:62ch;
+      color:var(--muted);
+      line-height:1.5;
+      margin:0 0 16px;
+      font-weight:400;
+    }
+
+    p{
+      max-width:65ch;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:15px;
+      margin:0;
+    }
+
+    .tagline{
+      font-size:13px;
+      opacity:.6;
+      margin-top:18px;
+    }
+
+    .divider{
+      margin-top:64px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      opacity:.35;
+      animation:fadeIn 600ms var(--ease) 1200ms forwards;
+    }
+
+    @keyframes fadeIn{ to{opacity:.6} }
+
+    .divider:before{
+      content:"";
+      height:1px;
+      background:var(--hair);
+      flex:1;
+    }
+
+    .divider span{
+      font-size:11px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+    }
+
+    /* ================= SECTIONS ================= */
+    main{ position:relative; z-index:1; }
+
+    section{
+      padding:clamp(80px,10vh,120px) 0;
+      border-top:1px solid var(--hair);
+      position:relative;
+    }
+
+    .section-head{
+      display:grid;
+      gap:12px;
+      max-width:78ch;
+    }
+
+    .section-head-spaced{ margin-top:80px; }
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    .kicker-spaced{ margin-top:20px; }
+
+    .h2{
+      font-size:clamp(28px,3.2vw,44px);
+      margin:0;
+      line-height:1.18;
+      letter-spacing:-.015em;
+      font-weight:520;
+    }
+
+    .lede{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .lede-spaced{ margin-top:8px; }
+
+    .cards{
+      margin-top:28px;
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:20px;
+    }
+
+    .card{
+      grid-column:span 6;
+      background:var(--panel-strong);
+      border:1px solid var(--hair);
+      border-radius:18px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .card small{
+      display:block;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      opacity:.85;
+      margin-bottom:8px;
+    }
+
+    .card p{ margin:0; }
+
+    @media (max-width: 820px){
+      .card{ grid-column:span 12; }
+    }
+
+    /* ================= CONTACT ================= */
+    .contact-form{
+      margin-top:40px;
+      background:var(--panel-strong);
+      border:1px solid var(--hair);
+      border-radius:18px;
+      padding:32px;
+      box-shadow:var(--shadow);
+      max-width:600px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .form-group{ margin-bottom:20px; }
+
+    .form-group label{
+      display:block;
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:500;
+    }
+
+    .form-group input,
+    .form-group textarea{
+      width:100%;
+      padding:12px 16px;
+      border:1px solid var(--hair);
+      border-radius:8px;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:inherit;
+      font-size:15px;
+      transition:border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus{
+      outline:none;
+      border-color:var(--ink);
+      box-shadow:var(--focus-shadow);
+    }
+
+    .form-group textarea{
+      resize:vertical;
+      min-height:120px;
+    }
+
+    .submit-btn{
+      width:100%;
+      padding:14px 28px;
+      background:var(--ink);
+      color:var(--bg);
+      border:none;
+      border-radius:8px;
+      font-size:14px;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:transform 150ms var(--ease), box-shadow 150ms var(--ease);
+    }
+
+    .submit-btn:hover{ transform:translateY(-1px); box-shadow:var(--shadow); }
+    .submit-btn:active{ transform:translateY(0); }
+
+    .submit-btn:focus-visible{
+      outline:2px solid var(--ink);
+      outline-offset:4px;
+    }
+
+    .form-status{
+      margin-top:16px;
+      padding:12px 16px;
+      border-radius:8px;
+      font-size:14px;
+      text-align:center;
+      display:none;
+    }
+
+    .form-status.success{
+      display:block;
+      background:rgba(52,199,89,.1);
+      color:#34c759;
+      border:1px solid rgba(52,199,89,.2);
+    }
+
+    .form-status.error{
+      display:block;
+      background:rgba(255,59,48,.1);
+      color:#ff3b30;
+      border:1px solid rgba(255,59,48,.2);
+    }
+
+    /* ================= FIELD NOTES ================= */
+    .field-note-card{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .field-note-image{
+      width:100%;
+      border-radius:10px;
+      overflow:hidden;
+      background:var(--bg);
+      margin-top:8px;
+    }
+
+    .field-note-image img{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:cover;
+    }
+
+    .loading-card{ grid-column:span 12; text-align:center; }
+
+    /* ================= FOOTER ================= */
+    footer{
+      border-top:1px solid var(--hair);
+      padding:80px 0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:24px;
+      position:relative;
+      z-index:1;
+    }
+
+    .footer-mark{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .footer-mark img.monogram{ height:24px; width:auto; opacity:.6; }
+
+    .footer-meta{
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--muted);
+      opacity:.6;
+      text-align:center;
+    }
+
+    .theme-toggle{
+      position:absolute;
+      bottom:80px;
+      right:var(--pad);
+      background:var(--panel);
+      border:1px solid var(--hair);
+      border-radius:999px;
+      padding:8px 16px;
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      cursor:pointer;
+      transition:all 200ms var(--ease);
+      backdrop-filter:blur(14px);
+    }
+
+    .theme-toggle:hover{ opacity:1; color:var(--ink); border-color:var(--ink); }
+
+    .theme-toggle:focus-visible{ outline:2px solid var(--ink); outline-offset:4px; }
+
+    @media (max-width: 768px){
+      .theme-toggle{ position:static; margin-top:16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *,*:before,*:after{
+        animation-duration:0.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:0.01ms !important;
+      }
+    }
+  </style>
 </head>
 
-<body class="boot-1">
-<script>
-// Prevent flash of wrong theme - runs immediately before render
-(function() {
-  const saved = localStorage.getItem('theme');
-  const theme = saved || 'light';
-  if (theme === 'dark') {
-    document.body.classList.add('dark-mode');
-  }
-})();
-</script>
-<a href="#main-content" class="skip-to-content">Skip to main content</a>
-<a id="top"></a>
+<body>
+  <script>
+    // Prevent flash of wrong theme - runs immediately before render
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const theme = saved || 'light';
+      if (theme === 'dark') document.body.classList.add('dark-mode');
+    })();
+  </script>
 
-<div class="topbar">
-  <div class="logo-pill">
-    <div class="pill-header">
-      <a href="#top" class="nav-brand" aria-label="Scott Bertrand">
-        <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
-        <span class="separator"></span>
-        <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
-      </a>
-      <button class="hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <nav>
-      <ul class="nav-menu">
-        <li><a href="#focus">Focus</a></li>
-        <li><a href="#field-notes">Field Notes</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="menu-pill">
-    <nav>
-      <ul class="nav-menu">
-        <li><a href="#focus">Focus</a></li>
-        <li><a href="#field-notes">Field Notes</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</div>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <a id="top"></a>
 
-<header id="main-content">
-  <div class="wrap">
-    <div class="hero-content">
-      <h1>Systems that make things feel lighter.</h1>
-      <p class="positioning">Reducing friction in how teams plan, decide, and hand off — especially when things are busy, imperfect, or changing. The goal isn't perfection. It's clearer decisions, fewer unforced errors, and more room to focus on what actually matters.</p>
-      <p class="tagline">Most days feel heavier than they need to be. This is an attempt to change that.</p>
-    </div>
-    <div class="divider"><span>—</span></div>
-  </div>
-</header>
+  <div class="topbar" aria-hidden="true">
+    <div class="header-pill" role="navigation" aria-label="Primary">
+      <div class="header-row">
+        <a href="#top" class="nav-brand" aria-label="Scott Bertrand">
+          <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
+          <span class="separator" aria-hidden="true"></span>
+          <img class="wordmark" src="assets/images/scott-bertrand-wordmark-dark.png" alt="Scott Bertrand" data-light-src="assets/images/scott-bertrand-wordmark-dark.png" data-dark-src="assets/images/scott-bertrand-wordmark-light.png" />
+        </a>
 
-<section id="focus">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Focus</div>
-      <p class="lede lede-spaced">Operational systems<br>Brand and decision frameworks<br>Practical tools for teams under constraint</p>
-    </div>
+        <ul class="nav-menu" aria-label="Site">
+          <li><a href="#focus">Focus</a></li>
+          <li><a href="#field-notes">Field Notes</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
 
-    <div class="divider"><span>—</span></div>
-
-    <div class="section-head" class="section-head-spaced">
-      <h2 class="h2">Most things don't fail because people aren't trying hard enough.</h2>
-      <p class="lede">They fail quietly — through unclear ownership, fragile handoffs, and decisions that never quite settle. Over time, that friction adds weight to the day.</p>
-      <p class="lede">This practice exists to remove some of that weight.</p>
-    </div>
-
-    <div class="divider"><span>—</span></div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="section-head">
-      <p class="lede">This is usually engaged when things feel harder to manage than they should.</p>
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <small>Operational Systems</small>
-        <p>Clarifying workflows, responsibilities, and decision points so work moves with less correction.</p>
+        <button class="hamburger" type="button" aria-label="Toggle menu" aria-controls="mobile-nav" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-      <div class="card">
-        <small>Brand & Structure</small>
-        <p>Defining what an organization is, what it is not, and how that shows up consistently.</p>
-      </div>
-      <div class="card">
-        <small>Tools & Documentation</small>
-        <p>Creating references teams can use when time and attention are limited.</p>
-      </div>
+
+      <nav id="mobile-nav" class="mobile-nav" hidden>
+        <ul>
+          <li><a href="#focus">Focus</a></li>
+          <li><a href="#field-notes">Field Notes</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
     </div>
-
-    <div class="divider"><span>—</span></div>
-
-    <div class="section-head" class="section-head-spaced">
-      <div class="kicker">What this often involves</div>
-      <p class="lede kicker-spaced">Mapping how things actually move — not how they're described.</p>
-      <p class="lede">Clarifying where decisions stall or repeat.</p>
-      <p class="lede">Making responsibilities explicit when they've become assumed.</p>
-      <p class="lede">Creating simple references teams can rely on without constant explanation.</p>
-    </div>
-
-    <div class="divider"><span>—</span></div>
   </div>
-</section>
 
-<section id="field-notes">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Field notes</div>
-      <p class="lede">Field Notes is a live record — observations, partial thoughts, and ideas in progress.</p>
-      <p class="lede">Not a blog, not a publication. It exists to think clearly, not to perform.</p>
-    </div>
-
-    <div class="cards" id="field-notes-cards">
-      <!-- Field notes loaded dynamically from Notion -->
-      <div class="card loading-card">
-        <p>Loading field notes...</p>
+  <header>
+    <div class="wrap">
+      <div class="hero-content">
+        <h1>Systems that make things feel lighter.</h1>
+        <p class="positioning">Reducing friction in how teams plan, decide, and hand off — especially when things are busy, imperfect, or changing. The goal isn't perfection. It's clearer decisions, fewer unforced errors, and more room to focus on what actually matters.</p>
+        <p class="tagline">Most days feel heavier than they need to be. This is an attempt to change that.</p>
       </div>
+      <div class="divider"><span>—</span></div>
     </div>
+  </header>
 
-    <div class="divider"><span>—</span></div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="section-head">
-      <p class="lede">Scott Bertrand is founder, operator, and systems developer at Bertrand Brands.</p>
-      <p class="lede">The focus is systems, operational clarity, and the design decisions that shape how organizations function day to day.</p>
-      <p class="lede">The office operates independently and engages with a small number of teams at a time.</p>
-    </div>
-
-    <div class="divider"><span>—</span></div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="kicker">Get in touch</div>
-    </div>
-
-    <form class="contact-form" id="contact-form" action="https://formspree.io/f/meeeazrq" method="POST">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required>
+  <main id="main-content">
+    <section id="focus">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Focus</div>
+          <p class="lede lede-spaced">Operational systems<br>Brand and decision frameworks<br>Practical tools for teams under constraint</p>
         </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+        <div class="divider"><span>—</span></div>
+
+        <div class="section-head section-head-spaced">
+          <h2 class="h2">Most things don't fail because people aren't trying hard enough.</h2>
+          <p class="lede">They fail quietly — through unclear ownership, fragile handoffs, and decisions that never quite settle. Over time, that friction adds weight to the day.</p>
+          <p class="lede">This practice exists to remove some of that weight.</p>
         </div>
 
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
+        <div class="divider"><span>—</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="lede">This is usually engaged when things feel harder to manage than they should.</p>
         </div>
 
-        <button type="submit" class="submit-btn">Send message</button>
-        <div class="form-status" id="form-status"></div>
-    </form>
-  </div>
-</section>
+        <div class="cards">
+          <div class="card">
+            <small>Operational Systems</small>
+            <p>Clarifying workflows, responsibilities, and decision points so work moves with less correction.</p>
+          </div>
+          <div class="card">
+            <small>Brand &amp; Structure</small>
+            <p>Defining what an organization is, what it is not, and how that shows up consistently.</p>
+          </div>
+          <div class="card">
+            <small>Tools &amp; Documentation</small>
+            <p>Creating references teams can use when time and attention are limited.</p>
+          </div>
+        </div>
 
-<footer>
-  <div class="footer-mark">
-    <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
-  </div>
-  <div class="footer-meta">© Bertrand Brands<br>Scott Bertrand, Principal</div>
-  <button class="theme-toggle" aria-label="Toggle theme">
-    <span class="theme-label">Dark mode</span>
-  </button>
-</footer>
+        <div class="divider"><span>—</span></div>
 
-<script src="assets/js/field-notes.js"></script>
+        <div class="section-head section-head-spaced">
+          <div class="kicker">What this often involves</div>
+          <p class="lede kicker-spaced">Mapping how things actually move — not how they're described.</p>
+          <p class="lede">Clarifying where decisions stall or repeat.</p>
+          <p class="lede">Making responsibilities explicit when they've become assumed.</p>
+          <p class="lede">Creating simple references teams can rely on without constant explanation.</p>
+        </div>
 
-<script>
-// Header pill behavior: show only after the user scrolls, and restore when back at top.
-// Also separate "header-on" (visible) from "collapse" (slightly smaller) for better feel.
-let menuRevealTimeout = null;
-function applyScroll(){
-  const y = window.scrollY || 0;
+        <div class="divider"><span>—</span></div>
+      </div>
+    </section>
 
-  // Show header pill once the user has meaningfully moved.
-  if (y > 10) {
-    document.body.classList.add('header-on');
+    <section id="field-notes">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Field notes</div>
+          <p class="lede">Field Notes is a live record — observations, partial thoughts, and ideas in progress.</p>
+          <p class="lede">Not a blog, not a publication. It exists to think clearly, not to perform.</p>
+        </div>
 
-    // On desktop, if user scrolls without hovering menu, reveal it after 3 seconds
-    if (window.innerWidth > 768 && !document.body.classList.contains('menu-revealed')) {
-      if (menuRevealTimeout) clearTimeout(menuRevealTimeout);
-      menuRevealTimeout = setTimeout(() => {
-        document.body.classList.add('menu-revealed');
-        document.querySelector('.logo-pill')?.classList.add('menu-revealed');
-      }, 3000);
+        <div class="cards" id="field-notes-cards">
+          <div class="card loading-card">
+            <p>Loading field notes...</p>
+          </div>
+        </div>
+
+        <div class="divider"><span>—</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="lede">Scott Bertrand is founder, operator, and systems developer at Bertrand Brands.</p>
+          <p class="lede">The focus is systems, operational clarity, and the design decisions that shape how organizations function day to day.</p>
+          <p class="lede">The office operates independently and engages with a small number of teams at a time.</p>
+        </div>
+
+        <div class="divider"><span>—</span></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="kicker">Get in touch</div>
+        </div>
+
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/meeeazrq" method="POST">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Send message</button>
+          <div class="form-status" id="form-status"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-mark">
+      <img class="monogram" src="assets/images/sb-monogram-dark.png" alt="SB" data-light-src="assets/images/sb-monogram-dark.png" data-dark-src="assets/images/sb-monogram-light.png" />
+    </div>
+    <div class="footer-meta">© Bertrand Brands<br>Scott Bertrand, Principal</div>
+    <button class="theme-toggle" type="button" aria-label="Toggle theme">
+      <span class="theme-label">Dark mode</span>
+    </button>
+  </footer>
+
+  <script src="assets/js/field-notes.js"></script>
+
+  <script>
+    // Header: show pill only after user scrolls; collapse slightly after deeper scroll.
+    function applyScroll(){
+      const y = window.scrollY || 0;
+      if (y > 10) document.body.classList.add('header-on');
+      else document.body.classList.remove('header-on');
+
+      if (y > 140) document.body.classList.add('collapse');
+      else document.body.classList.remove('collapse');
     }
-  } else {
-    document.body.classList.remove('header-on');
-    document.body.classList.remove('menu-revealed');
-    document.querySelector('.logo-pill')?.classList.remove('menu-revealed');
-    if (menuRevealTimeout) clearTimeout(menuRevealTimeout);
-  }
 
-  // Collapse sizing only after a bit more scroll.
-  if (y > 140) {
-    document.body.classList.add('collapse');
-  } else {
-    document.body.classList.remove('collapse');
-  }
-}
-
-// Theme management: manual toggle with localStorage persistence
-function getTheme() {
-  const saved = localStorage.getItem('theme');
-  return saved || 'light'; // Default to light mode
-}
-
-function setTheme(theme) {
-  localStorage.setItem('theme', theme);
-  if (theme === 'dark') {
-    document.body.classList.add('dark-mode');
-  } else {
-    document.body.classList.remove('dark-mode');
-  }
-  updateAssets();
-  updateThemeLabel();
-}
-
-function updateAssets(){
-  const isDark = document.body.classList.contains('dark-mode');
-  document.querySelectorAll('img[data-light-src][data-dark-src]').forEach(img => {
-    img.src = isDark ? img.dataset.darkSrc : img.dataset.lightSrc;
-  });
-}
-
-function updateThemeLabel() {
-  const isDark = document.body.classList.contains('dark-mode');
-  const label = document.querySelector('.theme-label');
-  if (label) {
-    label.textContent = isDark ? 'Light mode' : 'Dark mode';
-  }
-}
-
-// Initialize theme on page load
-setTheme(getTheme());
-
-// Theme toggle button
-const themeToggle = document.querySelector('.theme-toggle');
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = getTheme();
-    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
-  });
-}
-
-applyScroll();
-window.addEventListener('scroll', applyScroll, { passive: true });
-
-// Cancel auto-reveal if user manually hovers (desktop only)
-const logoPill = document.querySelector('.logo-pill');
-const menuPill = document.querySelector('.menu-pill');
-
-if (logoPill && menuPill) {
-  const cancelAutoReveal = () => {
-    if (menuRevealTimeout) {
-      clearTimeout(menuRevealTimeout);
-      menuRevealTimeout = null;
+    // Theme management: manual toggle with localStorage persistence
+    function getTheme(){
+      const saved = localStorage.getItem('theme');
+      return saved || 'light';
     }
-  };
 
-  logoPill.addEventListener('mouseenter', cancelAutoReveal);
-  menuPill.addEventListener('mouseenter', cancelAutoReveal);
-}
+    function setTheme(theme){
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') document.body.classList.add('dark-mode');
+      else document.body.classList.remove('dark-mode');
+      updateAssets();
+      updateThemeLabel();
+    }
 
-// Mobile menu toggle with hamburger button
-const hamburger = document.querySelector('.hamburger');
-if (hamburger) {
-  hamburger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    document.body.classList.toggle('mobile-menu-open');
-  });
-}
+    function updateAssets(){
+      const isDark = document.body.classList.contains('dark-mode');
+      document.querySelectorAll('img[data-light-src][data-dark-src]').forEach(img => {
+        img.src = isDark ? img.dataset.darkSrc : img.dataset.lightSrc;
+      });
+    }
 
-// Close menu when clicking a nav link
-document.querySelectorAll('.nav-menu a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.body.classList.remove('mobile-menu-open');
-  });
-});
+    function updateThemeLabel(){
+      const isDark = document.body.classList.contains('dark-mode');
+      const label = document.querySelector('.theme-label');
+      if (label) label.textContent = isDark ? 'Light mode' : 'Dark mode';
+    }
 
-// Close menu when clicking outside (mobile only)
-document.addEventListener('click', (e) => {
-  if (window.innerWidth <= 768 && document.body.classList.contains('mobile-menu-open')) {
-    const logoPill = document.querySelector('.logo-pill');
-    if (logoPill && !logoPill.contains(e.target)) {
+    // Init
+    setTheme(getTheme());
+    applyScroll();
+    window.addEventListener('scroll', applyScroll, { passive: true });
+
+    // Theme toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle){
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = getTheme();
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    // Mobile menu
+    const hamburger = document.querySelector('.hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    function closeMobileMenu(){
       document.body.classList.remove('mobile-menu-open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'false');
+      if (mobileNav) mobileNav.hidden = true;
     }
-  }
-});
 
-// Close menu when resizing to desktop
-window.addEventListener('resize', () => {
-  if (window.innerWidth > 768) {
-    document.body.classList.remove('mobile-menu-open');
-  }
-});
+    function openMobileMenu(){
+      document.body.classList.add('mobile-menu-open');
+      if (hamburger) hamburger.setAttribute('aria-expanded', 'true');
+      if (mobileNav) mobileNav.hidden = false;
+    }
 
-// Close mobile menu with ESC key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && document.body.classList.contains('mobile-menu-open')) {
-    document.body.classList.remove('mobile-menu-open');
-  }
-});
+    if (hamburger && mobileNav){
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        if (expanded) closeMobileMenu();
+        else openMobileMenu();
+      });
+    }
 
-// Contact form submission handling
-const contactForm = document.getElementById('contact-form');
-const formStatus = document.getElementById('form-status');
+    // Close menu when clicking a nav link
+    document.querySelectorAll('#mobile-nav a, .nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
 
-if (contactForm && formStatus) {
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    // Close menu when clicking outside (mobile only)
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768 && document.body.classList.contains('mobile-menu-open')){
+        const pill = document.querySelector('.header-pill');
+        if (pill && !pill.contains(e.target)) closeMobileMenu();
+      }
+    });
 
-    const submitBtn = contactForm.querySelector('.submit-btn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-    formStatus.className = 'form-status';
-    formStatus.textContent = '';
+    // Close menu on resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) closeMobileMenu();
+    });
 
-    try {
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: new FormData(contactForm),
-        headers: {
-          'Accept': 'application/json'
+    // Close menu with ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMobileMenu();
+    });
+
+    // Contact form submission handling
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
+
+    if (contactForm && formStatus){
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        formStatus.className = 'form-status';
+        formStatus.textContent = '';
+
+        try{
+          const response = await fetch(contactForm.action, {
+            method: 'POST',
+            body: new FormData(contactForm),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok){
+            formStatus.className = 'form-status success';
+            formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+            contactForm.reset();
+          } else {
+            throw new Error('Form submission failed');
+          }
+        } catch (error){
+          formStatus.className = 'form-status error';
+          formStatus.textContent = 'Something went wrong. Please try again or email directly.';
+        } finally {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
         }
       });
-
-      if (response.ok) {
-        formStatus.className = 'form-status success';
-        formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
-        contactForm.reset();
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      formStatus.className = 'form-status error';
-      formStatus.textContent = 'Something went wrong. Please try again or email directly.';
-    } finally {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
     }
-  });
-}
-</script>
-
+  </script>
 </body>
 </html>
